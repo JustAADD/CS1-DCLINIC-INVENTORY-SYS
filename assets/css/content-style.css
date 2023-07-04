@@ -11,6 +11,7 @@
   --dark-color-alt: #5E6063;
   --white-color: #fff;
   --orange-color: #F88646;
+  --light-orange: #F9F5EC;
 
   /*===== Fuente y tipografia =====*/
   --body-font: 'Poppins', sans-serif;
@@ -158,7 +159,7 @@ body {
 
 /*===== card =====*/
 
-.card {
+#card-one {
   box-shadow: 0 7px 4px rgba(126, 175, 249, 0.4);
   margin-left: 8.5rem;
   margin-top: 10%;
@@ -169,7 +170,7 @@ body {
 
 }
 
-.card-body {
+#card-one-body {
   margin: 0 auto;
   padding: 4%;
   width: 22rem;
@@ -177,9 +178,312 @@ body {
   border-radius: 10px;
 }
 
-.card h5 {
+#card-one h5 {
   font-weight: lighter;
   font-size: 12px;
   color: var(--dark-color-alt);
-  
+
+}
+
+/*===== MEDIA QUERIES =====*/
+/* tablet */
+@media screen and (max-width: 760px) {
+
+  ::before,
+  ::after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: var(--header-height) 0 0 0;
+    font-family: var(--body-font);
+    font-size: var(--small-font-size);
+    font-weight: 500;
+  }
+
+  .container-fluid {
+    margin: 0 auto;
+    padding: 0;
+  }
+
+
+  #columnOne {
+    width: 100%;
+  }
+
+
+  #columnOne h2 {
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: clamp (14px, 3vw, 24px);
+  }
+
+  #columnOne p {
+    margin: 0 auto;
+    padding: 0;
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+
+  #boton {
+
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+
+
+  }
+
+  #columnOne .btn-get-started {
+    margin: 0 auto;
+    padding: 0;
+    font-family: var(--body-font);
+    font-weight: var(--normal-font-size);
+    font-size: 15px;
+    text-decoration: none;
+    letter-spacing: 1px;
+    display: fixed;
+    padding: 15px 20px;
+    border-radius: 50px;
+    transition: 0.3s;
+    color: var(--white-color);
+    background: var(--first-color);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+    border: 0px solid rgba(255, 255, 255, 0.1);
+    margin-left: 9rem;
+
+  }
+
+  #columnOne .btn-get-started:hover {
+    border-color: rgb(47, 106, 244);
+    background-color: rgb(47, 106, 244);
+  }
+
+  #columnOne .btn-get-appointment {
+    margin: 0 auto;
+    padding: 0;
+
+    font-family: var(--body-font);
+    font-weight: var(--normal-font-size);
+    font-size: 15px;
+    text-decoration: none;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 14px 30px;
+    border-radius: 50px;
+    transition: 0.3s;
+    color: var(--white-color);
+    background: var(--orange-color);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    margin-left: -0.1rem;
+  }
+
+  .App-sched {
+    margin: 0 auto;
+    padding: 0;
+    margin-bottom: 2rem;
+  }
+
+  #card-one {
+    margin: 0 auto;
+
+  }
+}
+
+
+/* tablet */
+@media screen and (max-width: 560px) {
+
+  #boton {
+
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+
+  }
+
+  #columnOne .btn-get-started {
+    margin: 0 auto;
+    padding: 0;
+
+    font-family: var(--body-font);
+    font-weight: var(--normal-font-size);
+    font-size: 15px;
+    text-decoration: none;
+    letter-spacing: 1px;
+    display: fixed;
+    padding: 15px 20px;
+    border-radius: 50px;
+    transition: 0.3s;
+    color: var(--white-color);
+    background: var(--first-color);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+    border: 0px solid rgba(255, 255, 255, 0.1);
+    margin-left: 3.1rem;
+
+  }
+
+  #columnOne .btn-get-started:hover {
+    border-color: rgb(47, 106, 244);
+    background-color: rgb(47, 106, 244);
+  }
+}
+
+
+
+
+/*===== Second content =====*/
+
+.content-two {
+  width: min(100%, 1020px);
+  margin: 0 auto;
+  padding: 0;
+}
+
+.content-two p {
+  color: var(--orange-color);
+  font-weight: bolder;
+  font-size: 22px;
+}
+
+.content-two h2 {
+  font-size: 40px;
+  font-weight: bolder;
+}
+
+.content-two .btn-get-started {
+  font-family: var(--body-font);
+  font-weight: var(--small-font-size);
+  font-size: 13px;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 15px 20px;
+  width: 50%;
+  border-radius: 50px;
+  transition: 0.3s;
+  color: var(--white-color);
+  background: var(--first-color);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+  border: 0px solid rgba(255, 255, 255, 0.1);
+  margin-left: 8rem;
+}
+
+.content-two .btn-get-started:hover {
+  border-color: rgb(47, 106, 244);
+  background-color: rgb(47, 106, 244);
+}
+
+.content-two .card-title {
+  font-size: var(--normal-font-size);
+  font-weight: bold;
+  color: var(--first-color);
+}
+
+.content-two .card-text {
+
+  font-size: var(--small-font-size);
+  color: var(--first-color);
+}
+
+#slider {
+  margin: 0 auto;
+  width: 100%;
+  background-color: var(--white-color);
+  height: 400px;
+}
+
+.owl-carousel {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 50px;
+}
+
+.services-title {
+  margin-left: 1.5rem;
+}
+
+#item-one {
+  height: 27.5rem;
+  padding: 5%;
+  background-color: var(--white-color);
+}
+
+
+#owl-card {
+  background-color: var(--light-orange);
+  height: 100%;
+  width: 100%;
+  border-radius: 20px;
+  padding: 5%;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+#owl-card p {
+  color: var(--first-color);
+  font-size: var(--small-font-size);
+
+}
+
+#owl-card h5 {
+  color: var(--first-color);
+  font-size: var(--small-font-size);
+  color: var(--first-color);
+  font-size: var(--small-font-size);
+
+}
+
+#owl-card-body {
+  width: 100%;
+  height: 65%;
+  border-radius: 20px;
+}
+
+
+#owl-card-body img {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+}
+
+#owl-card-two {
+  background-color: var(--light-color);
+  height: 100%;
+  width: 100%;
+  border-radius: 20px;
+  padding: 5%;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#owl-card-two p {
+  color: var(--first-color);
+  font-size: var(--small-font-size);
+}
+
+#owl-card-two h5 {
+  color: var(--first-color);
+  font-size: var(--small-font-size);
+}
+
+
+
+/*===== Third content =====*/
+
+.feedback {
+  background-color: var(--light-orange);
+  height: auto;
+  width: 100%;
+  padding: 10%;
+  margin: 0 auto;
 }

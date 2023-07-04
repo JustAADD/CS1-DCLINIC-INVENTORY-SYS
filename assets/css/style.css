@@ -115,7 +115,6 @@ img {
     z-index: var(--z-fixed);
     -webkit-transition: .5s;
     transition: .5s;
-
   }
 
   .nav__menu {
