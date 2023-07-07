@@ -541,7 +541,6 @@ body {
   font-family: var(--font-nunito);
   color: var(--orange-color);
   font-size: 1.2rem;
-
 }
 
 .contact-info {
@@ -616,7 +615,7 @@ body {
 }
 
 .social-link ion-icon:hover {
- 
+
   color: var(--orange-color);
 }
 
