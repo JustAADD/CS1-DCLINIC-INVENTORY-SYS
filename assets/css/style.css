@@ -1,5 +1,6 @@
 /*===== GOOGLE FONTS =====*/
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400&display=swap");
 
 /*===== VARIABLES CSS =====*/
 :root {
@@ -7,12 +8,20 @@
 
   /*===== Colores =====*/
   --first-color: #3785F9;
+  --light-color: #D2E3FC;
+  --dark-color: #000000;
+  --dark-color-alt: #5E6063;
+  --white-color: #fff;
+  --orange-color: #F88646;
+  --light-orange: #F9F5EC;
+  --first-color: #3785F9;
   --dark-color: #000000;
   --dark-color-alt: #282B3A;
   --white-color: #fff;
 
   /*===== Fuente y tipografia =====*/
   --body-font: 'Poppins', sans-serif;
+  --font-nunito: 'Nunito Sans', sans-serif;
   --normal-font-size: .938rem;
   --small-font-size: .813rem;
 
@@ -20,11 +29,17 @@
   --z-fixed: 100;
 }
 
+
+
 @media screen and (min-width: 768px) {
   :root {
     --normal-font-size: 1rem;
     --small-font-size: .875rem;
   }
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 /*===== BASE =====*/
@@ -331,3 +346,203 @@ img {
   }
 }
 
+/* login / Sign up css */
+
+.body-main {
+  background-color: var(--light-color);
+}
+
+#main {
+  margin: 0 auto;
+  padding: 0;
+  height: 44rem;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#form-card {
+  width: 60rem;
+  padding: 2%;
+  height: 30rem;
+
+  border-radius: 30px;
+  box-shadow: 0 8px 8px rgba(100, 150, 200, 0.3);
+}
+
+
+#form-row {
+  columns: 200px 2;
+  height: 100%;
+
+}
+
+#form-col1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0;
+  margin: 0 auto;
+
+
+
+}
+
+#form-inner-card {
+
+  width: 28rem;
+  height: 100%;
+  box-shadow: 0 8px 8px rgba(100, 150, 200, 0.1);
+  border: none;
+}
+
+.form-title {
+  font-size: 1.1rem;
+}
+
+
+.form-label {
+  font-size: var(--small-font-size);
+  color: var(--dark-color-alt);
+}
+
+::placeholder {
+  font-size: 0.8rem;
+}
+
+.form-label {
+  color: var(--dark-color-alt);
+  font-weight: lighter;
+}
+
+.form-text {
+  color: var(--dark-color-alt);
+  font-weight: lighter;
+  display: flex;
+  justify-content: end;
+}
+
+.form-control {
+  width: 20rem;
+}
+
+#form-btn {
+  background-color: var(--orange-color);
+  border: var(--orange-color);
+  width: 20rem;
+  border-radius: 20px;
+
+  font-size: small;
+}
+
+.dh-acc {
+  font-size: var(--small-font-size);
+  font-family: var(--font-nunito);
+  color: var(--dark-color-alt);
+}
+
+.dh-accs a {
+  color: var(--orange-color);
+  font-size: var(--small-font-size);
+  font-family: var(--font-nunito);
+}
+
+/* form owl-carousel */
+
+#form-inner-card {
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+
+  border: none;
+
+}
+
+#form-carousel {
+  width: 29rem;
+  margin: 0 auto;
+  padding: 0;
+}
+
+#form-item1 {
+  margin: 0 auto;
+  padding: 0;
+  background-color: var(--white-color);
+  border: none;
+}
+
+#form-item1 img {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  border-radius: none;
+  border: none;
+}
+
+.form-business-name {
+  font-size: 1.2rem;
+  font-weight: bolder;
+}
+
+.form-business-name span {
+  color: var(--orange-color);
+}
+
+/* form-media queries */
+
+@media screen and (max-width: 850px) {
+
+  .body-main {
+    padding: 0;
+    margin: 0 auto;
+  }
+
+  #main {
+    padding: 10%;
+  }
+
+  #form-col2,
+  #form-item1 img {
+    display: none;
+    opacity: 1;
+    transition: opacity 0.1s ease;
+  }
+}
+
+/* loader */
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--light-color);
+  transition: opacity 1.50s, visibility 1.50s;
+}
+
+.loader--hidden{
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader::after {
+  content: "";
+  width: 75px;
+  height: 75px;
+  border: 15px solid #dddddd;
+  border-top-color: #009578;
+  border-radius: 50%;
+  animation: loading 1.50s ease infinite;
+}
+
+@keyframes loading {
+  from {transform: rotate(0turn);}
+  to {transform: rotate(2turn);}
+}
