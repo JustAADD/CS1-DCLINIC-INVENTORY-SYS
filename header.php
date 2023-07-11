@@ -1,3 +1,16 @@
+<?php
+if (isset($_GET['logout'])) {
+
+  // Unset all session variables
+  session_unset();
+
+  // Destroy the session
+  session_destroy();
+  header("Location: main.php");
+  exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,7 +59,7 @@
         <div class="nav__social">
           <a href="#" class="nav__social-icon"><ion-icon name="mail-outline"></ion-icon></a>
           <a href="#" class="nav__social-icon"><ion-icon name="logo-facebook"></ion-icon></a>
-          <a href="main.php" class="nav__social-icon"> <ion-icon name="log-out-outline"></ion-icon></a>
+          <a href="?logout" name="logout" id="logout" class="nav__social-icon"> <ion-icon name="log-out-outline"></ion-icon></a>
         </div>
       </div>
 

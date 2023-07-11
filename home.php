@@ -1,6 +1,13 @@
 <?php
 
+session_start();
 require_once 'header.php';
+
+if (!isset($_SESSION['email'])){
+
+  header ("Location: main.php");
+  
+}
 
 ?>
 
@@ -63,6 +70,18 @@ require_once 'header.php';
           <a href="#about" class="btn-get-started me-3">Get in Touch</a>
           <a href="#about" class="btn-get-appointment">Make an Appointment</a>
         </div>
+
+        <!-- <?php
+        if (isset($_SESSION['user'])) {
+        ?>
+          <div class="alert alert-success" style="height: 2rem; padding: 5%; display: flex; align-items: center; justify-content:center;">
+            <p class="verify" style="font-size:12px; margin: 0 auto; padding: 0;"><?= $_SESSION['user']; ?></p>
+          </div>
+        <?php
+          unset($_SESSION['user']);
+        }
+
+        ?> -->
 
         <!-- Your Appointment Schedule -->
 
