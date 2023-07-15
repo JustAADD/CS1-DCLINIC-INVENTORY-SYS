@@ -42,16 +42,16 @@ if (isset($_GET['logout'])) {
           </div>
 
           <div>
-            <a href="#" class="nav__name">Dalino Dental Clinic</a>
+            <a href="home.php" class="nav__name">Dalino Dental Clinic</a>
           </div>
         </div>
 
         <div class="nav__menu">
           <ul class="nav__list">
-            <li class="nav__item"><a href="#" class="nav__link">Home</a></li>
-            <li class="nav__item"><a href="#services" class="nav__link">Services</a></li>
-            <li class="nav__item"><a href="appointment.php" class="nav__link active">Appointment</a></li>
-            <li class="nav__item"><a href="#about-us" class="nav__link">About us</a></li>
+            <li class="nav__item"><a href="#" class="nav__link"></a></li>
+            <li class="nav__item"><a href="#services" class="nav__link"></a></li>
+            <li class="nav__item"><a href="appointment.php" class="nav__link"></a></li>
+            <li class="nav__item"><a href="#about-us" class="nav__link"></a></li>
 
           </ul>
         </div>

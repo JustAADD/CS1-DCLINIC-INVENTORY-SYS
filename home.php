@@ -68,7 +68,7 @@ if (!isset($_SESSION['email'])){
         </p>
         <div class="d-flex justify-content-center justify-content-lg-start mt-4" id="boton">
           <a href="#about" class="btn-get-started me-3">Get in Touch</a>
-          <a href="#about" class="btn-get-appointment">Make an Appointment</a>
+          <a href="appointment.php" class="btn-get-appointment">Make an Appointment</a>
         </div>
 
         <!-- <?php

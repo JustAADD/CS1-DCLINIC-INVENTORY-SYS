@@ -3,8 +3,11 @@ session_start();
 include "db-connect/db-con.php";
 
 if (isset($_SESSION['email'])) {
-  header("location: home.php");
-
+  header("Location: home.php");
+  exit();
+}
+elseif (isset($_SESSION['isAdmin'])){
+  header("Location: client/php/dashboard.php");
   exit();
 }
 

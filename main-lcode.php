@@ -1,17 +1,6 @@
 <?php
 session_start();
-// session_unset();
 
-// session_destroy();
-
-// header("Location: main.php");
-// exit();
-
-if (isset($_SESSION['email'])){
-
-  header ("Location: home.php");
-  
-}
 
 include('db-connect/db-con.php');
 
@@ -26,31 +15,41 @@ if (isset($_POST['submit'])) {
     if (mysqli_num_rows($login_query_run) > 0) {
       $row = mysqli_fetch_array($login_query_run);
       if ($row['verify_status'] == "1") {
-        $_SESSION['authenticated'] = TRUE;
-        $_SESSION['auth_user'] = [
-          'fullname' => $row['fullname'],
-          'email' => $row['email'],
-          'password' => $row['password']
-        ];
-        // $_SESSION['user'] = "You are Logged in Successfully";
-        $_SESSION['email'] = $email;
-        header("Location: home.php");
 
-        exit(0);
-      } else {
-        $_SESSION['status'] = "Please verify your account!";
-        header("Location: main.php");
+        if ($row['role'] == "admin") {
+          $_SESSION['isAdmin'] = true;
+
+          // $_SESSION['password'] = $password;
+
+          header("Location: client\php\dashboard.php");
+          exit(0);
+        } else {
+          $_SESSION['authenticated'] = TRUE;
+          $_SESSION['auth_user'] = [
+            'fullname' => $row['fullname'],
+            'email' => $row['email'],
+            'password' => $row['password']
+          ];
+          // $_SESSION['user'] = "You are Logged in Successfully";
+          $_SESSION['email'] = $email;
+
+          header("Location: main.php");
+        }
         exit(0);
       }
     } else {
-      $_SESSION['status'] = "Invalid Email or Password";
+      $_SESSION['status'] = "Please verify your account!";
       header("Location: main.php");
-
       exit(0);
     }
   } else {
-    $_SESSION['status'] = "ALL FIELDS ARE MANDATORY";
+    $_SESSION['status'] = "Invalid Email or Password";
     header("Location: main.php");
+
     exit(0);
   }
+} else {
+  $_SESSION['status'] = "ALL FIELDS ARE MANDATORY";
+  header("Location: main.php");
+  exit(0);
 }

@@ -547,28 +547,17 @@ img {
   to {transform: rotate(2turn);}
 }
 
-/* main registration */
+/* appointmend schedule */
 
-
-/* modal */
-
-#modalBody {
-
-  background-color: var(--light-orange);
-  padding: 10%;
-  margin: 0 auto;
-}
-#modalBody input{
-  border-radius: 10px;
-}
-.modal-content{
-  background-color: var(--light-orange);
+.banner{
 }
 
-#modalBody button{
-  width: 100%;
-  border-radius: 50px;
-  background-color: var(--orange-color);
-  border: none;
+.app{
+  margin-top: 100px;
+  
 }
+
+
+
+
 
