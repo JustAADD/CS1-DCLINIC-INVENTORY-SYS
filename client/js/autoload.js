@@ -22,9 +22,8 @@ function doctors() {
   xhttp.send();
 }
 
-setInterval(function () {
-  doctors();
-}, 1);
+doctors();
+
 
 // patient lists
 function patients() {
@@ -35,10 +34,8 @@ function patients() {
   xhttp.open("GET", "../php/patient_data.php");
   xhttp.send();
 }
-
-setInterval(function () {
   patients();
-}, 1);
+
 
 // transactions
 function transac() {
@@ -95,6 +92,22 @@ function inventory() {
 setInterval(function () {
   inventory();
 }, 1);
+
+//upcoming session
+// Inventory
+function upcoming_data() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    document.getElementById("upcoming_data").innerHTML = this.responseText;
+  }
+  xhttp.open("GET", "../php/upcoming_data.php");
+  xhttp.send();
+}
+
+setInterval(function () {
+  upcoming_data();
+}, 1); 
+
 
 
 

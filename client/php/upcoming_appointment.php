@@ -11,6 +11,11 @@
   <!-- Boxiocns CDN Link -->
   <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
 <body>
@@ -32,19 +37,15 @@
       </li>
       <li>
         <div class="iocn-link">
-          <a href="#">
+          <a href="upcoming_appointment.php">
             <i class='bx bx-collection'></i>
             <span class="link_name">Appointment Schedule</span>
           </a>
           <i class='bx bxs-chevron-down arrow'></i>
         </div>
         <ul class="sub-menu">
-          <li><a class="link_name" href="#">Appointment Schedule</a></li>
-          <li><a href="#">Upcoming Appointment</a></li>
-          <li><a href="#">Session Appointment</a></li>
-          <li><a href="#">Session Appointment</a></li>
-          <li><a href="#">Manage Date Slots</a></li>
-          <li><a href="#">Manage Time Slots</a></li>
+          <li><a class="link_name" href="upcoming_appointment.php">Appointment Schedule</a></li>
+          <li><a href="manage_date&time.php">Manage Date <br> & time Slots</a></li>
         </ul>
       </li>
       <li>
@@ -145,8 +146,23 @@
     </div>
 
     <div class="container">
-      <div id="feedback">
+      <div class="row">
+        <div class="col">
+          <div class="card mt-5" id="cerds">
+            <div class="header-table">Upcoming session</div>
+            <div class="body-table">
+              <table class="table table-hover">
 
+                <tbody>
+                  <div id="upcoming_data"></div>
+
+
+                </tbody>
+
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -154,6 +170,10 @@
 
   <!-- javascript -->
   <script src="../js/script.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+  </script>
 </body>
 
 </html>

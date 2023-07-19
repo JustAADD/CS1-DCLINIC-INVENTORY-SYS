@@ -1,7 +1,7 @@
 <?php 
 
   session_start();
-  include('db-connect/db-con.php');
+  require 'connection/connection.php';
 
   if(isset($_GET['token'])){
     $token =$_GET['token'];

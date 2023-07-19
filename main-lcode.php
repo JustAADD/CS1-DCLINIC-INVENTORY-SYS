@@ -1,8 +1,6 @@
 <?php
 session_start();
-
-
-include('db-connect/db-con.php');
+require 'connection/connection.php';
 
 if (isset($_POST['submit'])) {
   if (!empty(trim($_POST['email'])) && !empty(trim($_POST['password']))) {

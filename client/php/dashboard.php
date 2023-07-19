@@ -2,11 +2,11 @@
 
 session_start();
 
+
 if (!isset($_SESSION['isAdmin'])) {
 
   header("location: ../../main.php");
 
-  // include '/xampp/htdocs/cs1-dclinic-inventory-sys/main.php';
 } 
 
 if (isset($_GET['logout'])) {
@@ -57,18 +57,15 @@ if (isset($_GET['logout'])) {
       </li>
       <li>
         <div class="iocn-link">
-          <a href="#">
+          <a href="upcoming_appointment.php">
             <i class='bx bx-collection'></i>
             <span class="link_name">Appointment Schedule</span>
           </a>
           <i class='bx bxs-chevron-down arrow'></i>
         </div>
         <ul class="sub-menu">
-          <li><a class="link_name" href="#">Appointment Schedule</a></li>
-          <li><a href="#">Upcoming Appointment</a></li>
-          <li><a href="#">Session Appointment</a></li>
-          <li><a href="#">Manage Date Slots</a></li>
-          <li><a href="#">Manage Time Slots</a></li>
+          <li><a class="link_name" href="upcoming_appointment.php">Appointment Schedule</a></li>
+          <li><a href="manage_date&time.php">Manage Date <br> & time Slots</a></li>
         </ul>
       </li>
       <li>
@@ -92,12 +89,12 @@ if (isset($_GET['logout'])) {
         </ul>
       </li>
       <li>
-        <a href="../php/transactions.php">
+        <a href="../php/p_transaction.php">
           <i class='bx bx-credit-card-alt'></i>
-          <span class="link_name">Transactions</span>
+          <span class="link_name">Patient Transaction</span>
         </a>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="../php/transactions.php">Transactions</a></li>
+          <li><a class="link_name" href="../php/transactions.php">Patient Transaction</a></li>
         </ul>
       </li>
       <li>
@@ -110,20 +107,9 @@ if (isset($_GET['logout'])) {
         </div>
         <ul class="sub-menu">
           <li><a class="link_name" href="../php/Inventory.php">Inventory</a></li>
-          <li><a href="#">Upcoming Appointment</a></li>
-          <li><a href="#">Session Appointment</a></li>
-          <li><a href="#">Session Appointment</a></li>
+         
           <li><a href="#">Manage Date Slots</a></li>
           <li><a href="#">Manage Time Slots</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="../php/Patient_history.php">
-          <i class='bx bx-history'></i>
-          <span class="link_name">Patients History</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="../php/Patient_history.php">Patients History</a></li>
         </ul>
       </li>
       <li>
@@ -149,7 +135,6 @@ if (isset($_GET['logout'])) {
           <li><a href="#">Admin Settings</a></li>
         </ul>
       </li>
-
 
 
       <!-- sidebar footer -->
@@ -183,6 +168,7 @@ if (isset($_GET['logout'])) {
 
       </div>
     </div>
+
   </section>
 
 

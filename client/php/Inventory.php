@@ -68,12 +68,12 @@
         </ul>
       </li>
       <li>
-        <a href="../php/transactions.php">
+        <a href="../php/p_transaction.php">
           <i class='bx bx-credit-card-alt'></i>
-          <span class="link_name">Transactions</span>
+          <span class="link_name">Patient Transaction</span>
         </a>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="../php/transactions.php">Transactions</a></li>
+          <li><a class="link_name" href="../php/transactions.php">Patient Transaction</a></li>
         </ul>
       </li>
       <li>
@@ -93,15 +93,7 @@
           <li><a href="#">Manage Time Slots</a></li>
         </ul>
       </li>
-      <li>
-        <a href="../php/Patient_history.php">
-          <i class='bx bx-history'></i>
-          <span class="link_name">Patients History</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="../php/Patient_history.php">Patients History</a></li>
-        </ul>
-      </li>
+
       <li>
         <a href="../php/sa_feedback.php">
           <i class='bx bx-message-dots'></i>

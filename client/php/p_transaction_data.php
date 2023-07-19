@@ -1,6 +1,6 @@
 <?php
 
-include('/xampp/htdocs/cs1-dclinic-inventory-sys/db-connect/db-con.php');
+include('../../db-connect/db-con.php');
 // $rows = mysqli_query($con, "SELECT * FROM user_registration");
 ?>
 
@@ -19,7 +19,7 @@ include('/xampp/htdocs/cs1-dclinic-inventory-sys/db-connect/db-con.php');
     <div class="row">
       <div class="col">
         <div class="card" id="cerds">
-          <div class="header-table">Patient History</div>
+          <div class="header-table">Transactions</div>
           <div class="body-table">
             <table class="table table-hover">
               <thead>

@@ -1,6 +1,8 @@
 <?php
-include('db-connect/db-con.php');
 
+session_start();
+
+require 'connection/connection.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -50,40 +52,40 @@ if (isset($_POST['submit'])) {
   $verify_token = md5(rand());
 
 
-    $check_query = mysqli_query($con, "SELECT * FROM user_registration WHERE email = '$email'");
+  $check_query = mysqli_query($con, "SELECT * FROM user_registration WHERE email = '$email'");
 
-    if ($_SERVER['REQUEST_METHOD'] == "POST") {
-      if (empty($fullname) || empty($email) || empty($password)) {
-        $error = "All fields are required";
-        $password_day = "Please enter password";
-        $fullname_day = "Please enter fullname";
-        $email_day = "Please enter email";
-      } elseif (strlen($_POST['password']) < 6) {
-        $password_day = "Password must be greater than 6";
-      } elseif (mysqli_num_rows($check_query) > 0) {
-        $email_day = "Email already exists";
-      } elseif (strpos($email, '.com') === false) {
-        $email_day = "Please enter a valid email address";
+  if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    if (empty($fullname) || empty($email) || empty($password)) {
+      $error = "All fields are required";
+      $password_day = "Please enter password";
+      $fullname_day = "Please enter fullname";
+      $email_day = "Please enter email";
+    } elseif (strlen($_POST['password']) < 6) {
+      $password_day = "Password must be greater than 6";
+    } elseif (mysqli_num_rows($check_query) > 0) {
+      $email_day = "Email already exists";
+    } elseif (strpos($email, '.com') === false) {
+      $email_day = "Please enter a valid email address";
+    } else {
+
+      $sql = "INSERT INTO user_registration (fullname,email,password,verify_token) VALUES ('$fullname', '$email', '$password','$verify_token')";
+      $query_run = mysqli_query($con, $sql);
+
+      if ($query_run) {
+
+        sendemail_verify($fullname, $email, $verify_token);
+
+        // header("refresh:0.1;url=main.php");
+        // echo "Sign up Successfully";
       } else {
 
-        $sql = "INSERT INTO user_registration (fullname,email,password,verify_token) VALUES ('$fullname', '$email', '$password','$verify_token')";
-        $query_run = mysqli_query($con, $sql);
-
-        if ($query_run) {
-
-          sendemail_verify($fullname, $email, $verify_token);
-          
-          // header("refresh:0.1;url=main.php");
-          // echo "Sign up Successfully";
-        } else {
-
-          // header("refresh:0.1;url=main.php");
-           echo "There was a problem";
-        }
-
-        $con->close();
+        // header("refresh:0.1;url=main.php");
+        echo "There was a problem";
       }
+
+      $con->close();
     }
+  }
 }
 
 ?>

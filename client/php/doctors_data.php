@@ -1,11 +1,35 @@
 <?php
-include('../../db-connect/db-con.php');
-// $rows = mysqli_query($con, "SELECT * FROM user_registration");
+require '../../connection/connection.php';
+
+// Check if the "deleteid" parameter is present in the URL
+if (isset($_GET['deleteid'])) {
+  // Get the id to be deleted from the URL
+  $delete_id = $_GET['deleteid'];
+
+  // Create the DELETE query
+  $delete_query = "DELETE FROM dental_doctors WHERE id = '$delete_id'";
+
+  // Execute the query
+  if ($con->query($delete_query) === TRUE) {
+
+
+    header("Location: ../php/dental_doctors.php");
+  } else {
+
+    // echo "Error: " . $conn->error;
+  }
+
+  $con->close();
+}
+
 ?>
 
 <head>
 
   <link rel="stylesheet" href="../css/style.css">
+
+  <!-- icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
   <!-- ===== Bootstrap CSS ===== -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -14,32 +38,60 @@ include('../../db-connect/db-con.php');
 <body>
 
   <!-- appointment/session table -->
-  <div class="container overflow-hidden mt-5">
-    <div class="row">
-      <div class="col">
-        <div class="card" id="cerds">
-          <div class="header-table">All Dental Doctors in Clinic</div>
-          <div class="body-table">
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">Doctors ID</th>
-                  <th scope="col">Doctors Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Specialties</th>
-                  <th scope="col">Appointment Number</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <!-- data -->
-            </table>
-          </div>
-        </div>
-      </div>
+
+  <div class="body-table">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Doctors ID</th>
+          <th scope="col">Doctors Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Contact</th>
+          <th scope="col">Specialties</th>
+          <th scope="col">Status</th>
+          <th scope="col"></th>
+
+        </tr>
+      </thead>
+
+      <!-- data -->
+      <?php
+      $selectquery = "SELECT * FROM dental_doctors ORDER BY ID DESC";
+      $result = mysqli_query($con, $selectquery);
+
+      while ($row = mysqli_fetch_assoc($result)) {
+        $id = $row['id'];
+        $doctors_id = $row['doctors_id'];
+        $doctors_name = $row['doctors_name'];
+        $email = $row['email'];
+        $contact_number = $row['contact'];
+        $specialties = $row['specialties'];
+        $status = $row['status'];
+
+        echo '
+                <tbody>
+                  <tr class="centered-row">
+                    <th scope ="row">' . $doctors_id . '</td>
+                    <td> ' . $doctors_name .  '</td>
+                    <td> ' . $email . '</td>
+                    <td> ' . $contact_number . '</td>
+                    <td> ' . $specialties . '</td>
+                    <td> ' . $status . '</td>
+                
+                    <td> <a href="../php/doctors_data.php? deleteid=' . $id . '"><i class="fa-solid fa-trash" style="color:red;"></i></a> &nbsp;
+                    <a href="../php/doctors_update.php? updateid=' . $id . '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></a>
+                    </td>
+                </tbody>       
+          ';
+      }
 
 
-    </div>
+      $con->close();
+      ?>
+    </table>
   </div>
+
+
 
   <!--===== Bootstrap JS =====-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

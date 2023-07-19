@@ -1,12 +1,33 @@
 <?php
-
 session_start();
+if (isset($_SESSION['email'])) {
+  $email = $_SESSION['email'];
+}
+
+
+$mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
+$stmt = $mysqli->prepare("SELECT fullname FROM user_registration WHERE email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+
+// Bind the result to a variable
+$stmt->bind_result($fullname);
+
+// Fetch the result
+if ($stmt->fetch()) {
+  // Fullname is retrieved from the database
+  // Store it in the session variable
+  $_SESSION['fullname'] = $fullname;
+}
+
+$stmt->close();
+$mysqli->close();
+
 require_once 'header.php';
 
-if (!isset($_SESSION['email'])){
+if (!isset($_SESSION['email'])) {
 
-  header ("Location: main.php");
-  
+  header("Location: main.php");
 }
 
 ?>
@@ -71,24 +92,27 @@ if (!isset($_SESSION['email'])){
           <a href="appointment.php" class="btn-get-appointment">Make an Appointment</a>
         </div>
 
+      
+
         <!-- <?php
-        if (isset($_SESSION['user'])) {
-        ?>
+              if (isset($_SESSION['user'])) {
+              ?>
           <div class="alert alert-success" style="height: 2rem; padding: 5%; display: flex; align-items: center; justify-content:center;">
             <p class="verify" style="font-size:12px; margin: 0 auto; padding: 0;"><?= $_SESSION['user']; ?></p>
           </div>
         <?php
-          unset($_SESSION['user']);
-        }
+                unset($_SESSION['user']);
+              }
 
         ?> -->
 
         <!-- Your Appointment Schedule -->
-
+        <!-- <h4> Welcome, <?php echo $fullname ?></h4> -->
         <div class="App-sched mt-5">
           <div class="card" id="card-one" style="width: 25rem;">
             <div class="card-body" id="card-one-body">
               <h5>Your Appointment Schedule:</h5>
+            
             </div>
           </div>
 

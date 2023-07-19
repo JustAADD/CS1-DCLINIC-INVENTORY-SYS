@@ -2,17 +2,15 @@
 function build_calendar($month, $year)
 {
 
-
-
   $mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
-  $stmt = $mysqli->prepare("select * from bookings where MONTH(date) = ? AND YEAR(date) = ?");
+  $stmt = $mysqli->prepare("select * from appointment_booking where MONTH(session_date) = ? AND YEAR(session_date) = ?");
   $stmt->bind_param('ss', $month, $year);
   $bookings = array();
   if ($stmt->execute()) {
     $result = $stmt->get_result();
     if ($result->num_rows > 0) {
       while ($row = $result->fetch_assoc()) {
-        $bookings[] = $row['date'];
+        $bookings[] = $row['session_date'];
       }
       $stmt->close();
     }
@@ -44,11 +42,11 @@ function build_calendar($month, $year)
   $datetoday = date('Y-m-d');
 
 
-  $calendar = "<table class='table table-bordered'>";
-  $calendar .= "<div class='row'>";
-  $calendar .= "<div class='col-8 text-start'><h1>$monthName $year</h1></div>";
+  $calendar = "<table class='table table-bordered' id='appointment' style='width: 100%; height: 50%;'>";
+  $calendar .= "<div class='row' style='margin-top: 1px;'>";
+  $calendar .= "<div class='col-8 text-start'><h3>$monthName $year</h3></div>";
   $calendar .= "<div class='col-4'>";
-  $calendar .= "<a class='btn btn-xs btn-primary' style='font-size: 12px; background-color: #3785F9; margin-left: 150px'; href='?month=" . date('m', mktime(0, 0, 0, $month - 1, 1, $year)) . "&year=" . date('Y', mktime(0, 0, 0, $month - 1, 1, $year)) . "'><</a> ";
+  $calendar .= "<a class='btn btn-xs btn-primary' style='font-size: 12px; background-color: #3785F9; margin-left: 90px'; href='?month=" . date('m', mktime(0, 0, 0, $month - 1, 1, $year)) . "&year=" . date('Y', mktime(0, 0, 0, $month - 1, 1, $year)) . "'><</a> ";
   $calendar .= "<a class='btn btn-xs btn-primary' style='font-size: 12px'; background-color: #3785F9; href='?month=" . date('m') . "&year=" . date('Y') . "'>Current Month</a> ";
   $calendar .= "<a class='btn btn-xs btn-primary' style='font-size: 12px'; background-color: #3785F9; href='?month=" . date('m', mktime(0, 0, 0, $month + 1, 1, $year)) . "&year=" . date('Y', mktime(0, 0, 0, $month + 1, 1, $year)) . "'>></a></div>";
   $calendar .= "</div>";
@@ -82,12 +80,28 @@ function build_calendar($month, $year)
 
   if ($dayOfWeek > 0) {
     for ($k = 0; $k < $dayOfWeek; $k++) {
-      $calendar .= "<td  class='empty'></td>";
+      $calendar .= "<td class='empty'></td>";
     }
   }
 
 
+
   $month = str_pad($month, 2, "0", STR_PAD_LEFT);
+
+  // include "db-connect/db-con.php";
+  // $sql ="SELECT date, status FROM availability";
+  // $result = $con-> query($sql);
+
+  // $availabilityStatus = array();
+
+  // if ($result->num_rows > 0){
+  //   while($row = $result->fetch_assoc()){
+  //     $availabilityStatus[$row['date']] = $row ['status'];
+  //   }
+  // }
+
+  // $con->close();
+
 
   while ($currentDay <= $numberDays) {
 
@@ -102,18 +116,19 @@ function build_calendar($month, $year)
     $currentDayRel = str_pad($currentDay, 2, "0", STR_PAD_LEFT);
     $date = "$year-$month-$currentDayRel";
 
+
+
     $dayname = strtolower(date('l', strtotime($date)));
     $eventNum = 0;
     $today = $date == date('Y-m-d') ? "today" : "";
     if ($date < date('Y-m-d')) {
       $calendar .= "<td><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' style='font-size: 8px;'>N/A</button>";
-    } elseif (in_array($date, $bookings)) {
+    }elseif (in_array(date('Y-m-d', strtotime($date)), $bookings)) {
       $calendar .= "<td class='$today'><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' style='font-size: 8px; background-color: #3785F9; border: none;'>Already Booked</button>";
+    
     } else {
       $calendar .= "<td class='$today'><h4>$currentDay</h4> <a href='app-set-sched.php?date=" . $date . "' class='btn btn-success btn-xs' style='font-size: 8px; background-color: #3785F9; border: none;'>Book</a>";
     }
-
-
 
 
     $calendar .= "</td>";

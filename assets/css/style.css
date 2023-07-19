@@ -13,6 +13,7 @@
   --dark-color-alt: #5E6063;
   --white-color: #fff;
   --orange-color: #F88646;
+  --dark-orange: #f06717;
   --light-orange: #F9F5EC;
   --first-color: #3785F9;
   --dark-color: #000000;
@@ -527,7 +528,7 @@ img {
   transition: opacity 1.50s, visibility 1.50s;
 }
 
-.loader--hidden{
+.loader--hidden {
   opacity: 0;
   visibility: hidden;
 }
@@ -543,21 +544,223 @@ img {
 }
 
 @keyframes loading {
-  from {transform: rotate(0turn);}
-  to {transform: rotate(2turn);}
+  from {
+    transform: rotate(0turn);
+  }
+
+  to {
+    transform: rotate(2turn);
+  }
 }
 
 /* appointmend schedule */
 
-.banner{
+.banner-services h3 {
+  color: var(--first-color);
+  font-family: var(--font-nunito);
+  font-weight: bold;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
-.app{
-  margin-top: 100px;
-  
+.banner-services h4 {
+  font-size: 15px;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
+#banner-services {
+  margin: 0 auto;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 5%;
+}
+
+.app p {
+  padding-left: 40%;
+}
+
+/* footer */
+
+.footer .owner {
+  margin: 0 auto;
+  padding: 4%;
+  background-color: var(--first-color);
+  height: 50px;
 
 
+}
+
+.footer p {
+  color: #fff
+}
+
+/* set schedule form */
+
+#card-form {
+  margin: 0 auto;
+  padding: 4%;
+  width: 70%;
+  height: auto;
+
+  border-radius: 50px;
+  box-shadow: 0 7px 4px rgba(126, 175, 249, 0.4);
+}
+
+.card-form-text {
+  color: var(--first-color);
+  font-size: var(--normal-font-size);
+}
+
+/* select procedures */
 
 
+.btn-radio {
+
+  color: #fff;
+  background-color: var(--orange-color);
+  width: 10rem;
+  height: 3rem;
+  text-align: center;
+
+  padding: 13px 20px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: var(--small-font-size);
+  transition-duration: 0.4s;
+}
+
+.btn-radio:hover {
+  background-color: var(--dark-orange);
+  color: #fff;
+}
+
+.btn-radio:active {
+  background-color: var(--dark-orange);
+  color: #fff;
+}
+
+.btn-check {
+  display: none;
+}
+
+.btn-check:checked+.btn-radio {
+  background-color: var(--first-color);
+  color: #fff;
+}
+
+.appointment-submit {
+  margin: 0 auto;
+
+}
+
+#app-submit {
+  width: 12rem;
+  background-color: var(--first-color);
+  border-radius: 20px;
+  font-family: var(--font-nunito);
+}
+
+#app-back {
+  width: 10rem;
+  background-color: var(--first-color);
+  border-radius: 20px;
+  font-family: var(--font-nunito);
+}
+
+/* .timeslot {
+  width: 200px;
+  padding: 10px;
+  background-color: #f2f2f2;
+  margin: 10px auto;
+  text-align: center;
+  font-size: 16px;
+} */
+
+.timeslots {
+  color: var(--first-color);
+  font-size: var(--normal-font-size);
+}
+
+.button-row {
+
+  flex-wrap: wrap;
+}
+
+.button-row button {
+  margin: 0 auto;
+  padding: 0;
+  flex-basis: calc(33.33% - 10px);
+  /* Adjust the width based on the number of buttons */
+  width: 9.5rem;
+  height: 3rem;
+  margin-block-end: 10px;
+}
+
+.btn-radio-ts {
+  width: 9.5rem;
+  height: 3rem;
+  margin-block-end: 10px;
+  background-color: var(--orange-color);
+  font-size: var(--small-font-size);
+  color: #fff;
+
+  padding: 13px 15px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  flex-basis: calc(33.33% - 10px);
+}
+
+.btn-radio-ts:hover {
+  background-color: var(--dark-orange);
+  color: #fff;
+}
+
+.btn-radio-ts:active {
+  background-color: var(--first-color);
+  color: #fff;
+}
+
+.btn-check:checked+.btn-radio-ts {
+  background-color: var(--first-color);
+  color: #fff;
+}
+
+.services-btn {
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1.3rem;
+}
+
+/* "card update style */
+
+#update_container{
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+ 
+}
+
+#update_card {
+  box-shadow: 0 7px 4px rgba(126, 175, 249, 0.4);
+  height: 30rem;
+  width: 50rem;
+  margin-top: 5rem;
+  padding: 5%;
+}
+
+.update_title{
+  color: var(--first-color);
+  font-weight: var(--normal-font-size);
+
+}
+
+#update_card button {
+   width: 30%;
+   border-radius: 50px;
+   font-size: var(--small-font-size);
+}

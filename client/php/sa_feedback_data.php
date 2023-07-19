@@ -1,6 +1,6 @@
 <?php
 
-include('/xampp/htdocs/cs1-dclinic-inventory-sys/db-connect/db-con.php');
+include('../../db-connect/db-con.php');
 // $rows = mysqli_query($con, "SELECT * FROM user_registration");
 ?>
 

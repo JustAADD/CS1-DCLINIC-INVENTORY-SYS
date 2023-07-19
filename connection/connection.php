@@ -10,10 +10,10 @@ $dbname = "cs1-dclinic-sys";  //databases
 $con = mysqli_connect($hostname, $username, $password, $dbname); // connecting 
 // Check connection
 
-if ($con) {       //checking connection to DB	
-  //echo "connection successful";
-
-} else {
+if (!$con) {      
+  
 
   die("Connection failed: " . mysqli_connect_error());
 }
+
+// mysqli_close($con);

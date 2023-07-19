@@ -1,6 +1,6 @@
 <?php
 
-include('../../db-connect/db-con.php');
+require '../../connection/connection.php';
 // $rows = mysqli_query($con, "SELECT * FROM user_registration");
 ?>
 
@@ -35,10 +35,10 @@ include('../../db-connect/db-con.php');
 
   <!-- appointment/session table -->
   <div class="container overflow-hidden mt-5">
-    <div class="row gx-5">
+    <div class="row gx-2">
       <div class="col">
         <div class="card" id="cerds">
-          <div class="header-table">Upcoming Appointment</div>
+          <div class="header-table">Upcoming Session</div>
           <div class="body-table">
             <table class="table table-hover">
               <thead>
@@ -50,13 +50,40 @@ include('../../db-connect/db-con.php');
                 </tr>
               </thead>
               <!-- data -->
+               <!-- data -->
+               <?php
+              $selectquery = "SELECT * FROM appointment_booking ORDER BY ID DESC";
+              $result = mysqli_query($con, $selectquery);
+
+              while ($row = mysqli_fetch_assoc($result)) {
+                $id = $row['id'];
+                $patient_id = $row['patient_id'];
+                $name = $row['name'];
+                $procedures = $row['procedures'];
+                $email = $row['email'];
+                $pnumber = $row['pnumber'];
+                $message = $row['message'];
+                $session_time = $row['session_time'];
+                $session_date = $row['session_date'];
+
+                echo '
+                <tbody>
+                  <tr class="centered-row">
+                    <th scope ="row">' . $patient_id . '</td>
+                    <td>' . $name .  '</td>
+                    <td><button type="button" class="btn btn-primary" style="background-color:#31b522; width: 10rem; border: none;" >' . $procedures . '</button></td> 
+                    <td> ' . $session_date . '</td>
+                </tbody>
+          ';
+              }
+              ?>
             </table>
           </div>
         </div>
       </div>
       <div class="col">
         <div class="card" id="cerds">
-          <div class="header-table">Upcoming Session</div>
+          <div class="header-table">Help Desk</div>
           <div class="body-table">
             <table class="table table-hover">
               <thead>
