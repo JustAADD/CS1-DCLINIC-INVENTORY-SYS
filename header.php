@@ -57,8 +57,8 @@ if (isset($_GET['logout'])) {
         </div>
 
         <div class="nav__social">
-          <a href="#" class="nav__social-icon"><ion-icon name="mail-outline"></ion-icon></a>
-          <a href="#" class="nav__social-icon"><ion-icon name="logo-facebook"></ion-icon></a>
+          <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon"><ion-icon name="mail-outline"></ion-icon></a>
+          <a href="https://www.facebook.com/menchie.dalino" class="nav__social-icon"><ion-icon name="logo-facebook"></ion-icon></a>
           <a href="?logout" name="logout" id="logout" class="nav__social-icon"> <ion-icon name="log-out-outline"></ion-icon></a>
         </div>
       </div>

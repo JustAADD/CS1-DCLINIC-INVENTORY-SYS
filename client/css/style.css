@@ -450,3 +450,15 @@ body {
   margin-left: 61.5rem;
   border: none;
 }
+
+#button_patient_transaction button{
+  margin-left: 53rem;
+  background-color: var(--first-color);
+  border: none;
+}
+
+
+/* loader */
+
+
+

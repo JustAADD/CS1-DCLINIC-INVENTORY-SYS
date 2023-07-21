@@ -129,7 +129,7 @@ elseif (isset($_SESSION['isAdmin'])){
           </form>
         </div>
         <div class="col" id="form-col2">
-          <div class="card" id="form-inner-card">
+         
             <!-- owl carousel -->
             <div class="owl-carousel owl-theme" id="form-carousel">
 
@@ -145,15 +145,14 @@ elseif (isset($_SESSION['isAdmin'])){
 
 
             </div>
-          </div>
+         
         </div>
       </div>
 
     </div>
   </div>
 
-  <!-- loader -->
-  <div class="loader loader--hidden"></div>
+
 
 
   <!--===== Bootstrap JS =====-->

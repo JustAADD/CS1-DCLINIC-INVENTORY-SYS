@@ -65,7 +65,7 @@ if (isset($_GET['logout'])) {
         </div>
         <ul class="sub-menu">
           <li><a class="link_name" href="upcoming_appointment.php">Appointment Schedule</a></li>
-          <li><a href="manage_date&time.php">Manage Date <br> & time Slots</a></li>
+          <li><a href="manage_schedule.php">Manage Schedule</a></li>
         </ul>
       </li>
       <li>

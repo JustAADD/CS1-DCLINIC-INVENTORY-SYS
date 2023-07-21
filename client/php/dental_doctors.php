@@ -1,4 +1,20 @@
 <?php
+
+session_start();
+
+if (isset($_GET['logout'])) {
+
+  // Unset all session variables
+  session_unset();
+
+  // Destroy the session
+  session_destroy();
+  header("Location:../../main.php");
+  exit();
+}
+
+
+
 require '../../connection/connection.php';
 
 
@@ -166,7 +182,7 @@ if (isset($_POST["submit_doctors"])) {
             <div class="profile_name">Mercedita</div>
 
           </div>
-          <i class='bx bx-log-out'></i>
+          <a href="?logout" name="logout" id="logout"><i class='bx bx-log-out'></i></a>
         </div>
       </li>
     </ul>

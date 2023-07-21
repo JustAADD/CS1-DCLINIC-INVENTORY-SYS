@@ -1,4 +1,18 @@
 <?php
+
+session_start();
+if (isset($_GET['logout'])) {
+
+  // Unset all session variables
+  session_unset();
+
+  // Destroy the session
+  session_destroy();
+  header("Location:../../main.php");
+  exit();
+}
+
+
 require '../../connection/connection.php';
 
 // ADD QUERY DOCTORS
@@ -80,7 +94,7 @@ if (isset($_POST["add_patient"])) {
         </div>
         <ul class="sub-menu">
           <li><a class="link_name" href="upcoming_appointment.php">Appointment Schedule</a></li>
-          <li><a href="manage_date&time.php">Manage Date <br> & time Slots</a></li>
+          <li><a href="manage_schedule.php">Manage Schedule</a></li>
         </ul>
       </li>
       <li>
@@ -165,7 +179,7 @@ if (isset($_POST["add_patient"])) {
             <div class="profile_name">Mercedita</div>
 
           </div>
-          <i class='bx bx-log-out'></i>
+          <a href="?logout" name="logout" id="logout"><i class='bx bx-log-out'></i></a>
         </div>
       </li>
     </ul>

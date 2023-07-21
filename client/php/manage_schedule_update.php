@@ -4,40 +4,42 @@ require '../../connection/connection.php';
 
 $id = $_GET['updateid'];
 // Fetch the doctor's data
-$sql = "SELECT * FROM patient_transaction WHERE id =$id";
+$sql = "SELECT * FROM manage_schedule WHERE id =$id";
 $result = mysqli_query($con, $sql);
 
 $row = mysqli_fetch_assoc($result);
 
 $id = $row['id'];
-$patient_id = $row['patient_id'];
-$patient_name = $row['patient_name'];
-$session = $row['session'];
-$dentist = $row['dentist'];
-$dateTime = $row['datetime'];
+$slots = $row['slots'];
+$date = $row['date'];
+$start_time = $row['start_time'];
+$end_time = $row['end_time'];
 $status = $row['status'];
+$duration = $row['duration'];
 
 
 if (isset($_POST['update'])) {
 
-
-  $patient_name= $_POST['patient_name'];
-  $session = $_POST['session'];
-  $dentist = $_POST['dentist'];
+  $id = $_POST['id'];
+  $slots = $_POST['slots'];
+  $date = $_POST['date'];
+  $start_time = $_POST['start_time'];
+  $end_time = $_POST['end_time'];
   $status = $_POST['status'];
+  $duration = $_POST['duration'];
 
-  // Prepare and execute the update query
-  $updateQuery = "UPDATE patient_transaction SET id='$id', patient_name='$patient_name', session='$session', dentist='$dentist', status='$status'
+  //the query
+  $updateQuery = "UPDATE manage_schedule SET id='$id', slots='$slots', date='$date', start_time='$start_time', end_time='$end_time', status='$status', duration='$duration'
   WHERE id = '$id'";
   $result = mysqli_query($con, $updateQuery);
 
   if ($result) {
     // Update successful
     //  echo "Doctor information updated successfully.";
-    header("Location: ../php/p_transaction.php");
+    header("Location: ../php/manage_schedule.php");
   } else {
     // Update failed
-    echo "Error updating patient information: " . $con->error;
+    echo "Error updating schedule: " . $con->error;
   }
   //close the database 
   $con->close();
@@ -106,34 +108,47 @@ if (isset($_POST['update'])) {
   <div class="container mt-5" id="update_container">
     <div class="card" id="update_card">
       <form method="POST" action="">
-        <p class="update_title mt-4">Update Patient Information</p>
-        <div class="row ">
+        <p class="update_title">Update Your Schedule</p>
+        <div class="row">
           <div class="col">
             <div class="mb-3">
-              <label for="fullname" class="form-label">Fullname</label>
-              <input class="form-control" name="patient_name" type="text" value="<?php echo $patient_name; ?>" aria-label="default input example">
+              <label for="exampleFormControlInput1" class="form-label">Slots</label>
+              <input class="form-control" name="slots" type="text" value="<?php echo $slots; ?>" aria-label="default input example">
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label">Session</label>
-              <input type="form-control" name="session" class="form-control" value="<?php echo $session; ?>">
+              <label for="exampleFormControlInput2" class="form-label">Date</label>
+              <input type="date" name="date" class="form-control" value="<?php echo $date; ?>" id="exampleFormControlInput2">
             </div>
-
+            <div class="mb-3">
+              <label for="exampleFormControlInput3" class="form-label">Start_time</label>
+              <input class="form-control" name="start_time" type="time" value="<?php echo $start_time; ?>" aria-label="default input example">
+            </div>
           </div>
           <div class="col">
             <div class="mb-3">
-              <label for="email" class="form-label">Dentist</label>
-              <input type="form-control" name="dentist" class="form-control" value="<?php echo $dentist; ?>">
+              <label for="exampleFormControlInput3" class="form-label">End_time</label>
+              <input class="form-control" name="end_time" type="time" value="<?php echo $end_time; ?>" aria-label="default input example">
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label">Status</label>
-              <input type="form-control" name="status" class="form-control" value="<?php echo $status; ?>">
+              <label for="inputGroupSelect01" class="form-label">Select Status</label>
+              <select class="form-select" name="status" id="inputGroupSelect01">
+                <option value="Open" <?php if ($status === 'Open') echo ' selected'; ?>>Open</option>
+                <option value="Closed" <?php if ($status === 'Closed') echo ' selected'; ?>>Closed</option>
+                <option value="No Slots" <?php if ($status === 'No Slots') echo ' selected'; ?>>No Slots</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="exampleFormControlInput3" class="form-label">Duration in minutes</label>
+              <input class="form-control" name="duration" type="text" value="<?php echo $duration; ?>"" aria-label=" default input example">
             </div>
           </div>
         </div>
-        <button type="submit" name="update" id="update" value="update" class="btn btn-primary mt-5">Update</button>
+        <button type="submit" name="update" id="update" value="update" class="btn btn-primary mt-3">Update Schedule</button>
       </form>
     </div>
   </div>
+
 
 
 

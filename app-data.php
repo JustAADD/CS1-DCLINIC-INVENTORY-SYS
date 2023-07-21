@@ -3,14 +3,21 @@ function build_calendar($month, $year)
 {
 
   $mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
-  $stmt = $mysqli->prepare("select * from appointment_booking where MONTH(session_date) = ? AND YEAR(session_date) = ?");
+  // $stmt = $mysqli->prepare("select * from appointment_booking where MONTH(session_date) = ? AND YEAR(session_date) = ?");
+  //$stmt = $mysqli->prepare("SELECT session_date, status FROM appointment_booking WHERE MONTH(session_date) = ? AND YEAR(session_date) = ?");
+  $stmt = $mysqli->prepare("SELECT date, status, slots FROM manage_schedule WHERE MONTH(date) = ? AND YEAR(date) = ?");
   $stmt->bind_param('ss', $month, $year);
   $bookings = array();
+  $statuses = array();
+  $slotses = array();
   if ($stmt->execute()) {
     $result = $stmt->get_result();
     if ($result->num_rows > 0) {
       while ($row = $result->fetch_assoc()) {
-        $bookings[] = $row['session_date'];
+        $bookings[] = $row['date'];
+        $statuses[] = $row['status'];
+        // $slots[] = $row['slots'];
+        $slots[] = isset($row['slots']) ? $row['slots'] : 0;
       }
       $stmt->close();
     }
@@ -52,14 +59,6 @@ function build_calendar($month, $year)
   $calendar .= "</div>";
   $calendar .= "<tr>";
 
-
-  // $calendar = "<table class='table table-bordered'>";
-  // $calendar .= "<center><h2>$monthName $year</h2>";
-  // $calendar .= "<a class='btn btn-xs btn-primary' href='?month=" . date('m', mktime(0, 0, 0, $month - 1, 1, $year)) . "&year=" . date('Y', mktime(0, 0, 0, $month - 1, 1, $year)) . "'>Previous Month</a> ";
-  // $calendar .= "<a class='btn btn-xs btn-primary' href='?month=" . date('m') . "&year=" . date('Y') . "'>Current Month</a> ";
-  // $calendar .= "<a class='btn btn-xs btn-primary' href='?month=" . date('m', mktime(0, 0, 0, $month + 1, 1, $year)) . "&year=" . date('Y', mktime(0, 0, 0, $month + 1, 1, $year)) . "'>Next Month</a></center><br>";
-  // $calendar .= "<tr>";
-
   // Create the calendar headers
 
   foreach ($daysOfWeek as $day) {
@@ -88,19 +87,6 @@ function build_calendar($month, $year)
 
   $month = str_pad($month, 2, "0", STR_PAD_LEFT);
 
-  // include "db-connect/db-con.php";
-  // $sql ="SELECT date, status FROM availability";
-  // $result = $con-> query($sql);
-
-  // $availabilityStatus = array();
-
-  // if ($result->num_rows > 0){
-  //   while($row = $result->fetch_assoc()){
-  //     $availabilityStatus[$row['date']] = $row ['status'];
-  //   }
-  // }
-
-  // $con->close();
 
 
   while ($currentDay <= $numberDays) {
@@ -117,19 +103,41 @@ function build_calendar($month, $year)
     $date = "$year-$month-$currentDayRel";
 
 
-
     $dayname = strtolower(date('l', strtotime($date)));
     $eventNum = 0;
     $today = $date == date('Y-m-d') ? "today" : "";
-    if ($date < date('Y-m-d')) {
-      $calendar .= "<td><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' style='font-size: 8px;'>N/A</button>";
-    }elseif (in_array(date('Y-m-d', strtotime($date)), $bookings)) {
-      $calendar .= "<td class='$today'><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' style='font-size: 8px; background-color: #3785F9; border: none;'>Already Booked</button>";
-    
-    } else {
-      $calendar .= "<td class='$today'><h4>$currentDay</h4> <a href='app-set-sched.php?date=" . $date . "' class='btn btn-success btn-xs' style='font-size: 8px; background-color: #3785F9; border: none;'>Book</a>";
-    }
 
+    // if ($date < date('Y-m-d')) {
+    //   $calendar .= "<td><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' style='font-size: 8px;'>N/A</button>";
+    // }elseif (in_array(date('Y-m-d', strtotime($date)), $bookings)) {
+    //   $calendar .= "<td class='$today'><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' style='font-size: 8px; background-color: #3785F9; border: none;'>Already Booked</button>";
+
+    // } else {
+    //   $calendar .= "<td class='$today'><h4>$currentDay</h4> <a href='app-set-sched.php?date=" . $date . "' class='btn btn-success btn-xs' style='font-size: 8px; background-color: #3785F9; border: none;'>Book</a>";
+    // }
+
+    if (in_array(date('Y-m-d', strtotime($date)), $bookings)) {
+      // Find the index of the date in the bookings array
+      $bookingIndex = array_search(date('Y-m-d', strtotime($date)), $bookings);
+      // Get the status for the corresponding date
+      $status = $statuses[$bookingIndex];
+      $slotses = $slots[$bookingIndex];
+
+      if ($status === "Open") {
+        
+        $calendar .= "<td class='booked $today' style ='background-color:#31b522;' ><h4>$currentDay</h4> 
+        <a href='app-set-sched.php?date=" . $date . "' class='btn btn-success btn-xs' style='font-size: 10px; background-color: #3785F9; border: none;'>Book</a>
+        <button class='btn btn-danger btn-xs' style='font-size: 10px; background-color: #3785F9; border: none;'>$slotses</button>
+      </td>";
+      
+      } elseif ($status === "Closed") {
+        $calendar .= "<td class='na $today'><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' style='font-size: 8px;'>Closed</button>";
+      } else {
+        $calendar .= "<td class='available $today'><h4>$currentDay</h4> <a href='app-set-sched.php?date=" . $date . "' class='btn btn-success btn-xs' style='font-size: 8px; background-color: #3785F9; border: none;'>Book</a>";
+      }
+    } else {
+      $calendar .= "<td class='available $today'><h4>$currentDay</h4> <a href='app-set-sched.php?date=" . $date . "' class='btn btn-success btn-xs' style='font-size: 8px; background-color: #3785F9; border: none;'>Book</a>";
+    }
 
     $calendar .= "</td>";
     // Increment counters

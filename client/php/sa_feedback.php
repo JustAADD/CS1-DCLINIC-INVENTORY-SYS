@@ -1,3 +1,19 @@
+<?php
+
+session_start();
+if (isset($_GET['logout'])) {
+
+  // Unset all session variables
+  session_unset();
+
+  // Destroy the session
+  session_destroy();
+  header("Location:../../main.php");
+  exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -39,12 +55,8 @@
           <i class='bx bxs-chevron-down arrow'></i>
         </div>
         <ul class="sub-menu">
-          <li><a class="link_name" href="#">Appointment Schedule</a></li>
-          <li><a href="#">Upcoming Appointment</a></li>
-          <li><a href="#">Session Appointment</a></li>
-          <li><a href="#">Session Appointment</a></li>
-          <li><a href="#">Manage Date Slots</a></li>
-          <li><a href="#">Manage Time Slots</a></li>
+          <li><a class="link_name" href="upcoming_appointment.php">Appointment Schedule</a></li>
+          <li><a href="manage_schedule.php">Manage Schedule</a></li>
         </ul>
       </li>
       <li>
@@ -128,7 +140,7 @@
             <div class="profile_name">Mercedita</div>
 
           </div>
-          <i class='bx bx-log-out'></i>
+          <a href="?logout" name="logout" id="logout"><i class='bx bx-log-out'></i></a>
         </div>
       </li>
     </ul>

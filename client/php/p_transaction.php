@@ -1,3 +1,59 @@
+<?php
+
+session_start();
+if (isset($_GET['logout'])) {
+
+  // Unset all session variables
+  session_unset();
+
+  // Destroy the session
+  session_destroy();
+  header("Location:../../main.php");
+  exit();
+}
+
+
+require '../../connection/connection.php';
+
+// ADD QUERY DOCTORS
+if (isset($_POST["add_transaction"])) {
+  $fullname = $_POST["fullname"];
+  $session = $_POST["session"];
+  $dentist = $_POST["dentist"];
+  $status = $_POST["status"];
+
+  $desired_date_time = '20/07/2023 10:23 AM';
+  $date_time_obj = DateTime::createFromFormat('d/m/Y h:i A', $desired_date_time);
+
+  function generatePatientID()
+  {
+    $prefix = 'PT-'; // Set the prefix for the product ID
+    $unique_id = uniqid(); // Generate a unique ID based on the current time in microseconds
+    $patient_id = $prefix . $unique_id; // Combine the prefix and unique ID to create the product ID
+    return $patient_id; // Return the product ID
+  }
+
+  $patient_id = generatePatientID();
+  $formatted_date_time = $date_time_obj->format('Y-m-d H:i:s');
+
+  $formatted_time = $date_time_obj->format('h:i A');
+
+  $sql = "INSERT INTO patient_transaction (patient_id, patient_name, session, dentist, datetime, status)
+  VALUES ('$patient_id', '$fullname', '$session', '$dentist', '$formatted_date_time', '$status')";
+
+  // Execute the query and check if it was successful
+  if ($con->query($sql) === TRUE) {
+    // echo "Event data saved successfully.";
+    header("Location: ../php/p_transaction.php");
+  } else {
+    echo "Error: " . $sql . "<br>" . $con->error;
+  }
+  // Close the database connection
+  $con->close();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -7,6 +63,8 @@
   <title>Dalino Admin</title>
 
   <link rel="stylesheet" href="../css/style.css">
+  <!-- ===== Bootstrap CSS ===== -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
   <!-- Boxiocns CDN Link -->
   <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
@@ -40,8 +98,7 @@
         </div>
         <ul class="sub-menu">
           <li><a class="link_name" href="upcoming_appointment.php">Appointment Schedule</a></li>
-          <li><a href="#">Manage Date Slots</a></li>
-          <li><a href="#">Manage Time Slots</a></li>
+          <li><a href="manage_schedule.php">Manage Schedule</a></li>
         </ul>
       </li>
       <li>
@@ -67,10 +124,10 @@
       <li>
         <a href="../php/p_transaction.php">
           <i class='bx bx-credit-card-alt'></i>
-          <span class="link_name">Transactions</span>
+          <span class="link_name">Patient Transaction</span>
         </a>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="../php/transactions.php">Transactions</a></li>
+          <li><a class="link_name" href="../php/transactions.php">Patient Transaction</a></li>
         </ul>
       </li>
       <li>
@@ -88,15 +145,6 @@
           <li><a href="#">Session Appointment</a></li>
           <li><a href="#">Manage Date Slots</a></li>
           <li><a href="#">Manage Time Slots</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="../php/patient_history.php">
-          <i class='bx bx-history'></i>
-          <span class="link_name">Patients History</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="../php/patient_history.php">Patients History</a></li>
         </ul>
       </li>
       <li>
@@ -135,7 +183,7 @@
             <div class="profile_name">Mercedita</div>
 
           </div>
-          <i class='bx bx-log-out'></i>
+          <a href="?logout" name="logout" id="logout"><i class='bx bx-log-out'></i></a>
         </div>
       </li>
     </ul>
@@ -151,13 +199,65 @@
       <i class='bx bx-menu'></i>
     </div>
 
-    <div class="container">
-      <div id="transac">
+    <div class="container overflow-hidden mt-5">
+      <div class="row">
+        <div class="col">
+          <div class="card" id="cerds">
+            <div class="header-table" id="button_patient_transaction">Patient Transaction
+              <button type="btn" name="add_patient" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary">Add Patient Transaction</button>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <form method="POST" action="">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Patient Transaction</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Fullname</label>
+                        <input class="form-control" name="fullname" type="text" placeholder="Your Fullname:" aria-label="default input example">
+                      </div>
+                      <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Session</label>
+                        <input class="form-control" name="session" type="text" placeholder="Your Session:" aria-label="default input example">
+                      </div>
+                      <div class="mb-3">
+                        <label for="exampleFormControlInput3" class="form-label">Dentist</label>
+                        <input class="form-control" name="dentist" type="text" placeholder="Your Dentist:" aria-label="default input example">
+                      </div>
+                      <div class="mb-3">
+                        <label for="exampleFormControlInput3" class="form-label">Status</label>
+                        <input class="form-control" name="status" type="text" placeholder="" aria-label="date of birth">
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" name="add_transaction" class="btn btn-primary" style="background:#3785F9; border: none;">Add Patient Transaction</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="body-table">
+              <table class="table table-hover">
+                <div id="transaction"></div>
+
+              </table>
+            </div>
+          </div>
+        </div>
+
 
       </div>
     </div>
   </section>
 
+  <!--===== Bootstrap JS =====-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
   <!-- javascript -->
   <script src="../js/script.js"></script>

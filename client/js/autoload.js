@@ -34,36 +34,20 @@ function patients() {
   xhttp.open("GET", "../php/patient_data.php");
   xhttp.send();
 }
-  patients();
+patients();
 
-
-// transactions
-function transac() {
+// patient transaction
+function transaction() {
   const xhttp = new XMLHttpRequest();
   xhttp.onload = function () {
-    document.getElementById("transac").innerHTML = this.responseText;
+    document.getElementById("transaction").innerHTML = this.responseText;
   }
-  xhttp.open("GET", "../php/transactions_data.php");
+  xhttp.open("GET", "../php/p_transaction_data.php");
   xhttp.send();
 }
 
-setInterval(function () {
-  transac();
-}, 1);
+transaction();
 
-// Patient History
-function pHistory() {
-  const xhttp = new XMLHttpRequest();
-  xhttp.onload = function () {
-    document.getElementById("pHistory").innerHTML = this.responseText;
-  }
-  xhttp.open("GET", "../php/pHistory_data.php");
-  xhttp.send();
-}
-
-setInterval(function () {
-  pHistory();
-}, 1);
 
 // Feedback w/ Sentiment Analysis
 function feedback() {
@@ -106,7 +90,19 @@ function upcoming_data() {
 
 setInterval(function () {
   upcoming_data();
-}, 1); 
+}, 1);
+
+// Manage Schedule
+function manageSchedule() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    document.getElementById("manageSchedule").innerHTML = this.responseText;
+  }
+  xhttp.open("GET", "../php/manage_schedule_data.php");
+  xhttp.send();
+}
+manageSchedule();
+
 
 
 

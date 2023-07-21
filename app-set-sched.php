@@ -218,7 +218,7 @@ if (isset($_POST['submit'])) {
               <?php
 
 
-              include "db-connect/db-con.php";
+              require 'connection\connection.php';
 
               $sql = "SELECT manage_start_time, manage_end_time FROM manage_date_time";
               $result = $con->query($sql);
