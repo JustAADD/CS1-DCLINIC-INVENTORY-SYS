@@ -52,7 +52,7 @@ if (!isset($_SESSION['email'])) {
 </head>
 
 <body>
-  Loader HTML
+ 
   <div class="loader-wrapper">
     <div class="loader"></div>
   </div>

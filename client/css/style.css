@@ -457,6 +457,12 @@ body {
   border: none;
 }
 
+#button_inventory button{
+  margin-left: 52rem;
+  background-color: var(--first-color);
+  border: none;
+}
+
 
 /* loader */
 

@@ -73,9 +73,8 @@ function inventory() {
   xhttp.send();
 }
 
-setInterval(function () {
   inventory();
-}, 1);
+
 
 //upcoming session
 // Inventory

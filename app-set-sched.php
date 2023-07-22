@@ -40,10 +40,8 @@ if (isset($_POST['back'])) {
 
 if (isset($_POST['submit'])) {
 
-  $email = $_POST['email'];
+  $patient_name = $_POST['patient_name'];
   $selectedProcedure = $_POST['procedures'];
-  $pnumber = $_POST['phone_number'];
-  // $name = "essy";
   $currentDate = date('Y-m-d');
   $messages = $_POST['messages'];
   $selectedTimeslot = $_POST['timeslot'];
@@ -55,17 +53,6 @@ if (isset($_POST['submit'])) {
   // Check for connection errors
   if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: " . $mysqli->connect_error;
-    // Handle the error appropriately (e.g., show an error message)
-    exit();
-  }
-
-
-  $stmt = $mysqli->prepare("INSERT INTO appointment_booking (patient_id, name, procedures, email, pnumber, message,  session_time, session_date) VALUES (?,?,?,?,?,?,?,?)");
-
-  // Check if the statement preparation was successful
-  if (!$stmt) {
-    echo "Failed to prepare statement: " . $mysqli->error;
-    // Handle the error appropriately (e.g., show an error message)
     exit();
   }
 
@@ -80,23 +67,50 @@ if (isset($_POST['submit'])) {
 
   $patient_id = generatePatientID();
 
-  // Bind the parameters and execute the statement
-  $stmt->bind_param('ssssssss', $patient_id,  $fullname, $selectedProcedure, $email, $pnumber, $messages,  $selectedTimeslot, $date);
+
+  $stmt = $mysqli->prepare("INSERT INTO appointment_booking (patient_id, name, patient_name, procedures, message,  session_time, session_date) VALUES (?,?,?,?,?,?,?)");
+
+  if (!$stmt) {
+    echo "Failed to prepare statement: " . $mysqli->error;
+    exit();
+  }
+
+  $stmt->bind_param('sssssss', $patient_id,  $fullname, $patient_name, $selectedProcedure, $messages,  $selectedTimeslot, $date);
   if ($stmt->execute()) {
 
+    $stmt->close();
+
+    // UPDATE QUERY
+    $updateStmt = $mysqli->prepare("UPDATE manage_schedule SET slots = slots - 1, status = CASE WHEN slots <= 1 THEN 'Fully Booked' ELSE status END WHERE date = ?");
+
+    if (!$updateStmt) {
+      echo "Error preparing update statement: " . $mysqli->error;
+      exit();
+    }
+
+    // Bind parameters and execute the update statement
+    $updateStmt->bind_param('s', $date);
+
+    if (!$updateStmt->execute()) {
+      echo "Error executing update statement: " . $updateStmt->error;
+      exit();
+    }
+
+    $updateStmt->close();
+    $mysqli->close();
     // $msg = "<div class='alert alert-success'>Booking Successful</div>";
 
     $_SESSION['status'] = "Your Appointment Booking successfully";
     $_SESSION['status_code'] = "success";
     header("refresh:0.1;url=appointment.php");
+    exit();
   } else {
     echo "Failed to execute statement: " . $stmt->error;
-    // Handle the error appropriately (e.g., show an error message)
-  }
 
-  // Close the statement and the database connection
-  $stmt->close();
-  $mysqli->close();
+    $stmt->close();
+    $mysqli->close();
+    exit();
+  }
 }
 
 ?>
@@ -198,15 +212,11 @@ if (isset($_POST['submit'])) {
             <div class="col" id="ts1">
               <p class="timeslots">Fill up for our info</p>
               <div class="mb-3 mt-3">
-                <label for="exampleInputEmail1" class="form-label m">Email address</label>
-                <input type="email" class="form-control" name="email" id="exampleInputEmail1" placeholder="Your Email Address" aria-describedby="emailHelp">
+                <label for="exampleInputEmail1" class="form-label m">Fullname</label>
+                <input type="text" class="form-control" name="patient_name" id="exampleInputEmail1" placeholder="Your Fullname" aria-describedby="default input example">
               </div>
               <div class="mb-3 mt-3">
-                <label for="text" class="form-label m">Phone number</label>
-                <input type="text" class="form-control" name="phone_number" id="text" placeholder="Your Phone Number" aria-label="default input example">
-              </div>
-              <div class="mb-3 mt-3">
-                <label for="text" class="form-label m">Get in touch</label>
+                <label for="text" class="form-label m">Leave a message</label>
                 <input type="text" class="form-control" name="messages" id="text" placeholder="Leave a message" aria-label="default input example">
               </div>
             </div>
@@ -220,14 +230,16 @@ if (isset($_POST['submit'])) {
 
               require 'connection\connection.php';
 
-              $sql = "SELECT manage_start_time, manage_end_time FROM manage_date_time";
+              // $date = $_GET['date'];
+
+              $sql = "SELECT start_time, end_time FROM manage_schedule;";
               $result = $con->query($sql);
 
               // Check if the query was successful and fetch the values
               if ($result && $result->num_rows > 0) {
                 $row = $result->fetch_assoc();
-                $start = $row['manage_start_time'];
-                $end = $row['manage_end_time'];
+                $start = $row['start_time'];
+                $end = $row['end_time'];
               } else {
                 // Handle the case where no data is found in the database or any other error
                 echo "Error fetching data from the database: " . $con->error;
@@ -235,8 +247,8 @@ if (isset($_POST['submit'])) {
 
               $duration = 60;
               $cleanup = 0;
-              $start = "09:00";
-              $end = "17:00";
+              // $start = "09:00";
+              // $end = "17:00";
 
               function convertTo12HourFormat($time)
               {
@@ -251,15 +263,21 @@ if (isset($_POST['submit'])) {
                 $cleanupInterval = new DateInterval("PT" . $cleanup . "M");
                 $slots = array();
 
-                for ($intStart = $start; $intStart < $end; $intStart->add($interval)->add($cleanupInterval)) {
-                  $sendPeriod = clone $intStart;
-                  $sendPeriod->add($interval);
-                  if ($sendPeriod > $end) {
-                    break;
-                  }
-                  $slots[] = convertTo12HourFormat($intStart->format("H:i")) . "-" . convertTo12HourFormat($sendPeriod->format("H:i"));
-                  // $slots[] = $intStart->format("H:iA") . "-" . $sendPeriod->format("H:iA");
+                while ($start < $end) {
+
+                  $slots[] = convertTo12HourFormat($start->format("H:i"));
+                  $start->add($interval)->add($cleanupInterval);
                 }
+
+                // for ($intStart = $start; $intStart < $end; $intStart->add($interval)->add($cleanupInterval)) {
+                //   $sendPeriod = clone $intStart;
+                //   $sendPeriod->add($interval);
+                //   if ($sendPeriod > $end) {
+                //     break;
+                //   }
+                //   $slots[] = convertTo12HourFormat($intStart->format("H:i")) . "-" . convertTo12HourFormat($sendPeriod->format("H:i"));
+                //   // $slots[] = $intStart->format("H:iA") . "-" . $sendPeriod->format("H:iA");
+                // }
 
                 return $slots;
               }

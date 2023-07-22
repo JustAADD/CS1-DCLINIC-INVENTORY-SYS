@@ -50,7 +50,6 @@ if (isset($_GET['deleteid'])) {
           <th scope="col">Start Time</th>
           <th scope="col">End Time</th>
           <th scope="col">Status</th>
-          <th scope="col">Duration in minutes</th>
           <th scope="col">Action</th>
 
         </tr>
@@ -70,7 +69,7 @@ if (isset($_GET['deleteid'])) {
         $start_time = $row['start_time'];
         $end_time = $row['end_time'];
         $status = $row['status'];
-        $duration = $row['duration'];
+       
 
 
         echo '
@@ -82,7 +81,7 @@ if (isset($_GET['deleteid'])) {
                     <td> ' . $start_time . '</td>
                     <td> ' . $end_time . '</td>
                     <td> ' . $status . '</td>
-                    <td> ' . $duration . '</td>
+                   
                    
                 
                     <td> <a href="../php/manage_schedule_data.php? deleteid=' . $id . '"><i class="fa-solid fa-trash" style="color:red;"></i></a> &nbsp;
@@ -90,8 +89,9 @@ if (isset($_GET['deleteid'])) {
                     </td>
                 </tbody>       
           ';
-      }
 
+          
+      }
 
       $con->close();
       ?>

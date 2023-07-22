@@ -24,8 +24,8 @@ if (isset($_POST["submit_schedule"])) {
   $status = $_POST["status"];
   $duration = $_POST["duration"];
 
-  $sql = "INSERT INTO manage_schedule (slots, date, start_time, end_time, status, duration)
-  VALUES ('$slots','$date', '$start_time', '$end_time', '$status', '$duration')";
+  $sql = "INSERT INTO manage_schedule (slots, date, start_time, end_time, status)
+  VALUES ('$slots','$date', '$start_time', '$end_time', '$status')";
 
   // Execute the query and check if it was successful
   if ($con->query($sql) === TRUE) {
