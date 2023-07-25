@@ -1,10 +1,46 @@
 <?php
+
+
+require 'connection/connection.php';
+
+$mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
+if ($mysqli->connect_error) {
+  die("Connection failed: " . $mysqli->connect_error);
+}
+$stmt = $mysqli->prepare("SELECT fullname FROM user_registration WHERE email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+
+// Bind the result to a variable
+$stmt->bind_result($fullname);
+
+// Fetch the result
+if ($stmt->fetch()) {
+  // Fullname is retrieved from the database
+  // Store it in the session variable
+  $_SESSION['fullname'] = $fullname;
+}
+
+$stmt->close();
+$mysqli->close();
+
 if (isset($_GET['logout'])) {
 
-  // Unset all session variables
+  $fullname = $_SESSION['fullname'];
+  $status = "logout";
+  $date = date("Y-m-d");
+  $time = date("H:i:s");
+
+  $sql = "INSERT INTO user_logs (name, status, time, date)
+  VALUES ('$fullname','$status', '$time', '$date')";
+
+  if ($con->query($sql) === TRUE) {
+  } else {
+    echo "Error: " . $sql . "<br>" . $con->error;
+  }
+
   session_unset();
 
-  // Destroy the session
   session_destroy();
   header("Location: main.php");
   exit();

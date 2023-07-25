@@ -15,7 +15,7 @@ $fullname = $row['doctors_name'];
 $email = $row['email'];
 $contact = $row['contact'];
 $specialties = $row['specialties'];
-$status = $row['status'];
+
 
 
 if (isset($_POST['update'])) {
@@ -25,10 +25,10 @@ if (isset($_POST['update'])) {
   $email = $_POST['email'];
   $contact = $_POST['contact'];
   $specialties = $_POST['specialties'];
-  $status = $_POST['status'];
+
 
   // Prepare and execute the update query
-  $updateQuery = "UPDATE dental_doctors SET id='$id', doctors_name='$fullname', email='$email', contact='$contact', specialties='$specialties', status='$status'
+  $updateQuery = "UPDATE dental_doctors SET id='$id', doctors_name='$fullname', email='$email', contact='$contact', specialties='$specialties'
   WHERE id = '$id'";
   $result = mysqli_query($con, $updateQuery);
 
@@ -47,7 +47,7 @@ if (isset($_POST['update'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">  
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -107,30 +107,26 @@ if (isset($_POST['update'])) {
   <div class="container mt-5" id="update_container">
     <div class="card" id="update_card">
       <form method="POST" action="">
-        <p class="update_title">Update Dental Doctors Information</p>
+        <p class="update_title mt-5">Update Dental Doctors Information</p>
         <div class="row">
           <div class="col">
             <div class="mb-3">
               <label for="fullname" class="form-label">Fullname</label>
-              <input class="form-control" name="fullname" type="text" value="<?php echo $fullname; ?>" aria-label="default input example" >
+              <input class="form-control" name="fullname" type="text" value="<?php echo $fullname; ?>" aria-label="default input example">
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Email address</label>
               <input type="email" name="email" class="form-control" value="<?php echo $email; ?>">
             </div>
+          </div>
+          <div class="col">
             <div class="mb-3">
               <label for="contact" class="form-label">Contact Number</label>
               <input class="form-control" name="contact" type="text" value="<?php echo $contact; ?>" aria-label="default input example">
             </div>
-          </div>
-          <div class="col">
             <div class="mb-3">
               <label for="specialties" class="form-label">Specialties</label>
               <input class="form-control" name="specialties" type="text" value="<?php echo $specialties; ?>" aria-label="default input example">
-            </div>
-            <div class="mb-3">
-              <label for="status" class="form-label">Status</label>
-              <input class="form-control" name="status" type="text" value="<?php echo $status; ?>" aria-label="default input example">
             </div>
           </div>
         </div>

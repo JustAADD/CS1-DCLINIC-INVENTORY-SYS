@@ -4,7 +4,7 @@ require '../../connection/connection.php';
 
 $id = $_GET['updateid'];
 // Fetch the doctor's data
-$sql = "SELECT * FROM patient_transaction WHERE id =$id";
+$sql = "SELECT * FROM patient_list WHERE id =$id";
 $result = mysqli_query($con, $sql);
 
 $row = mysqli_fetch_assoc($result);
@@ -12,29 +12,27 @@ $row = mysqli_fetch_assoc($result);
 $id = $row['id'];
 $patient_id = $row['patient_id'];
 $patient_name = $row['patient_name'];
-$session = $row['session'];
-$dentist = $row['dentist'];
-$dateTime = $row['datetime'];
-$status = $row['status'];
+$email = $row['email'];
+$contact = $row['contact'];
+$birth = $row['date_of_birth'];
 
 
 if (isset($_POST['update'])) {
 
-
-  $patient_name= $_POST['patient_name'];
-  $session = $_POST['session'];
-  $dentist = $_POST['dentist'];
-  $status = $_POST['status'];
+  $patient_name = $_POST['patient_name'];
+  $email = $_POST['email'];
+  $contact= $_POST['contact'];
+  $birth = $_POST['date_of_birth'];
 
   // Prepare and execute the update query
-  $updateQuery = "UPDATE patient_transaction SET id='$id', patient_name='$patient_name', session='$session', dentist='$dentist', status='$status'
+  $updateQuery = "UPDATE patient_list SET id='$id', patient_name='$patient_name', email='$email', contact='$contact', date_of_birth='$birth'
   WHERE id = '$id'";
   $result = mysqli_query($con, $updateQuery);
 
   if ($result) {
     // Update successful
     //  echo "Doctor information updated successfully.";
-    header("Location: ../php/p_transaction.php");
+    header("Location: ../php/patient_lists.php");
   } else {
     // Update failed
     echo "Error updating patient information: " . $con->error;
@@ -114,19 +112,19 @@ if (isset($_POST['update'])) {
               <input class="form-control" name="patient_name" type="text" value="<?php echo $patient_name; ?>" aria-label="default input example">
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label">Session</label>
-              <input type="form-control" name="session" class="form-control" value="<?php echo $session; ?>">
+              <label for="email" class="form-label">Email</label>
+              <input type="form-control" name="email" class="form-control" value="<?php echo $email; ?>">
             </div>
 
           </div>
           <div class="col">
             <div class="mb-3">
-              <label for="email" class="form-label">Dentist</label>
-              <input type="form-control" name="dentist" class="form-control" value="<?php echo $dentist; ?>">
+              <label for="email" class="form-label">Contact</label>
+              <input type="form-control" name="contact" class="form-control" value="<?php echo $contact; ?>">
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label">Status</label>
-              <input type="form-control" name="status" class="form-control" value="<?php echo $status; ?>">
+              <label for="email" class="form-label">date of birth</label>
+              <input type="form-control" name="date_of_birth" class="form-control" value="<?php echo $birth; ?>">
             </div>
           </div>
         </div>

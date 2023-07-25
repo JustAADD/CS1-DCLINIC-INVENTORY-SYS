@@ -6,7 +6,6 @@ if (isset($_SESSION['email'])) {
   $email = $_SESSION['email'];
 }
 
-
 $mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
 $stmt = $mysqli->prepare("SELECT fullname FROM user_registration WHERE email = ?");
 $stmt->bind_param("s", $email);
@@ -40,13 +39,16 @@ if (isset($_POST['back'])) {
 
 if (isset($_POST['submit'])) {
 
+  $status = "pending";
   $patient_name = $_POST['patient_name'];
   $selectedProcedure = $_POST['procedures'];
   $currentDate = date('Y-m-d');
-  $messages = $_POST['messages'];
   $selectedTimeslot = $_POST['timeslot'];
 
   $date = $_POST['date'];
+
+  $date_obj = DateTime::createFromFormat('Y-m-d', $date);
+  $formatted_date = $date_obj->format('d/m/y l');
 
   $mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
 
@@ -56,26 +58,26 @@ if (isset($_POST['submit'])) {
     exit();
   }
 
-  // Generate the patient ID
-  function generatePatientID()
+  //auto generate appointment id
+  function generateTR_NO()
   {
-    $prefix = 'PT-ID';
-    $unique_id = uniqid();
-    $patient_id = $prefix . $unique_id;
-    return $patient_id;
+    // Generate a random 5-digit number
+    $random_number = mt_rand(10000, 99999);
+
+    $tr_no = 'TR-' . $random_number;
+    return $tr_no;
   }
 
-  $patient_id = generatePatientID();
+  $tr_no = generateTR_NO();
 
-
-  $stmt = $mysqli->prepare("INSERT INTO appointment_booking (patient_id, name, patient_name, procedures, message,  session_time, session_date) VALUES (?,?,?,?,?,?,?)");
+  $stmt = $mysqli->prepare("INSERT INTO appointment_booking (transac_no, status, name, patient_name, procedures,  session_time, session_date) VALUES (?,?,?,?,?,?,?)");
 
   if (!$stmt) {
     echo "Failed to prepare statement: " . $mysqli->error;
     exit();
   }
 
-  $stmt->bind_param('sssssss', $patient_id,  $fullname, $patient_name, $selectedProcedure, $messages,  $selectedTimeslot, $date);
+  $stmt->bind_param('sssssss', $tr_no, $status, $fullname, $patient_name, $selectedProcedure,  $selectedTimeslot, $formatted_date);
   if ($stmt->execute()) {
 
     $stmt->close();
@@ -215,10 +217,7 @@ if (isset($_POST['submit'])) {
                 <label for="exampleInputEmail1" class="form-label m">Fullname</label>
                 <input type="text" class="form-control" name="patient_name" id="exampleInputEmail1" placeholder="Your Fullname" aria-describedby="default input example">
               </div>
-              <div class="mb-3 mt-3">
-                <label for="text" class="form-label m">Leave a message</label>
-                <input type="text" class="form-control" name="messages" id="text" placeholder="Leave a message" aria-label="default input example">
-              </div>
+            
             </div>
 
 
@@ -230,67 +229,94 @@ if (isset($_POST['submit'])) {
 
               require 'connection\connection.php';
 
-              // $date = $_GET['date'];
+              if (isset($_GET['date'])) {
+                $date = $_GET['date'];
 
-              $sql = "SELECT start_time, end_time FROM manage_schedule;";
-              $result = $con->query($sql);
+                $sql = "SELECT start_time, end_time FROM manage_schedule WHERE date = '$date';";
+                $result = $con->query($sql);
 
-              // Check if the query was successful and fetch the values
-              if ($result && $result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $start = $row['start_time'];
-                $end = $row['end_time'];
-              } else {
-                // Handle the case where no data is found in the database or any other error
-                echo "Error fetching data from the database: " . $con->error;
-              }
-
-              $duration = 60;
-              $cleanup = 0;
-              // $start = "09:00";
-              // $end = "17:00";
-
-              function convertTo12HourFormat($time)
-              {
-                return date("g:iA", strtotime($time));
-              }
-
-              function timeslots($duration, $cleanup, $start, $end)
-              {
-                $start = new DateTime($start);
-                $end = new DateTime($end);
-                $interval = new DateInterval("PT" . $duration . "M");
-                $cleanupInterval = new DateInterval("PT" . $cleanup . "M");
-                $slots = array();
-
-                while ($start < $end) {
-
-                  $slots[] = convertTo12HourFormat($start->format("H:i"));
-                  $start->add($interval)->add($cleanupInterval);
+                // Check if the query was successful and fetch the values
+                if ($result && $result->num_rows > 0) {
+                  $row = $result->fetch_assoc();
+                  $start = $row['start_time'];
+                  $end = $row['end_time'];
+                } else {
+                  // Handle the case where no data is found in the database or any other error
+                  echo "Error fetching data from the database: " . $con->error;
                 }
 
-                // for ($intStart = $start; $intStart < $end; $intStart->add($interval)->add($cleanupInterval)) {
-                //   $sendPeriod = clone $intStart;
-                //   $sendPeriod->add($interval);
-                //   if ($sendPeriod > $end) {
-                //     break;
-                //   }
-                //   $slots[] = convertTo12HourFormat($intStart->format("H:i")) . "-" . convertTo12HourFormat($sendPeriod->format("H:i"));
-                //   // $slots[] = $intStart->format("H:iA") . "-" . $sendPeriod->format("H:iA");
-                // }
+                $duration = 60;
+                $cleanup = 0;
+                // $start = "09:00";
+                // $end = "17:00";
 
-                return $slots;
+                function convertTo12HourFormat($time)
+                {
+                  return date("g:iA", strtotime($time));
+                }
+
+                function timeslots($duration, $cleanup, $start, $end)
+                {
+                  $start = new DateTime($start);
+                  $end = new DateTime($end);
+                  $interval = new DateInterval("PT" . $duration . "M");
+                  $cleanupInterval = new DateInterval("PT" . $cleanup . "M");
+                  $slots = array();
+
+                  while ($start < $end) {
+
+                    $slots[] = convertTo12HourFormat($start->format("H:i"));
+                    $start->add($interval)->add($cleanupInterval);
+                  }
+
+                  // for ($intStart = $start; $intStart < $end; $intStart->add($interval)->add($cleanupInterval)) {
+                  //   $sendPeriod = clone $intStart;
+                  //   $sendPeriod->add($interval);
+                  //   if ($sendPeriod > $end) {
+                  //     break;
+                  //   }
+                  //   $slots[] = convertTo12HourFormat($intStart->format("H:i")) . "-" . convertTo12HourFormat($sendPeriod->format("H:i"));
+                  //   // $slots[] = $intStart->format("H:iA") . "-" . $sendPeriod->format("H:iA");
+                  // }
+
+                  return $slots;
+                }
+
+                $timeslots = timeslots($duration, $cleanup, $start, $end);
               }
               ?>
 
-              <?php $timeslots = timeslots($duration, $cleanup, $start, $end);
-              foreach ($timeslots as $ts) {
+              <?php
+
+              // foreach ($timeslots as $ts) {
+              // 
               ?>
 
 
-              <?php } ?>
+              <?php  ?>
 
-              <div class="form-group">
+              <?php if (!empty($timeslots)) : ?>
+                <div class="form-group">
+                  <div class="button-row">
+                    <?php foreach ($timeslots as $counter => $ts) : ?>
+                      <?php if ($counter % 3 === 0) : ?>
+                        <div class="row">
+                        <?php endif; ?>
+                        <div class="col-md-4">
+                          <input type="radio" class="btn-check" name="timeslot" value="<?php echo $ts; ?>" id="radio<?php echo $counter; ?>" autocomplete="off">
+                          <label class="btn btn-radio-ts" for="radio<?php echo $counter; ?>"><?php echo $ts; ?></label>
+                        </div>
+                        <?php if ($counter % 3 === 2 || $counter === count($timeslots) - 1) : ?>
+                        </div>
+                      <?php endif; ?>
+                    <?php endforeach; ?>
+                  </div>
+                </div>
+              <?php else : ?>
+                <p>No time slots available for the selected date.</p>
+              <?php endif; ?>
+
+              <!-- <div class="form-group">
                 <div class="button-row">
                   <?php
                   $counter = 0; // Counter to keep track of the number of buttons
@@ -316,7 +342,7 @@ if (isset($_POST['submit'])) {
                   }
                   ?>
                 </div>
-              </div>
+              </div> -->
 
 
             </div>

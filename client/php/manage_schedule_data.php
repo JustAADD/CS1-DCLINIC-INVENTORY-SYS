@@ -40,44 +40,30 @@ if (isset($_GET['deleteid'])) {
 
   <!-- appointment/session table -->
 
-  <div class="body-table">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Slots</th>
-          <th scope="col">Date</th>
-          <th scope="col">Start Time</th>
-          <th scope="col">End Time</th>
-          <th scope="col">Status</th>
-          <th scope="col">Action</th>
+  <!-- data -->
+  <tbody>
+    <?php
+    require '../../connection/connection.php';
 
-        </tr>
-      </thead>
+    $selectquery = "SELECT * FROM manage_schedule ORDER BY ID DESC";
+    $result = mysqli_query($con, $selectquery);
 
-      <!-- data -->
-      <?php
-      require '../../connection/connection.php';
-
-      $selectquery = "SELECT * FROM manage_schedule ORDER BY ID DESC";
-      $result = mysqli_query($con, $selectquery);
-
-      while ($row = mysqli_fetch_assoc($result)) {
-        $id = $row['id'];
-        $slots = $row['slots'];
-        $date = $row['date'];
-        $start_time = $row['start_time'];
-        $end_time = $row['end_time'];
-        $status = $row['status'];
-       
+    while ($row = mysqli_fetch_assoc($result)) {
+      $id = $row['id'];
+      $slots = $row['slots'];
+      $date = $row['date'];
+      $session_date = $row['session_date'];
+      $start_time = $row['start_time'];
+      $end_time = $row['end_time'];
+      $status = $row['status'];
 
 
-        echo '
-                <tbody>
+      echo '
+               
                   <tr class="centered-row">
                     <th scope ="row">' . $id . '</td>
                     <td> ' . $slots .  '</td>
-                    <td> ' . $date . '</td>
+                    <td> ' . $session_date . '</td>
                     <td> ' . $start_time . '</td>
                     <td> ' . $end_time . '</td>
                     <td> ' . $status . '</td>
@@ -87,16 +73,15 @@ if (isset($_GET['deleteid'])) {
                     <td> <a href="../php/manage_schedule_data.php? deleteid=' . $id . '"><i class="fa-solid fa-trash" style="color:red;"></i></a> &nbsp;
                     <a href="../php/manage_schedule_update.php? updateid=' . $id . '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></a>
                     </td>
-                </tbody>       
+              
           ';
+    }
 
-          
-      }
 
-      $con->close();
-      ?>
-    </table>
-  </div>
+    $con->close();
+    ?>
+  </tbody>
+
 
 
 

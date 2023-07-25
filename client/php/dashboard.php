@@ -6,8 +6,7 @@ session_start();
 if (!isset($_SESSION['isAdmin'])) {
 
   header("location: ../../main.php");
-
-} 
+}
 
 if (isset($_GET['logout'])) {
 
@@ -36,6 +35,7 @@ if (isset($_GET['logout'])) {
   <!-- Boxiocns CDN Link -->
   <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 
 <body>
@@ -64,9 +64,21 @@ if (isset($_GET['logout'])) {
           <i class='bx bxs-chevron-down arrow'></i>
         </div>
         <ul class="sub-menu">
-          <li><a class="link_name" href="upcoming_appointment.php">Appointment Schedule</a></li>
-          <li><a href="manage_schedule.php">Manage Schedule</a></li>
+          <li><a href="../php/approved_booking.php">Approved</a></li>
+          <li><a href="../php/completed_booking.php">Completed</a></li>
+          <li><a href="../php/rejected_booking.php">Rejected</a></li>
         </ul>
+      </li>
+      <li>
+        <div class="iocn-link">
+          <a href="../php/manage_schedule.php">
+            <i class='bx bx-calendar'></i>
+            <span class="link_name">Manage Schedule</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a href="manage_schedule.php">Manage Schedule</a></li>
+          </ul>
+        </div>
       </li>
       <li>
         <div class="iocn-link">
@@ -103,36 +115,38 @@ if (isset($_GET['logout'])) {
             <i class='bx bx-collection'></i>
             <span class="link_name">Inventory</span>
           </a>
-          <i class='bx bxs-chevron-down arrow'></i>
         </div>
         <ul class="sub-menu">
           <li><a class="link_name" href="../php/Inventory.php">Inventory</a></li>
-         
-          <li><a href="#">Manage Date Slots</a></li>
-          <li><a href="#">Manage Time Slots</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="../php/sa_feedback.php">
-          <i class='bx bx-message-dots'></i>
-          <span class="link_name">Feedback</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="../php/sa_feedback.php">Feedback</a></li>
         </ul>
       </li>
       <li>
         <div class="iocn-link">
-          <a href="#">
+          <a href="../php/sa_feedback.php">
+            <i class='bx bx-message-dots'></i>
+            <span class="link_name">Feedback</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow'></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Feedback</a></li>
+          <li><a href="../php/positive_feedback.php">Positive Feedback</a></li>
+          <li><a href="../php/negative_feedback.php">Negative Feedback</a></li>
+          <li><a href="../php/neutral_feedback.php">Neutral Feedback</a></li>
+        </ul>
+      </li>
+      <li>
+        <div class="iocn-link">
+          <a href="../php/settings.php">
             <i class='bx bx-cog'></i>
             <span class="link_name">Settings</span>
           </a>
           <i class='bx bxs-chevron-down arrow'></i>
         </div>
         <ul class="sub-menu">
-          <li><a class="link_name" href="#">Settings</a></li>
+          <li><a class="link_name" href="../php/settings.php">Settings</a></li>
           <li><a href="#">Page Settings</a></li>
-          <li><a href="#">Admin Settings</a></li>
+          <li><a href="../php/admin_settings.php">Admin Settings</a></li>
         </ul>
       </li>
 
@@ -141,11 +155,10 @@ if (isset($_GET['logout'])) {
       <li>
         <div class="profile-details">
           <div class="profile-content">
-            <img src="image/profile.jpg" alt="profileImg">
+            <img src="../image/dp_admin.jpg" alt="profileImg">
           </div>
           <div class="name-job">
             <div class="profile_name">Mercedita</div>
-
           </div>
           <a href="?logout" name="logout" id="logout"><i class='bx bx-log-out'></i></a>
         </div>
@@ -163,14 +176,13 @@ if (isset($_GET['logout'])) {
       <i class='bx bx-menu'></i>
     </div>
 
-    <div class="container">
-      <div id="ddata">
 
-      </div>
+    <div class="container">
+
+      <div id="ddata"></div>
     </div>
 
   </section>
-
 
   <!-- javascript -->
   <script src="../js/script.js"></script>

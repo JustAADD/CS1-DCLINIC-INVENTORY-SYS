@@ -1,7 +1,6 @@
 <?php
 
 session_start();
-
 if (isset($_GET['logout'])) {
 
   // Unset all session variables
@@ -13,52 +12,7 @@ if (isset($_GET['logout'])) {
   exit();
 }
 
-
-
-require '../../connection/connection.php';
-
-
-// ADD QUERY DOCTORS
-if (isset($_POST["submit_doctors"])) {
-  $fullname = $_POST["fullname"];
-  $email = $_POST["email"];
-  $contact = $_POST["contact"];
-  $specialties = $_POST["specialties"];
-
-  function generateDoctorsID()
-  {
-    $prefix = 'DD-';
-    $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-    // Generate a random 5-character string
-    $random_string = '';
-    for ($i = 0; $i < 5; $i++) {
-      $random_string .= $characters[mt_rand(0, strlen($characters) - 1)];
-    }
-
-    $doctors_id = $prefix . $random_string;
-    return $doctors_id;
-  }
-
-  $doctors_id = generateDoctorsID();
-
-  $sql = "INSERT INTO dental_doctors (doctors_id, doctors_name, email, contact, specialties)
-  VALUES ('$doctors_id','$fullname', '$email', '$contact', '$specialties')";
-
-  // Execute the query and check if it was successful
-  if ($con->query($sql) === TRUE) {
-    // echo "Event data saved successfully.";
-    header("Location: ../php/dental_doctors.php");
-  } else {
-    echo "Error: " . $sql . "<br>" . $con->error;
-  }
-  // Close the database connection
-  $con->close();
-}
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -73,8 +27,10 @@ if (isset($_POST["submit_doctors"])) {
   <!-- Boxiocns CDN Link -->
   <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <!-- ===== Bootstrap CSS ===== -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 </head>
 
 <body>
@@ -154,7 +110,6 @@ if (isset($_POST["submit_doctors"])) {
             <i class='bx bx-collection'></i>
             <span class="link_name">Inventory</span>
           </a>
-
         </div>
         <ul class="sub-menu">
           <li><a class="link_name" href="../php/Inventory.php">Inventory</a></li>
@@ -219,70 +174,29 @@ if (isset($_POST["submit_doctors"])) {
     </div>
 
     <!-- appointment/session table -->
-
     <div class="container overflow-hidden mt-5">
       <div class="row">
         <div class="col">
           <div class="card" id="cerds">
-            <div class="header-table">All Dental Doctors in Clinic
-              <button type="btn" name="add_doctors" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary">Add Doctors</button>
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <form method="POST" action="">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Dental Doctors</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Fullname</label>
-                        <input class="form-control" name="fullname" type="text" placeholder="Your Fullname:" aria-label="default input example">
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput2" class="form-label">Email address</label>
-                        <input type="email" name="email" class="form-control" id="exampleFormControlInput2" placeholder="Your Email Address:">
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput3" class="form-label">Contact Number</label>
-                        <input class="form-control" name="contact" type="text" placeholder="Your Specialties:" aria-label="default input example">
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput3" class="form-label">Specialties</label>
-                        <input class="form-control" name="specialties" type="text" placeholder="Your Specialties:" aria-label="default input example">
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="submit" name="submit_doctors" class="btn btn-primary" style="background:#3785F9; border: none;">Save changes</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-
+            <div class="header-table">Positive Feedback</div>
             <div class="body-table">
-              <table class="table table-bordered">
+              <table class="table table-hover table-bordered">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Doctors ID</th>
-                    <th scope="col">Doctors Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Contact</th>
-                    <th scope="col">Specialties</th>
-                    <th scope="col">Action</th>
+                    <th>#</th>
+                    <th>Patient Name</th>
+                    <th>Feedback</th>
+                    <th>Date</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
-                <tbody id="doctors">
+                <tbody id="positive">
+
                 </tbody>
               </table>
             </div>
           </div>
         </div>
-
 
       </div>
     </div>

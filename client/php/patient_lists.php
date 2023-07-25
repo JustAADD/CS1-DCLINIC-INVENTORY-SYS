@@ -22,12 +22,20 @@ if (isset($_POST["add_patient"])) {
   $contact = $_POST["contact"];
   $date_of_birth = $_POST["date_of_birth"];
 
+
   function generatePatientID()
   {
-    $prefix = 'PT-'; // Set the prefix for the product ID
-    $unique_id = uniqid(); // Generate a unique ID based on the current time in microseconds
-    $patient_id = $prefix . $unique_id; // Combine the prefix and unique ID to create the product ID
-    return $patient_id; // Return the product ID
+    $prefix = 'PT-';
+    $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    // Generate a random 5-character string
+    $random_string = '';
+    for ($i = 0; $i < 5; $i++) {
+      $random_string .= $characters[mt_rand(0, strlen($characters) - 1)];
+    }
+
+    $patient_id = $prefix . $random_string;
+    return $patient_id;
   }
 
   $patient_id = generatePatientID();
@@ -86,16 +94,28 @@ if (isset($_POST["add_patient"])) {
       </li>
       <li>
         <div class="iocn-link">
-          <a href="#">
+          <a href="upcoming_appointment.php">
             <i class='bx bx-collection'></i>
             <span class="link_name">Appointment Schedule</span>
           </a>
           <i class='bx bxs-chevron-down arrow'></i>
         </div>
         <ul class="sub-menu">
-          <li><a class="link_name" href="upcoming_appointment.php">Appointment Schedule</a></li>
-          <li><a href="manage_schedule.php">Manage Schedule</a></li>
+          <li><a href="../php/approved_booking.php">Approved</a></li>
+          <li><a href="../php/completed_booking.php">Completed</a></li>
+          <li><a href="../php/rejected_booking.php">Rejected</a></li>
         </ul>
+      </li>
+      <li>
+        <div class="iocn-link">
+          <a href="../php/manage_schedule.php">
+            <i class='bx bx-calendar'></i>
+            <span class="link_name">Manage Schedule</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a href="manage_schedule.php">Manage Schedule</a></li>
+          </ul>
+        </div>
       </li>
       <li>
         <div class="iocn-link">
@@ -132,24 +152,24 @@ if (isset($_POST["add_patient"])) {
             <i class='bx bx-collection'></i>
             <span class="link_name">Inventory</span>
           </a>
-          <i class='bx bxs-chevron-down arrow'></i>
         </div>
         <ul class="sub-menu">
           <li><a class="link_name" href="../php/Inventory.php">Inventory</a></li>
-          <li><a href="#">Upcoming Appointment</a></li>
-          <li><a href="#">Session Appointment</a></li>
-          <li><a href="#">Manage Date Slots</a></li>
-          <li><a href="#">Manage Time Slots</a></li>
         </ul>
       </li>
-
       <li>
-        <a href="../php/sa_feedback.php">
-          <i class='bx bx-message-dots'></i>
-          <span class="link_name">Feedback</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="../php/sa_feedback.php">Feedback</a></li>
+        <div class="iocn-link">
+          <a href="../php/sa_feedback.php">
+            <i class='bx bx-message-dots'></i>
+            <span class="link_name">Feedback</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow'></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Feedback</a></li>
+          <li><a href="../php/positive_feedback.php">Positive Feedback</a></li>
+          <li><a href="../php/negative_feedback.php">Negative Feedback</a></li>
+          <li><a href="../php/neutral_feedback.php">Neutral Feedback</a></li>
         </ul>
       </li>
       <li>
@@ -173,7 +193,7 @@ if (isset($_POST["add_patient"])) {
       <li>
         <div class="profile-details">
           <div class="profile-content">
-            <img src="image/profile.jpg" alt="profileImg">
+            <img src="../image/dp_admin.jpg" alt="profileImg">
           </div>
           <div class="name-job">
             <div class="profile_name">Mercedita</div>
@@ -239,10 +259,20 @@ if (isset($_POST["add_patient"])) {
             </div>
 
             <div class="body-table">
-
-              <table class="table table-hover">
-                <div id="patients"></div>
-
+              <table class="table table-hover table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Patient Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Date of birth</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="patients">
+                </tbody>
               </table>
             </div>
           </div>

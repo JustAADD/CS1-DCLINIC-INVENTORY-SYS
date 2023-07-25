@@ -52,7 +52,7 @@ if (!isset($_SESSION['email'])) {
 </head>
 
 <body>
- 
+
   <div class="loader-wrapper">
     <div class="loader"></div>
   </div>
@@ -61,14 +61,14 @@ if (!isset($_SESSION['email'])) {
 
   <section class="cons hidden" id="cons">
     <div class="row m-0">
-      <div class="col-sm-6" id="columnOne" data-aos="fade-right" data-aos-duration="30000">
+      <div class="col-sm-6" id="columnOne" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">
         <h2>We Care About <br> Your <span>Smile</span></h2>
         <p>We will take care of your dental health. <br>
           Choose your desired time below and <br>
           we'll help out. <br>
         </p>
         <div class="d-flex justify-content-center justify-content-lg-start mt-4" id="boton">
-          <a href="#about" class="btn-get-started me-3">Get in Touch</a>
+          <a href="#feedback" class="btn-get-started me-3">Patient Feedback</a>
           <a href="appointment.php" class="btn-get-appointment">Make an Appointment</a>
         </div>
 
@@ -92,26 +92,43 @@ if (!isset($_SESSION['email'])) {
           <div class="card" id="card-one" style="width: 25rem;">
             <div class="card-body" id="card-one-body">
               <h5>Your Appointment Schedule:</h5>
+              <?php
+              require 'connection/connection.php';
 
+              $fullname = $_SESSION['fullname'];
+
+              $selectQuery = "SELECT transac_no, session_time, session_date FROM appointment_booking WHERE name = '$fullname'";
+              $result = mysqli_query($con, $selectQuery);
+
+              while ($row = mysqli_fetch_assoc($result)) {
+                $transac_no = $row['transac_no'];
+                $session_time = $row['session_time'];
+                $session_date = $row['session_date'];
+
+                echo "<div class='show' style='text-align:center; margin-top: 5px;'> $transac_no <br>
+                    $session_time  - $session_date </div>";
+              }
+              mysqli_close($con);
+              ?>
             </div>
           </div>
 
         </div>
       </div>
       <div class="col-sm-6 p-0">
-        <div class="rectangle" data-aos="fade-left" data-aos-duration="30000">
-          <div class="columntwo">
-            <p> Our dental health services prioritize your oral well-being. <br>
-              Trust your oral well-being. Trust our Experienced services to <br>
-              Guide you on your journey to optimal dental health.
-            </p>
+        <div class="rectangle" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">
+          <div class=" columntwo">
+          <p> Our dental health services prioritize your oral well-being. <br>
+            Trust your oral well-being. Trust our Experienced services to <br>
+            Guide you on your journey to optimal dental health.
+          </p>
 
-            <div class="model">
-              <img src="assets/image/model.svg" alt="">
-            </div>
+          <div class="model">
+            <img src="assets/image/model.svg" alt="">
           </div>
         </div>
       </div>
+    </div>
     </div>
 
   </section>
@@ -123,19 +140,19 @@ if (!isset($_SESSION['email'])) {
   <br>
   <br>
   <section class="content-two mt-5">
-    <p class="services-title" data-aos="fade-right" data-aos-duration="8000">OUR SERVICES</p>
+    <p class="services-title" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">OUR SERVICES</p>
     <div class="row g-0">
       <div class="col-sm-6 col-md-8">
-        <h2 class="services-title" data-aos="fade-right" data-aos-duration="8000">We specialize in you,<br>
+        <h2 class="services-title" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">We specialize in you,<br>
           Whatever your specialty</h2>
       </div>
       <div class="col-6 col-md-4" style="display: flex; justify-content: center; align-items: center;">
-        <a href="#about" class="btn-get-started me-3" data-aos="fade-left" data-aos-duration="8000">MORE ABOUT</a>
+        <a href="#about" class="btn-get-started me-3" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">MORE ABOUT</a>
       </div>
     </div>
 
     <!-- ===== CAROUSEL ===== -->
-    <div data-aos="fade-up" data-aos-duration="8000">
+    <div data-aos="fade-up" data-aos-offset="300" data-aos-easing="ease-in-sine">
       <div class="container-fluid mb-5 mt-4" id="slider">
         <div class="owl-carousel owl-theme">
           <div class="item" id="item-one">
@@ -180,19 +197,85 @@ if (!isset($_SESSION['email'])) {
   </section>
 
   <!-- ===== THIRD CONTENT ===== -->
-
-  <section class="feedback" data-aos="fade-down" data-aos-duration="8000">
+  <div id="feedback"></div>
+  <section class="feedback mt-5" data-aos="fade-down" data-aos-offset="300" data-aos-easing="ease-in-sine">
     <div class="container-fluid">
       <div class="row g-0 mb-4">
         <div class="col-md-8" style="padding-top: 0.5rem">
           <h3 class="feedback-title"> Let's see our patients Feedback! </h3>
         </div>
         <div class="col-6 col-md-4">
-          <a href="#feedback" class="btn-get-feedback me-3">Send Feedback!</a>
+          <a href="feedback.php" class="btn-get-feedback me-3">Send Feedback!</a>
         </div>
       </div>
       <div class="card-container" id="feedback-card">
-        <!-- carousel -->
+        <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner" id="inner" style="background-color: transparent;">
+            <div class="carousel-item active" data-bs-interval="10000">
+              <p><?php
+                  require 'connection/connection.php';
+
+                  $selectQuery = "SELECT feedback, patient_name FROM positive_feedback WHERE id = '5'";
+                  $result = mysqli_query($con, $selectQuery);
+
+                  while ($row = mysqli_fetch_assoc($result)) {
+                    $feedback = $row['feedback'];
+                    $patient_name = $row['patient_name'];
+
+
+                    echo "$feedback <br><br>
+                    - $patient_name";
+                  }
+                  mysqli_close($con);
+                  ?>
+              </p>
+            </div>
+            <div class="carousel-item" data-bs-interval="10000">
+              <p><?php
+                  require 'connection/connection.php';
+
+                  $selectQuery = "SELECT feedback, patient_name FROM positive_feedback  WHERE id = '6'";
+                  $result = mysqli_query($con, $selectQuery);
+
+                  while ($row = mysqli_fetch_assoc($result)) {
+                    $feedback = $row['feedback'];
+                    $patient_name = $row['patient_name'];
+
+                    echo "$feedback <br><br>
+                    - $patient_name";
+                  }
+                  mysqli_close($con);
+                  ?>
+              </p>
+            </div>
+            <div class="carousel-item " data-bs-interval="20000">
+              <p><?php
+                  require 'connection/connection.php';
+
+                  $selectQuery = "SELECT feedback, patient_name FROM positive_feedback WHERE id = '7'";
+                  $result = mysqli_query($con, $selectQuery);
+
+                  while ($row = mysqli_fetch_assoc($result)) {
+                    $feedback = $row['feedback'];
+                    $patient_name = $row['patient_name'];
+
+                    echo "$feedback <br> <br>
+                     - $patient_name";
+                  }
+                  mysqli_close($con);
+                  ?>
+              </p>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
 
       </div>
     </div>
@@ -200,7 +283,7 @@ if (!isset($_SESSION['email'])) {
   </section>
 
   <!-- ===== ABOUT US ===== -->
-  <div data-aos="fade-up" data-aos-duration="8000">
+  <div data-aos="fade-up" data-aos-offset="300" data-aos-easing="ease-in-sine">
     <section class="about-us" id="about-us">
       <div class="row" id="about-row">
         <div class="col">
@@ -321,7 +404,7 @@ if (!isset($_SESSION['email'])) {
     // When the page is fully loaded
     window.addEventListener('load', function() {
       // Hide the loader
-      setTimeout(showLandingPage, 200);
+      setTimeout(showLandingPage, 100);
     });
   </script>
 

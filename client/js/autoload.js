@@ -7,10 +7,19 @@ function ddata() {
   xhttp.open("GET", "../php/dashboard_data.php");
   xhttp.send();
 }
+ddata();
 
-setInterval(function () {
-  ddata();
-}, 1);
+//for records 
+function recapp() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    document.getElementById("recapp").innerHTML = this.responseText;
+  }
+  xhttp.open("GET", "../php/dashboard_data.php");
+  xhttp.send();
+}
+recapp();
+
 
 // doctors
 function doctors() {
@@ -59,9 +68,9 @@ function feedback() {
   xhttp.send();
 }
 
-setInterval(function () {
-  feedback();
-}, 1);
+
+feedback();
+
 
 // Inventory
 function inventory() {
@@ -73,7 +82,7 @@ function inventory() {
   xhttp.send();
 }
 
-  inventory();
+inventory();
 
 
 //upcoming session
@@ -87,9 +96,8 @@ function upcoming_data() {
   xhttp.send();
 }
 
-setInterval(function () {
-  upcoming_data();
-}, 1);
+upcoming_data();
+
 
 // Manage Schedule
 function manageSchedule() {
@@ -102,6 +110,106 @@ function manageSchedule() {
 }
 manageSchedule();
 
+// Completed booking
+function completed() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    document.getElementById("completed").innerHTML = this.responseText;
+  }
+  xhttp.open("GET", "../php/completed_booking_data.php");
+  xhttp.send();
+}
+completed();
+
+// Rejected booking
+function rejected() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    document.getElementById("rejected").innerHTML = this.responseText;
+  }
+  xhttp.open("GET", "../php/rejected_booking_data.php");
+  xhttp.send();
+}
+rejected();
+
+// Approved booking
+function approved() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    document.getElementById("approved").innerHTML = this.responseText;
+  }
+  xhttp.open("GET", "../php/approved_booking_data.php");
+  xhttp.send();
+}
+approved();
+
+
+// Positive
+function positive() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    document.getElementById("positive").innerHTML = this.responseText;
+  }
+  xhttp.open("GET", "../php/positive_feedbackData.php");
+  xhttp.send();
+}
+positive();
+
+
+// negative
+function negative() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    document.getElementById("negative").innerHTML = this.responseText;
+  }
+  xhttp.open("GET", "../php/negative_feedbackData.php");
+  xhttp.send();
+}
+negative();
+
+// neutral
+function neutral() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    document.getElementById("neutral").innerHTML = this.responseText;
+  }
+  xhttp.open("GET", "../php/neutral_feedbackData.php");
+  xhttp.send();
+}
+neutral();
+
+//feedback settings
+function feedbackSettings() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    document.getElementById("feedbackSettings").innerHTML = this.responseText;
+  }
+  xhttp.open("GET", "../php/sa_feedback_data.php");
+  xhttp.send();
+}
+feedbackSettings();
+
+//settings
+function settings() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    document.getElementById("settings").innerHTML = this.responseText;
+  }
+  xhttp.open("GET", "../php/settings_data.php");
+  xhttp.send();
+}
+settings();
+
+//admin settings
+function Adminsettings() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    document.getElementById("Adminsettings").innerHTML = this.responseText;
+  }
+  xhttp.open("GET", "../php/admin_settingsData.php");
+  xhttp.send();
+}
+Adminsettings();
 
 
 

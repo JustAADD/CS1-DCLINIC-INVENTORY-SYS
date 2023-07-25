@@ -40,27 +40,35 @@ if (isset($_POST["add_inventory"])) {
     // echo "The file " . basename($_FILES["image"]["name"]) . " has been uploaded.";
     function generateinvID()
     {
-      $prefix = 'INV-'; // Set the prefix for the product ID
-      $unique_id = uniqid(); // Generate a unique ID based on the current time in microseconds
-      $inv_id = $prefix . $unique_id; // Combine the prefix and unique ID to create the product ID
-      return $inv_id; // Return the product ID
+      $prefix = 'INV-';
+      $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+      // Generate a random 5-character string
+      $random_string = '';
+      for ($i = 0; $i < 5; $i++) {
+        $random_string .= $characters[mt_rand(0, strlen($characters) - 1)];
+      }
+
+      $inv_id = $prefix . $random_string;
+      return $inv_id;
     }
 
     $inv_id = generateinvID();
 
-    $stmt = $con->prepare("INSERT INTO inventory (imagedata, name, stocks, class, date) VALUES (?, ?, ?, ?, ?)");
+
+    $stmt = $con->prepare("INSERT INTO inventory (inv_id, imagedata, name, stocks, class, date) VALUES (?, ?, ?, ?, ?, ?)");
     if (!$stmt) {
       echo "Failed to prepare statement: " . $con->error;
       exit();
     }
 
-    $stmt->bind_param("sssss", $target_file, $name, $stocks, $class, $formatted_time);
+    $stmt->bind_param("ssssss", $inv_id, $target_file, $name, $stocks, $class, $formatted_date_time);
 
     if (!$stmt->execute()) {
       echo "Failed to execute statement: " . $stmt->error;
       exit();
     }
-    
+
     $stmt->close();
     $con->close();
 
@@ -111,16 +119,28 @@ if (isset($_POST["add_inventory"])) {
       </li>
       <li>
         <div class="iocn-link">
-          <a href="#">
+          <a href="upcoming_appointment.php">
             <i class='bx bx-collection'></i>
             <span class="link_name">Appointment Schedule</span>
           </a>
           <i class='bx bxs-chevron-down arrow'></i>
         </div>
         <ul class="sub-menu">
-          <li><a class="link_name" href="upcoming_appointment.php">Appointment Schedule</a></li>
-          <li><a href="manage_schedule.php">Manage Schedule</a></li>
+          <li><a href="../php/approved_booking.php">Approved</a></li>
+          <li><a href="../php/completed_booking.php">Completed</a></li>
+          <li><a href="../php/rejected_booking.php">Rejected</a></li>
         </ul>
+      </li>
+      <li>
+        <div class="iocn-link">
+          <a href="../php/manage_schedule.php">
+            <i class='bx bx-calendar'></i>
+            <span class="link_name">Manage Schedule</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a href="manage_schedule.php">Manage Schedule</a></li>
+          </ul>
+        </div>
       </li>
       <li>
         <div class="iocn-link">
@@ -159,14 +179,19 @@ if (isset($_POST["add_inventory"])) {
           </a>
         </div>
       </li>
-
       <li>
-        <a href="../php/sa_feedback.php">
-          <i class='bx bx-message-dots'></i>
-          <span class="link_name">Feedback</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="../php/sa_feedback.php">Feedback</a></li>
+        <div class="iocn-link">
+          <a href="../php/sa_feedback.php">
+            <i class='bx bx-message-dots'></i>
+            <span class="link_name">Feedback</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow'></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Feedback</a></li>
+          <li><a href="../php/positive_feedback.php">Positive Feedback</a></li>
+          <li><a href="../php/negative_feedback.php">Negative Feedback</a></li>
+          <li><a href="../php/neutral_feedback.php">Neutral Feedback</a></li>
         </ul>
       </li>
       <li>
@@ -190,7 +215,7 @@ if (isset($_POST["add_inventory"])) {
       <li>
         <div class="profile-details">
           <div class="profile-content">
-            <img src="image/profile.jpg" alt="profileImg">
+            <img src="../image/dp_admin.jpg" alt="profileImg">
           </div>
           <div class="name-job">
             <div class="profile_name">Mercedita</div>
@@ -214,11 +239,11 @@ if (isset($_POST["add_inventory"])) {
 
     <!-- appointment/session table -->
 
-    <div class="container overflow-hidden mt-5">
+    <div class="container overflow-hidden mt-4">
       <div class="row">
         <div class="col">
           <div class="card" id="cerds">
-            <div class="header-table" id="button_inventory">Supplies & Equipment Inventory
+            <div class="header-table" id="button_inventory">Supplies Inventory
               <button type="btn" name="add_inventory" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary">Add Inventory</button>
             </div>
             <!-- Modal -->
@@ -259,17 +284,30 @@ if (isset($_POST["add_inventory"])) {
 
             <div class="body-table">
 
-              <table class="table table-hover">
-                <div id="inventory"></div>
+              <!-- Inventory -->
+              <div class="body-table">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Supplies</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Stocks</th>
+                      <th scope="col">Class</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="inventory"></tbody>
 
-              </table>
+                </table>
+              </div>
             </div>
           </div>
+
+
         </div>
-
-
       </div>
-    </div>
   </section>
 
 

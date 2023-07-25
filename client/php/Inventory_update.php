@@ -4,41 +4,37 @@ require '../../connection/connection.php';
 
 $id = $_GET['updateid'];
 // Fetch the doctor's data
-$sql = "SELECT * FROM manage_schedule WHERE id =$id";
+$sql = "SELECT * FROM inventory WHERE id =$id";
 $result = mysqli_query($con, $sql);
 
 $row = mysqli_fetch_assoc($result);
 
 $id = $row['id'];
-$slots = $row['slots'];
+$inv_id = $row['inv_id'];
+$imagedata = $row['imagedata'];
+$name = $row['name'];
+$stocks = $row['stocks'];
+$class = $row['class'];
 $date = $row['date'];
-$start_time = $row['start_time'];
-$end_time = $row['end_time'];
-$status = $row['status'];
-
-
 
 if (isset($_POST['update'])) {
 
-  $slots = $_POST['slots'];
-  $date = $_POST['date'];
-  $start_time = $_POST['start_time'];
-  $end_time = $_POST['end_time'];
-  $status = $_POST['status'];
+  $name = $_POST['name'];
+  $stocks = $_POST['stocks'];
+  $class = $_POST['class'];
 
-
-  //the query
-  $updateQuery = "UPDATE manage_schedule SET id='$id', slots='$slots', date='$date', start_time='$start_time', end_time='$end_time', status='$status'
+  // Prepare and execute the update query
+  $updateQuery = "UPDATE inventory SET id='$id', imagedata='$imagedata', name='$name', stocks='$stocks', class='$class'
   WHERE id = '$id'";
   $result = mysqli_query($con, $updateQuery);
 
   if ($result) {
     // Update successful
     //  echo "Doctor information updated successfully.";
-    header("Location: ../php/manage_schedule.php");
+    header("Location: ../php/Inventory.php");
   } else {
     // Update failed
-    echo "Error updating schedule: " . $con->error;
+    echo "Error updating Inventory information: " . $con->error;
   }
   //close the database 
   $con->close();
@@ -56,13 +52,14 @@ if (isset($_POST['update'])) {
   <!-- ===== Bootstrap CSS ===== -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <!-- ===== CSS ===== -->
+  <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../../assets/css/style.css">
 
   <title>Dalino Dental Clinic</title>
 </head>
 
 <body>
-  <!-- <header class="header">
+  <header class="header">
     <a href="#" class="header__logo">Dalino Dental Clinic</a>
 
     <ion-icon name="menu-outline" class="header__toggle" id="nav-toggle"></ion-icon>
@@ -100,51 +97,50 @@ if (isset($_POST['update'])) {
 
     </nav>
 
-  </header> -->
+  </header>
 
 
 
   <div class="container mt-5" id="update_container">
-    <div class="card" id="update_card">
+    <div class="card" id="inventory_update_card">
       <form method="POST" action="">
-        <p class="update_title">Update Your Schedule</p>
-        <div class="row">
-          <div class="col">
-            <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label">Slots</label>
-              <input class="form-control" name="slots" type="text" value="<?php echo $slots; ?>" aria-label="default input example">
-            </div>
-            <div class="mb-3">
-              <label for="exampleFormControlInput2" class="form-label">Date</label>
-              <input type="date" name="date" class="form-control" value="<?php echo $date; ?>" id="exampleFormControlInput2">
-            </div>
-            <div class="mb-3">
-              <label for="exampleFormControlInput3" class="form-label">Start_time</label>
-              <input class="form-control" name="start_time" type="time" value="<?php echo $start_time; ?>" aria-label="default input example">
-            </div>
-          </div>
-          <div class="col">
-            <div class="mb-3">
-              <label for="exampleFormControlInput3" class="form-label">End_time</label>
-              <input class="form-control" name="end_time" type="time" value="<?php echo $end_time; ?>" aria-label="default input example">
-            </div>
-            <div class="mb-3">
-              <label for="inputGroupSelect01" class="form-label">Select Status</label>
-              <select class="form-select" name="status" id="inputGroupSelect01">
-                <option value="Open" <?php if ($status === 'Open') echo ' selected'; ?>>Open</option>
-                <option value="Closed" <?php if ($status === 'Closed') echo ' selected'; ?>>Closed</option>
-                <option value="No Slots" <?php if ($status === 'No Slots') echo ' selected'; ?>>No Slots</option>
-              </select>
-            </div>
-
-          </div>
-        </div>
-        <button type="submit" name="update" id="update" value="update" class="btn btn-primary mt-3">Update Schedule</button>
-        <a href="../php/manage_schedule.php"><button type="button" id="update" value="update" class="btn btn-primary mt-3">Back</button></a>
+        <p class="update_title mt-5">Update Supplies & Equipment Inventory</p>
+        <table class="table">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col"></th>
+            <th scope="col">Name</th>
+            <th scope="col">Stocks</th>
+            <th scope="col">Class</th>
+          </tr>
+          <tr class="centered-row">
+            <th scope="row"><?php echo $inv_id; ?></th>
+            <td>
+              <div class="imagesrc" name="imagedata" style="height:100px; width:100px;">
+                <?php echo '  <img src="' . $row['imagedata']  . '"/>'; ?>
+              </div>
+            </td>
+            <td>
+              <div class="name">
+                <input type="text" name="name" class="form-control" value=" <?php echo $name; ?>">
+              </div>
+            </td>
+            <td>
+              <div class="name">
+                <input type="text" name="stocks" class="form-control" value=" <?php echo $stocks; ?>">
+              </div>
+            </td>
+            <td>
+              <div class="name">
+                <input type="text" name="class" class="form-control" value=" <?php echo $class; ?>">
+              </div>
+            </td>
+          </tr>
+        </table>
+        <button type="submit" name="update" id="inv_button_update" value="update" class="btn btn-primary mt-3">Update</button>
       </form>
     </div>
   </div>
-
 
 
 

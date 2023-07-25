@@ -1,7 +1,27 @@
 <?php
 
 require '../../connection/connection.php';
-// $rows = mysqli_query($con, "SELECT * FROM user_registration");
+
+// Check if the "deleteid" parameter is present in the URL
+if (isset($_GET['deleteid'])) {
+  // Get the id to be deleted from the URL
+  $delete_id = $_GET['deleteid'];
+
+  // Create the DELETE query
+  $delete_query = "DELETE FROM inventory WHERE id = '$delete_id'";
+
+  // Execute the query
+  if ($con->query($delete_query) === TRUE) {
+
+
+    header("Location: ../php/Inventory.php");
+  } else {
+
+    // echo "Error: " . $conn->error;
+  }
+  $con->close();
+}
+
 ?>
 
 <head>
@@ -18,25 +38,27 @@ require '../../connection/connection.php';
       width: 100px;
       height: 60px;
     }
+
+    .row-red {
+      background-color: #ffcccc;
+      /* Or any other styling you want for rows with low stocks */
+    }
+
+    .row-class {
+      vertical-align: center;
+    }
+
+    .centered-row {
+
+      vertical-align: middle;
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- Inventory -->
-  <div class="body-table">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col"></th>
-          <th scope="col">Name</th>
-          <th scope="col">Quantity</th>
-          <th scope="col">Class</th>
-          <th scope="col">Date</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
+  
+      </tbody>
       <?php
       $selectQuery = "SELECT * FROM inventory ORDER BY id DESC";
       $result = mysqli_query($con, $selectQuery);
@@ -50,30 +72,32 @@ require '../../connection/connection.php';
         $class = $row['class'];
         $date = $row['date'];
 
+        // Check if stocks are less than 5
+        $rowClass = ($stocks < 5) ? 'row-red' : '';
+
         echo '
-              <tbody>
-                <tr class="centered-row">
-                  <th scope ="row">' . $inv_id . '</td>
-                  <td> <div class="imagesrc">
-                    <img src="' . $row['imagedata'] . '"/>
-                    </div>
-                  </td>
-                  <td>' . $name . '</td>
-                  <td> <button type="" class="btn btn-outline-success">' . $stocks . '</button></td>
-                  <td>' . $class . '</td>
-                  <td>' . $date . '</td>
-                  <td> 
-                  <a href="../admin/stockdelete.php? deleteid=' . $id . '"><i class="fa-solid fa-trash" style="color:red;"></i></a> &nbsp&nbsp
-                  <a href="../admin/admin-view-stocks.php? updateid=' . $id . '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></a>
-                  </td>
-              </tbody>
-        ';
+            <tr class="centered-row ' . $rowClass . '">
+              <th scope ="row">' . $id . '</td>
+              <td> <div class="imagesrc">
+                <img src="' . $row['imagedata'] . '"/>
+                </div>
+              </td>
+              <td>' . $name . '</td>
+              <td><button type="button" class="btn ' . ($stocks < 5 ? 'btn-outline-danger' : 'btn-outline-success') . '">' . $stocks . '</button></td>
+              <td>' . $class . '</td>
+              <td>' . $date . '</td>
+              <td> 
+              <a href="../php/Inventory_data.php? deleteid=' . $id . '"><i class="fa-solid fa-trash" style="color:red;"></i></a> &nbsp&nbsp
+              <a href="../php/Inventory_update.php? updateid=' . $id . '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></a>
+              </td>
+            </tr>
+          ';
       }
       ?>
 
       <!-- data -->
-    </table>
-  </div>
+      </tbody>
+
 
   <!--===== Bootstrap JS =====-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

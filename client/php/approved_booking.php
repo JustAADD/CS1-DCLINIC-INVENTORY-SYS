@@ -1,63 +1,17 @@
 <?php
-
 session_start();
 
 if (isset($_GET['logout'])) {
 
   // Unset all session variables
   session_unset();
-
   // Destroy the session
   session_destroy();
   header("Location:../../main.php");
   exit();
 }
 
-
-
-require '../../connection/connection.php';
-
-
-// ADD QUERY DOCTORS
-if (isset($_POST["submit_doctors"])) {
-  $fullname = $_POST["fullname"];
-  $email = $_POST["email"];
-  $contact = $_POST["contact"];
-  $specialties = $_POST["specialties"];
-
-  function generateDoctorsID()
-  {
-    $prefix = 'DD-';
-    $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-    // Generate a random 5-character string
-    $random_string = '';
-    for ($i = 0; $i < 5; $i++) {
-      $random_string .= $characters[mt_rand(0, strlen($characters) - 1)];
-    }
-
-    $doctors_id = $prefix . $random_string;
-    return $doctors_id;
-  }
-
-  $doctors_id = generateDoctorsID();
-
-  $sql = "INSERT INTO dental_doctors (doctors_id, doctors_name, email, contact, specialties)
-  VALUES ('$doctors_id','$fullname', '$email', '$contact', '$specialties')";
-
-  // Execute the query and check if it was successful
-  if ($con->query($sql) === TRUE) {
-    // echo "Event data saved successfully.";
-    header("Location: ../php/dental_doctors.php");
-  } else {
-    echo "Error: " . $sql . "<br>" . $con->error;
-  }
-  // Close the database connection
-  $con->close();
-}
-
 ?>
-
 
 
 <!DOCTYPE html>
@@ -73,7 +27,10 @@ if (isset($_POST["submit_doctors"])) {
   <!-- Boxiocns CDN Link -->
   <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- ===== Bootstrap CSS ===== -->
+
+  <!-- icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
@@ -154,7 +111,6 @@ if (isset($_POST["submit_doctors"])) {
             <i class='bx bx-collection'></i>
             <span class="link_name">Inventory</span>
           </a>
-
         </div>
         <ul class="sub-menu">
           <li><a class="link_name" href="../php/Inventory.php">Inventory</a></li>
@@ -218,72 +174,23 @@ if (isset($_POST["submit_doctors"])) {
       <i class='bx bx-menu'></i>
     </div>
 
-    <!-- appointment/session table -->
-
-    <div class="container overflow-hidden mt-5">
+    <div class="container">
       <div class="row">
         <div class="col">
-          <div class="card" id="cerds">
-            <div class="header-table">All Dental Doctors in Clinic
-              <button type="btn" name="add_doctors" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary">Add Doctors</button>
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <form method="POST" action="">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Dental Doctors</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Fullname</label>
-                        <input class="form-control" name="fullname" type="text" placeholder="Your Fullname:" aria-label="default input example">
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput2" class="form-label">Email address</label>
-                        <input type="email" name="email" class="form-control" id="exampleFormControlInput2" placeholder="Your Email Address:">
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput3" class="form-label">Contact Number</label>
-                        <input class="form-control" name="contact" type="text" placeholder="Your Specialties:" aria-label="default input example">
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput3" class="form-label">Specialties</label>
-                        <input class="form-control" name="specialties" type="text" placeholder="Your Specialties:" aria-label="default input example">
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="submit" name="submit_doctors" class="btn btn-primary" style="background:#3785F9; border: none;">Save changes</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-
+          <div class="card mt-5" id="cerds">
+            <div class="header-table">Appointment Approved</div>
             <div class="body-table">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Doctors ID</th>
-                    <th scope="col">Doctors Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Contact</th>
-                    <th scope="col">Specialties</th>
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody id="doctors">
+              <table class="table table-hover">
+
+                <tbody>
+                  <div id="approved"></div>
+
                 </tbody>
+
               </table>
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
   </section>
@@ -291,9 +198,10 @@ if (isset($_POST["submit_doctors"])) {
 
   <!-- javascript -->
   <script src="../js/script.js"></script>
-  <!--===== Bootstrap JS =====-->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+  </script>
 </body>
 
 </html>

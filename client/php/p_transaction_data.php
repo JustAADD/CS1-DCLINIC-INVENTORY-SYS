@@ -33,66 +33,49 @@ if (isset($_GET['deleteid'])) {
 </head>
 
 <body>
+  <tbody>
+    <?php
 
-  <!-- appointment/session table -->
+    require '../../connection/connection.php';
 
-  <div class="body-table">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">Patient ID</th>
-          <th scope="col">Patient Name</th>
-          <th scope="col">Session</th>
-          <th scope="col">Dental Doctor</th>
-          <th scope="col">Date & Time</th>
-          <th scope="col">Status</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <!-- data -->
-      <!-- FETCHING DATA FROM DATABASE -->
-      <?php
+    $selectquery = "SELECT * FROM patient_transaction ORDER BY ID DESC";
+    $result = mysqli_query($con, $selectquery);
 
-      require '../../connection/connection.php';
+    while ($row = mysqli_fetch_assoc($result)) {
+      $id = $row['id'];
+      $transac_no = $row['transac_no'];
+      $status = $row['status'];
+      $patient_name = $row['patient_name'];
+      $procedures = $row['procedures'];
 
-      $selectquery = "SELECT * FROM patient_transaction ORDER BY ID DESC";
-      $result = mysqli_query($con, $selectquery);
+      $session_time = $row['session_time'];
+      $dateTime = $row['session_date'];
 
-      while ($row = mysqli_fetch_assoc($result)) {
-        $id = $row['id'];
-        $patient_id = $row['patient_id'];
-        $patient_name = $row['patient_name'];
-        $session = $row['session'];
-        $dentist = $row['dentist'];
-        $dateTime = $row['datetime'];
-        $status = $row['status'];
-        
-        $date_time_obj = new DateTime($dateTime);
-        // Format the time in "10:23 AM/PM" format
-        $formatted_time = $date_time_obj->format('h:i A');
+      $date_time_obj = new DateTime($dateTime);
+      // Format the time in "10:23 AM/PM" format
+      $formatted_time = $date_time_obj->format('h:i A');
 
-        echo '
+      echo '
           <tbody>
             <tr class="centered-row">
-              <th scope ="row">' . $patient_id . '</td>
-              <td> ' . $patient_name .  '</td>
-              <td> ' . $session . '</td>
-              <td> ' . $dentist . '</td>
+              <th scope ="row">' . $id . '</td>
+              <td> <a href="">' . $transac_no .  '</a><br>
+              ' . $patient_name .  '</td>
+              <td> ' . $status . '</td>
+              <td> ' . $procedures . '</td>
               <td> ' . $formatted_time . '</td>
-              <td><button type="button" class="btn btn-primary" style="background-color:#31b522; width: 10rem; border: none;" >' . $status . '</button></td>
           
-              <td> <a href="../php/p_transaction_data.php? deleteid=' . $id . '"><i class="fa-solid fa-trash" style="color:red;"></i></a> &nbsp;
-              <a href="../php/patient_update.php? updateid=' . $id . '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></a>
+              <td> <a href="../php/p_transaction_data.php? deleteid=' . $id . '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash" style="color:red;"></i></button></a>
+              <a href="../php/booking_receipt.php? receiptid=' . $id . '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-receipt"></i></button></a> 
               </td>
-          </tbody>       
+             
     ';
-      }
+    }
 
 
-      $con->close();
-      ?>
-    </table>
-  </div>
+    $con->close();
+    ?>
+  </tbody>
 
 
   <!--===== Bootstrap JS =====-->

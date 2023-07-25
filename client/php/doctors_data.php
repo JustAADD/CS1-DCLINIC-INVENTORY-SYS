@@ -33,63 +33,51 @@ if (isset($_GET['deleteid'])) {
 
   <!-- ===== Bootstrap CSS ===== -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style>
+    .centered-row {
+      vertical-align: middle;
+    }
+  </style>
+
 </head>
 
 <body>
 
   <!-- appointment/session table -->
+      <tbody>
+        <!-- data -->
+        <?php
+        $selectquery = "SELECT * FROM dental_doctors ORDER BY ID DESC";
+        $result = mysqli_query($con, $selectquery);
 
-  <div class="body-table">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Doctors ID</th>
-          <th scope="col">Doctors Name</th>
-          <th scope="col">Email</th>
-          <th scope="col">Contact</th>
-          <th scope="col">Specialties</th>
-          <th scope="col">Status</th>
-          <th scope="col"></th>
-
-        </tr>
-      </thead>
-
-      <!-- data -->
-      <?php
-      $selectquery = "SELECT * FROM dental_doctors ORDER BY ID DESC";
-      $result = mysqli_query($con, $selectquery);
-
-      while ($row = mysqli_fetch_assoc($result)) {
-        $id = $row['id'];
-        $doctors_id = $row['doctors_id'];
-        $doctors_name = $row['doctors_name'];
-        $email = $row['email'];
-        $contact_number = $row['contact'];
-        $specialties = $row['specialties'];
-        $status = $row['status'];
-
-        echo '
-                <tbody>
+        while ($row = mysqli_fetch_assoc($result)) {
+          $id = $row['id'];
+          $doctors_id = $row['doctors_id'];
+          $doctors_name = $row['doctors_name'];
+          $email = $row['email'];
+          $contact_number = $row['contact'];
+          $specialties = $row['specialties'];
+          echo '
+              
                   <tr class="centered-row">
-                    <th scope ="row">' . $doctors_id . '</td>
+                    <th scope ="row">' . $id . '</td>
+                    <td> ' . $doctors_id .  '</td>
                     <td> ' . $doctors_name .  '</td>
                     <td> ' . $email . '</td>
                     <td> ' . $contact_number . '</td>
                     <td> ' . $specialties . '</td>
-                    <td> ' . $status . '</td>
                 
-                    <td> <a href="../php/doctors_data.php? deleteid=' . $id . '"><i class="fa-solid fa-trash" style="color:red;"></i></a> &nbsp;
-                    <a href="../php/doctors_update.php? updateid=' . $id . '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></a>
+                    <td> <a href="../php/doctors_data.php? deleteid=' . $id . '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash" style="color:red;"></i></button></a>
+                    <a href="../php/doctors_update.php? updateid=' . $id . '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></button></a>
                     </td>
-                </tbody>       
+                     
           ';
-      }
+        }
 
 
-      $con->close();
-      ?>
-    </table>
-  </div>
+        $con->close();
+        ?>
+      </tbody>
 
 
 

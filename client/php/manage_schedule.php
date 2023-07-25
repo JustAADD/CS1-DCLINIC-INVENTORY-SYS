@@ -19,20 +19,36 @@ if (isset($_GET['logout'])) {
 if (isset($_POST["submit_schedule"])) {
   $slots = $_POST["slots"];
   $date = $_POST["date"];
+
+  $date_obj = DateTime::createFromFormat('Y-m-d', $date);
+  $formatted_date = $date_obj->format('d/m/y l');
+
   $start_time = $_POST["start_time"];
   $end_time = $_POST["end_time"];
   $status = $_POST["status"];
-  $duration = $_POST["duration"];
 
-  $sql = "INSERT INTO manage_schedule (slots, date, start_time, end_time, status)
-  VALUES ('$slots','$date', '$start_time', '$end_time', '$status')";
+  $check_query = "SELECT * FROM manage_schedule WHERE date = '$date'";
+  $result = mysqli_query($con, $check_query);
 
-  // Execute the query and check if it was successful
-  if ($con->query($sql) === TRUE) {
-    // echo "Event data saved successfully.";
-    header("Location: ../php/manage_schedule.php");
+  if (mysqli_num_rows($result) > 0) {
+
+    $_SESSION['back'] = "Selected time slot already exists. Please choose a different time.";
+    $_SESSION['back_code'] = "warning";
+
+    // echo "Selected time slot already exists. Please choose a different time.";
   } else {
-    echo "Error: " . $sql . "<br>" . $con->error;
+
+    $sql = "INSERT INTO manage_schedule (slots, date, session_date, start_time, end_time, status)
+    VALUES ('$slots','$date', '$formatted_date', '$start_time', '$end_time', '$status')";
+
+    if ($con->query($sql) === TRUE) {
+      // echo "Event data saved successfully.";
+      $_SESSION['insert'] = "Great!";
+      $_SESSION['insert_code'] = "Your available date and slots already sets.";
+      // header("Location: ../php/manage_schedule.php");
+    } else {
+      echo "Error: " . $sql . "<br>" . $con->error;
+    }
   }
   // Close the database connection
   $con->close();
@@ -54,6 +70,10 @@ if (isset($_POST["submit_schedule"])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- ===== Bootstrap CSS ===== -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <!-- SweetAlert 2 library -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="./assets/js/sweetalert.min.js"></script>
 
 
 </head>
@@ -84,9 +104,21 @@ if (isset($_POST["submit_schedule"])) {
           <i class='bx bxs-chevron-down arrow'></i>
         </div>
         <ul class="sub-menu">
-          <li><a class="link_name" href="upcoming_appointment.php">Appointment Schedule</a></li>
-          <li><a href="manage_schedule.php">Manage Schedule</a></li>
+          <li><a href="../php/approved_booking.php">Approved</a></li>
+          <li><a href="../php/completed_booking.php">Completed</a></li>
+          <li><a href="../php/rejected_booking.php">Rejected</a></li>
         </ul>
+      </li>
+      <li>
+        <div class="iocn-link">
+          <a href="../php/dental_doctors.php">
+            <i class='bx bx-calendar'></i>
+            <span class="link_name">Manage Schedule</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a href="manage_schedule.php">Manage Schedule</a></li>
+          </ul>
+        </div>
       </li>
       <li>
         <div class="iocn-link">
@@ -123,24 +155,24 @@ if (isset($_POST["submit_schedule"])) {
             <i class='bx bx-collection'></i>
             <span class="link_name">Inventory</span>
           </a>
-          <i class='bx bxs-chevron-down arrow'></i>
         </div>
         <ul class="sub-menu">
           <li><a class="link_name" href="../php/Inventory.php">Inventory</a></li>
-          <li><a href="#">Upcoming Appointment</a></li>
-          <li><a href="#">Session Appointment</a></li>
-          <li><a href="#">Manage Date Slots</a></li>
-          <li><a href="#">Manage Time Slots</a></li>
         </ul>
       </li>
-
       <li>
-        <a href="../php/sa_feedback.php">
-          <i class='bx bx-message-dots'></i>
-          <span class="link_name">Feedback</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="../php/sa_feedback.php">Feedback</a></li>
+        <div class="iocn-link">
+          <a href="../php/sa_feedback.php">
+            <i class='bx bx-message-dots'></i>
+            <span class="link_name">Feedback</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow'></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Feedback</a></li>
+          <li><a href="../php/positive_feedback.php">Positive Feedback</a></li>
+          <li><a href="../php/negative_feedback.php">Negative Feedback</a></li>
+          <li><a href="../php/neutral_feedback.php">Neutral Feedback</a></li>
         </ul>
       </li>
       <li>
@@ -164,7 +196,7 @@ if (isset($_POST["submit_schedule"])) {
       <li>
         <div class="profile-details">
           <div class="profile-content">
-            <img src="image/profile.jpg" alt="profileImg">
+            <img src="../image/dp_admin.jpg" alt="profileImg">
           </div>
           <div class="name-job">
             <div class="profile_name">Mercedita</div>
@@ -192,7 +224,7 @@ if (isset($_POST["submit_schedule"])) {
       <div class="row">
         <div class="col">
           <div class="card" id="cerds">
-            <div class="header-table">Manage Schedule Records
+            <div class="header-table" id="schedule_button">Manage Schedule Records
               <button type="button" name="add_doctors" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary">Add Schedule</button>
             </div>
             <!-- Modal -->
@@ -230,10 +262,7 @@ if (isset($_POST["submit_schedule"])) {
                           <option value="No Slots">No Slots</option>
                         </select>
                       </div>
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput3" class="form-label">Duration in minutes</label>
-                        <input class="form-control" name="duration" type="text" placeholder="Your duration in minutes:" aria-label="default input example">
-                      </div>
+
                     </div>
 
                     <div class="modal-footer">
@@ -245,12 +274,22 @@ if (isset($_POST["submit_schedule"])) {
               </div>
             </div>
 
-
             <div class="body-table">
+              <table class="table table-hover table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Slots</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Start Time</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="manageSchedule">
 
-              <table class="table table-hover">
-                <div id="manageSchedule"></div>
-
+                </tbody>
               </table>
             </div>
           </div>
@@ -259,6 +298,51 @@ if (isset($_POST["submit_schedule"])) {
 
       </div>
     </div>
+    <?php
+    if (isset($_SESSION['insert'])) {
+      // Display the SweetAlert confirmation pop-up
+      echo "<script>
+            Swal.fire({
+              title: 'Great!',
+              text: 'Your available date and slots already sets.',
+              icon: 'success',
+              confirmButtonText: 'Ok Proceed',
+              customClass: {
+                popup: 'custom-swal-popup',
+                title: 'custom-swal-title',
+                confirmButton: 'custom-swal-button',
+              },
+            });
+          </script>";
+
+      unset($_SESSION['insert']);
+    }
+    ?>
+    <?php
+    if (isset($_SESSION['back'])) {
+      // Display the SweetAlert confirmation pop-up
+      echo "<script>
+            Swal.fire({
+              title: 'Selected time slot already exists.',
+              text: 'Please choose a different time.',
+              icon: 'warning',
+              confirmButtonText: 'Ok Proceed',
+              customClass: {
+                popup: 'custom-swal-popup',
+                title: 'custom-swal-title',
+                confirmButton: 'custom-swal-button',
+              },
+            });
+          </script>";
+
+      unset($_SESSION['back']);
+    }
+    ?>
+
+
+    <!-- sweet alert -->
+    <script src="./assets/js/sweetalert.min.js"></script>
+
     <!-- javascript -->
     <script src="../js/script.js"></script>
     <!--===== Bootstrap JS =====-->
