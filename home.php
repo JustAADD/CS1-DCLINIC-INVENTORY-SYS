@@ -118,17 +118,17 @@ if (!isset($_SESSION['email'])) {
       <div class="col-sm-6 p-0">
         <div class="rectangle" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">
           <div class=" columntwo">
-          <p> Our dental health services prioritize your oral well-being. <br>
-            Trust your oral well-being. Trust our Experienced services to <br>
-            Guide you on your journey to optimal dental health.
-          </p>
+            <p> Our dental health services prioritize your oral well-being. <br>
+              Trust your oral well-being. Trust our Experienced services to <br>
+              Guide you on your journey to optimal dental health.
+            </p>
 
-          <div class="model">
-            <img src="assets/image/model.svg" alt="">
+            <div class="model">
+              <img src="assets/image/model.svg" alt="">
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </div>
 
   </section>
@@ -158,16 +158,16 @@ if (!isset($_SESSION['email'])) {
           <div class="item" id="item-one">
             <div class="card" id="owl-card">
               <p>
-                Dental Examine
+                Consultation
 
-              <h5>Routine dental exam are essential to maintain good oral <br>
-                health. They include a thorough examination of the teeth, <br>
-                gums, and mount to check for any signs of tooth decay, <br>
-                gum disease, or other oral health problems.</h5>
+              <h5>At our dental clinic, we pride ourselves on providing <br>
+                exceptional dental consultation services to all our patients. <br>
+                Our dedicated team of experienced dentists is committed to offering
+                personalized care and attention to address your unique dental needs.</h5>
               </p>
 
               <div class="card" id="owl-card-body">
-                <img src="assets\image\sample1.jpg" alt="">
+                <img src="assets/image/wokrplace1.jpg" alt="">
                 <!-- php img -->
               </div>
             </div>
@@ -178,14 +178,53 @@ if (!isset($_SESSION['email'])) {
               <p>
                 Teeth Cleaning
 
-              <h5>Teeth cleaning is a preventative dental treatment that <br>
-                removes plaque and tartar from the teeth and gum line. <br>
-                Regular teeth cleaning can help prevent cavities, gum <br>
-                disease, and other dental problems.</h5>
+              <h5>Our teeth cleaning service is designed to give you
+                a bright and healthy smile that you can be proud of.
+                We understand the importance of maintaining excellent
+                oral hygiene, and our team of skilled dental hygienists
+                is dedicated to providing you with a thorough and gentle
+                cleaning experience.</h5>
               </p>
 
               <div class="card" id="owl-card-body">
-                <img src="assets\image\sample2.jpg" alt="">
+                <img src="assets/image/whitening and cleaning.jpg" alt="">
+                <!-- php img -->
+              </div>
+            </div>
+          </div>
+
+          <div class="item" id="item-one">
+            <div class="card" id="owl-card">
+              <p>
+                Oral Prophylaxis
+
+              <h5>At our dental clinic, we provide professional oral Prophylaxis <br>
+                serviecs to help you maintain a healthy and radiant smile, During <br>
+                your oral prophylaxis appointment, our skilled hygienists will <br>
+                carefully examine your teeth and gums to assess their overall health.
+              </h5>
+              </p>
+
+              <div class="card" id="owl-card-body">
+                <img src="assets/image/oral prophylaxis.jpg" alt="">
+                <!-- php img -->
+              </div>
+            </div>
+          </div>
+          <div class="item" id="item-one">
+            <div class="card" id="owl-card-two">
+              <p>
+                Braces
+
+              <h5>At our dental clinic, we offer comprehensive braces services 
+                to help you achieve a straighter and more aligned smile.
+                Our team of skilled orthodontists is committed to providing
+                personalized and effective orthodontic treatment for patients
+                of all ages.</h5>
+              </p>
+
+              <div class="card" id="owl-card-body">
+                <img src="assets/image/braces.jpg" alt="">
                 <!-- php img -->
               </div>
             </div>

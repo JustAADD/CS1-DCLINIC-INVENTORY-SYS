@@ -1,5 +1,6 @@
 <?php
 session_start();
+require '../../connection/connection.php';
 
 if (isset($_GET['logout'])) {
 
@@ -10,6 +11,68 @@ if (isset($_GET['logout'])) {
   header("Location:../../main.php");
   exit();
 }
+
+if (isset($_GET['deleteid'])) {
+
+  $delete_id = $_GET['deleteid'];
+
+
+  $select_query = "SELECT * FROM booking_approved WHERE id = '$delete_id'";
+  $result = mysqli_query($con, $select_query);
+
+  if ($result && mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_assoc($result);
+
+    $transac_no = $row['transac_no'];
+    $status = "Completed";
+    $name = $row['name'];
+    $patient_name = $row['patient_name'];
+    $procedures = $row['procedures'];
+    $session_time = $row['session_time'];
+    $session_date = $row['session_date'];
+
+
+    // Insert the data into the 'booking_completed' table
+    $insert_query = "INSERT INTO booking_completed (id, transac_no, status, name, patient_name, procedures, session_time, session_date) VALUES 
+    ('$id', '$transac_no', '$status', '$name', '$patient_name', '$procedures', '$session_time', '$session_date')";
+
+    $insert_result = mysqli_query($con, $insert_query);
+
+    if ($insert_result) {
+      // Now, insert the same data into the 'patient_transaction' table
+      $insert_sql = "INSERT INTO patient_transaction (id, transac_no, status, name, patient_name, procedures, session_time, session_date) VALUES 
+      ('$id', '$transac_no', '$status', '$name', '$patient_name', '$procedures', '$session_time', '$session_date')";
+
+      $sql_result = mysqli_query($con, $insert_sql);
+
+      if ($sql_result) {
+
+        // Now, delete the record from the 'appointment_booking' table
+        $delete_query = "DELETE FROM booking_approved WHERE id = '$delete_id'";
+        $delete_result = mysqli_query($con, $delete_query);
+
+        if ($delete_result) {
+          // Record deleted successfully
+          header("Location: ../php/approved_booking.php");
+          exit();
+        } else {
+
+          echo "Error deleting data: " . mysqli_error($con);
+        }
+      } else {
+
+        echo "Error transferring data to patient_transaction: " . mysqli_error($con);
+      }
+    } else {
+
+      echo "Error transferring data to booking_completed: " . mysqli_error($con);
+    }
+  } else {
+
+    echo "Error fetching data from the database or no record found for the given ID.";
+  }
+}
+
 
 ?>
 

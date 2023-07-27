@@ -87,6 +87,7 @@ if (isset($_GET['deleteid'])) {
                     <td> ' . $session_date . '</td>
                   
                     <td><a href="../php/approved_booking_data.php? deleteid=' . $id . '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a> 
+                    <a href="../php/approved_booking.php? deleteid=' . $id . '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-square-check"></i></i></button></a>
                     </td>
                     </tbody>
                

@@ -270,7 +270,7 @@ img {
 
   #nav__content {
 
-   
+
     grid-template-columns: repeat(3, -webkit-max-content);
     grid-template-columns: repeat(3, max-content);
     grid-template-rows: 1fr;
@@ -839,3 +839,21 @@ img {
   font-style: var(--font-nunito);
   color: var(--dark-color);
 }
+
+/* payment */
+.gcash{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 8rem;
+
+}
+
+#gcash_card {
+
+  width: 50rem;
+  height: 30rem;
+  border-radius: 30px;
+  box-shadow: 0 7px 4px rgba(126, 175, 249, 0.4);
+}
+
