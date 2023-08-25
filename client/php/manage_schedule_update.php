@@ -119,13 +119,13 @@ if (isset($_POST['update'])) {
               <input type="date" name="date" class="form-control" value="<?php echo $date; ?>" id="exampleFormControlInput2">
             </div>
             <div class="mb-3">
-              <label for="exampleFormControlInput3" class="form-label">Start_time</label>
+              <label for="exampleFormControlInput3" class="form-label">Opening Time</label>
               <input class="form-control" name="start_time" type="time" value="<?php echo $start_time; ?>" aria-label="default input example">
             </div>
           </div>
           <div class="col">
             <div class="mb-3">
-              <label for="exampleFormControlInput3" class="form-label">End_time</label>
+              <label for="exampleFormControlInput3" class="form-label">Closed Time</label>
               <input class="form-control" name="end_time" type="time" value="<?php echo $end_time; ?>" aria-label="default input example">
             </div>
             <div class="mb-3">

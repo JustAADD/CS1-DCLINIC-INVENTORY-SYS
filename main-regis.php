@@ -20,17 +20,19 @@ function sendemail_verify($fullname, $email, $verify_token)
   $mail->isSMTP();                                            //Send using SMTP
   $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
   $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-  $mail->Username   = 'makiling_adrian@plpasig.edu.ph';                     //SMTP username
-  $mail->Password   = 'secret';                             //SMTP password
+  $mail->Username   = 'dalinomercedita@gmail.com';                     //SMTP username
+  $mail->Password   = 'hvlwmhqwgavwcvnl';                             //SMTP password
   $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
   $mail->Port       = 465;
 
-  $mail->setFrom('makiling_adrian@plpasig.edu.ph', $fullname);
+  $mail->setFrom('dalinomercedita@gmail.com', $fullname);
   $mail->addAddress($email);
 
   $mail->isHTML(true);                                  //Set email format to HTML
   $mail->Subject = 'Email verification from Dalino Dental Clinic';
 
+
+  // $email_template = file_get_contents('email_template.php');
 
   $email_template = "
   <h3>You have registered with Dalino Dental Clinic as a user</h3>
@@ -75,6 +77,9 @@ if (isset($_POST['submit'])) {
 
         sendemail_verify($fullname, $email, $verify_token);
 
+        $_SESSION['insert'] = "Verify Your Account";
+        $_SESSION['insert_code'] = "We already sent your Verification";
+
         // header("refresh:0.1;url=main.php");
         // echo "Sign up Successfully";
       } else {
@@ -103,6 +108,9 @@ if (isset($_POST['submit'])) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <!-- Stylesheets css -->
   <link rel="stylesheet" href="assets\css\style.css">
+  <!-- SweetAlert 2 library -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="./assets/js/sweetalert.min.js"></script>
 
 
   <!-- OWL-Carousel-->
@@ -115,6 +123,34 @@ if (isset($_POST['submit'])) {
 
   <div class="container-fluid" id="main">
 
+    <?php
+    if (isset($_SESSION['insert'])) {
+      // Display the SweetAlert confirmation pop-up
+      echo "<script>
+            Swal.fire({
+              title: 'Verify Your Account',
+              text: 'We already sent your Verification',
+              icon: 'success',
+              confirmButtonText: 'Done',
+              customClass: {
+                popup: 'custom-swal-popup',
+                title: 'custom-swal-title',
+                confirmButton: 'custom-swal-button',
+              },
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  
+                  window.location.href = 'main.php';
+              }
+            });
+          </script>
+          
+          
+          ";
+
+      unset($_SESSION['insert']);
+    }
+    ?>
     <div class="card" id="form-card">
       <div class="row g-0" id="form-row">
         <div class="col" id="form-col1">
@@ -165,9 +201,6 @@ if (isset($_POST['submit'])) {
     </div>
   </div>
 
-  <!-- loader -->
-  <div class="loader loader--hidden"></div>
-
 
   <!--===== Bootstrap JS =====-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -199,6 +232,8 @@ if (isset($_POST['submit'])) {
     })
   </script>
 
+  <!-- sweet alert -->
+  <script src="./assets/js/sweetalert.min.js"></script>
 
 </body>
 

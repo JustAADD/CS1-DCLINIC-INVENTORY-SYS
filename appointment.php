@@ -271,8 +271,6 @@ include 'app-data.php';
 
   </div>
 
-
-
   <!-- sweet alert -->
   <script src="./assets/js/sweetalert.min.js"></script>
 

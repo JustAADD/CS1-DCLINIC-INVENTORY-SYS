@@ -30,6 +30,11 @@ if (isset($_GET['deleteid'])) {
   <!-- icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
+  <style>
+    .centered-row {
+      vertical-align: middle;
+    }
+  </style>
 </head>
 
 <body>
@@ -51,9 +56,9 @@ if (isset($_GET['deleteid'])) {
       $session_time = $row['session_time'];
       $dateTime = $row['session_date'];
 
-      $date_time_obj = new DateTime($dateTime);
+     
       // Format the time in "10:23 AM/PM" format
-      $formatted_time = $date_time_obj->format('h:i A');
+    
 
       echo '
           <tbody>
@@ -63,10 +68,11 @@ if (isset($_GET['deleteid'])) {
               ' . $patient_name .  '</td>
               <td> ' . $status . '</td>
               <td> ' . $procedures . '</td>
-              <td> ' . $formatted_time . '</td>
+              <td> ' . $dateTime . '</td>
+             
           
               <td> <a href="../php/p_transaction_data.php? deleteid=' . $id . '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash" style="color:red;"></i></button></a>
-              <a href="../php/booking_receipt.php? receiptid=' . $id . '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-receipt"></i></button></a> 
+              <a href="../php/p_transaction_receipt.php? receiptid=' . $id . '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-receipt"></i></button></a> 
               </td>
              
     ';

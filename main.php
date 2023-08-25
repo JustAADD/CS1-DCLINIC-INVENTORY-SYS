@@ -115,11 +115,11 @@ elseif (isset($_SESSION['isAdmin'])){
             <?php } ?>
             <div class="mb-3">
               <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" name="email" id="email" placeholder="Your email address" aria-describedby="emailHelp">
+              <input type="email" class="form-control" name="email" id="email" placeholder="Your email address" aria-describedby="emailHelp"  autocomplete="off">
             </div>
             <div class="mb-4">
               <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" name="password" id="password" placeholder="Enter password ">
+              <input type="password" class="form-control" name="password" id="password" placeholder="Enter password"  autocomplete="off">
 
             </div>
             <button type="submit" id="form-btn" name="submit" value="Login" class="btn btn-primary">Log in</button>

@@ -281,8 +281,8 @@ if (isset($_POST["submit_schedule"])) {
                     <th scope="col">#</th>
                     <th scope="col">Slots</th>
                     <th scope="col">Date</th>
-                    <th scope="col">Start Time</th>
-                    <th scope="col">End Date</th>
+                    <th scope="col">Opening Time</th>
+                    <th scope="col">Closed Time</th>
                     <th scope="col">Status</th>
                     <th scope="col">Action</th>
                   </tr>

@@ -124,16 +124,22 @@ function build_calendar($month, $year)
       $slotses = $slots[$bookingIndex];
 
       if ($status === "Open") {
-        
-        $calendar .= "<td class='booked $today' style ='background-color:#32CD32;' ><h4>$currentDay</h4> 
-        <a href='app-set-sched.php?date=" . $date . "' class='btn btn-success btn-xs' style='font-size: 10px; background-color: #3785F9; border: none;'>Book</a>
-        <button class='btn btn-danger btn-xs' style='font-size: 10px; background-color: #3785F9; border: none;'>$slotses slots</button>
-      </td>";
-      
+        if ($slotses > 0) {
+          $calendar .= "<td class='booked $today' style ='background-color:#32CD32;' ><h4>$currentDay</h4> 
+                <a href='app-set-sched.php?date=" . $date . "' class='btn btn-success btn-xs' style='font-size: 10px; background-color: #3785F9; border: none;'>Book</a>
+                <button class='btn btn-danger btn-xs' style='font-size: 10px; background-color: #3785F9; border: none;'>$slotses slots</button>
+              </td>";
+        } elseif ($slotses == 0) {
+          $calendar .= "<td class='booked $today' style ='background-color:#32CD32;' ><h4>$currentDay</h4> 
+                <button class='btn btn-danger btn-xs' style='font-size: 10px; background-color: #3785F9; border: none;'>No slots available</button>
+              </td>";
+        }
       } elseif ($status === "Closed") {
         $calendar .= "<td class='na $today'><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' style='font-size: 8px;'>Closed</button>";
       } else {
-        $calendar .= "<td class='available $today'><h4>$currentDay</h4> <a href='app-set-sched.php?date=" . $date . "' class='btn btn-success btn-xs' style='font-size: 8px; background-color: #3785F9; border: none;'>Book</a>";
+        $calendar .= "<td class='booked $today' style ='background-color:#32CD32;' ><h4>$currentDay</h4> 
+                <button class='btn btn-danger btn-xs' style='font-size: 9px; background-color: #3785F9; border: none;'>No slots available</button>
+              </td>";
       }
     } else {
       $calendar .= "<td class='na $today'><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' style='font-size: 8px;'>Closed</button>";

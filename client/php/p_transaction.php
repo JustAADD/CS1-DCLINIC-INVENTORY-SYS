@@ -266,8 +266,8 @@ if (isset($_POST["add_transaction"])) {
                     <th scope="col">Transaction no</th>
                     <th scope="col">Status</th>
                     <th scope="col">Session</th>
-
-                    <th scope="col">Date & Time</th>
+                    <th scope="col">Date</th>
+                   
                     <th scope="col">Action</th>
                   </tr>
                 </thead>

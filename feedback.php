@@ -85,7 +85,7 @@ function analyzeFeedback($Feedback)
       "unresponsive", "inflexible", "impatient", "overbeating", "unprofessional",
       "disrespectful", "pessimistic", "unmotivated", "disengaged", "indecisive",
       "forgetful", "stubborn", "inadequate", "irresponsible", "unprepared", "disorganized",
-      "wasted", "disinterested", "dissapointed", "unprofessional", "frustrated", "unpleasant", "uncomfortable",
+      "wasted", "disinterested", "dissapointed", "frustrated", "unpleasant", "uncomfortable",
       "negligent", "uncaring", "unsympathetic", "inconsiderate", "incompetent", "rude", "indifferent", "impersonal",
       "unorganized", "unresponsive", "inattentive", "careless", "unclear", "inaffective"
     ],
@@ -105,8 +105,7 @@ function analyzeFeedback($Feedback)
     "NEGATIONWORDS" => [
       "not", "never", "no", "n't", "dont", "don't", "lack", "cannot", "can't", "no way", "nope", "no chance", "no option", "without",
       "devoid", "lacking", "fail", "failed", "failing", "failure", "unable", "unable to", "incapable", "lacking", "insufficient", "insufficiently",
-      "less", "less than", "fell short", "fell behind", "didn't", "didn't meet", "didn't fulfill", "didn't provide", "didn't deliver",
-      "didn't achieve", "didn't satisfy", "didn't meet expectations", "didn't meet the mark"
+      "less", "less than", "fell short", "fell behind", "didn't"
     ]
   ];
 

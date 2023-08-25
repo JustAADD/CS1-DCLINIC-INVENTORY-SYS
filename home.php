@@ -124,7 +124,7 @@ if (!isset($_SESSION['email'])) {
             </p>
 
             <div class="model">
-              <img src="assets/image/model.svg" alt="">
+              <img src="assets/image/model1.png" alt="">
             </div>
           </div>
         </div>
@@ -147,7 +147,7 @@ if (!isset($_SESSION['email'])) {
           Whatever your specialty</h2>
       </div>
       <div class="col-6 col-md-4" style="display: flex; justify-content: center; align-items: center;">
-        <a href="#about" class="btn-get-started me-3" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">MORE ABOUT</a>
+        <a href="more-about.php" class="btn-get-started me-3" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">MORE ABOUT</a>
       </div>
     </div>
 
@@ -160,8 +160,8 @@ if (!isset($_SESSION['email'])) {
               <p>
                 Consultation
 
-              <h5>At our dental clinic, we pride ourselves on providing <br>
-                exceptional dental consultation services to all our patients. <br>
+              <h5>At our dental clinic, we pride ourselves on providing
+                exceptional dental consultation services to all our patients.
                 Our dedicated team of experienced dentists is committed to offering
                 personalized care and attention to address your unique dental needs.</h5>
               </p>
@@ -198,9 +198,9 @@ if (!isset($_SESSION['email'])) {
               <p>
                 Oral Prophylaxis
 
-              <h5>At our dental clinic, we provide professional oral Prophylaxis <br>
-                serviecs to help you maintain a healthy and radiant smile, During <br>
-                your oral prophylaxis appointment, our skilled hygienists will <br>
+              <h5>At our dental clinic, we provide professional oral Prophylaxis
+                serviecs to help you maintain a healthy and radiant smile,
+                During your oral prophylaxis appointment, our skilled hygienists will
                 carefully examine your teeth and gums to assess their overall health.
               </h5>
               </p>
@@ -216,7 +216,7 @@ if (!isset($_SESSION['email'])) {
               <p>
                 Braces
 
-              <h5>At our dental clinic, we offer comprehensive braces services 
+              <h5>At our dental clinic, we offer comprehensive braces services
                 to help you achieve a straighter and more aligned smile.
                 Our team of skilled orthodontists is committed to providing
                 personalized and effective orthodontic treatment for patients
