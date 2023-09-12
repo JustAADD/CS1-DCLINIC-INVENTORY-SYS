@@ -23,7 +23,6 @@ function build_calendar($month, $year)
     }
   }
 
-
   // Create array containing abbreviations of days of week.
   $daysOfWeek = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
 
