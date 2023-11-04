@@ -98,6 +98,13 @@ if (isset($_POST["add_inventory"])) {
   <!-- ===== Bootstrap CSS ===== -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
+  <!--Datatables-->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <!-- icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 </head>
 
 <body>
@@ -242,80 +249,138 @@ if (isset($_POST["add_inventory"])) {
     <div class="container overflow-hidden mt-4">
       <div class="row">
         <div class="col">
-          <div class="card" id="cerds">
-            <div class="header-table" id="button_inventory">Supplies Inventory
-              <button type="btn" name="add_inventory" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary">Add Inventory</button>
+          <div class="card mb-3" id="cerds">
+            <div class="header-table" style="display: flex; justify-content: space-between; align-items:center;">Supplies inventory
+              <button type="btn" name="add_doctors" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary">Add Inventory</button>
             </div>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <form method="POST" action="" enctype="multipart/form-data">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Supplies & Equipment Inventory</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <form method="POST" action="" enctype="multipart/form-data">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Supplies & Equipment Inventory</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="formfile" class="form-label">Supplies/Equipments</label>
+                      <input type="file" name="image" class="form-control" id="image" placeholder="Upload your photos">
                     </div>
-                    <div class="modal-body">
-                      <div class="mb-3">
-                        <label for="formfile" class="form-label">Supplies/Equipments</label>
-                        <input type="file" name="image" class="form-control" id="image" placeholder="Upload your photos">
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Supplies/Equipment Name</label>
-                        <input class="form-control" name="name" type="text" id="exampleFormControlInput1" placeholder="Name:" aria-label="default input example">
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput2" class="form-label">Stocks</label>
-                        <input class="form-control" name="stocks" type="text" id="exampleFormControlInput2" placeholder="Quantity:" aria-label="default input example">
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput3" class="form-label">Class</label>
-                        <input class="form-control" name="class" type="text" id="exampleFormControlInput3" placeholder="Class:" aria-label="default input example">
-                      </div>
+                    <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">Supplies/Equipment Name</label>
+                      <input class="form-control" name="name" type="text" id="exampleFormControlInput1" placeholder="Name:" aria-label="default input example">
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="submit" name="add_inventory" value="Upload Image" class="btn btn-primary" style="background:#3785F9; border: none;">Add Inventory</button>
+                    <div class="mb-3">
+                      <label for="exampleFormControlInput2" class="form-label">Stocks</label>
+                      <input class="form-control" name="stocks" type="text" id="exampleFormControlInput2" placeholder="Quantity:" aria-label="default input example">
                     </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-
-            <div class="body-table">
-
-              <!-- Inventory -->
-              <div class="body-table">
-                <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Supplies</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Stocks</th>
-                      <th scope="col">Class</th>
-                      <th scope="col">Date</th>
-                      <th scope="col">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody id="inventory"></tbody>
-
-                </table>
+                    <div class="mb-3">
+                      <label for="exampleFormControlInput3" class="form-label">Class</label>
+                      <input class="form-control" name="class" type="text" id="exampleFormControlInput3" placeholder="Class:" aria-label="default input example">
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" name="add_inventory" value="Upload Image" class="btn btn-primary" style="background:#3785F9; border: none;">Add Inventory</button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
 
 
+
+          <!-- Inventory -->
+          <div class="body-table">
+            <table id="data-table" class="display">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Supplies</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Stocks</th>
+                  <th scope="col">Class</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody id="data-table"></tbody>
+
+            </table>
+          </div>
         </div>
       </div>
+
   </section>
 
+  <!-- javascript -->
+  <script src="../js/script.js"></script>
+
+  <!--datatable-->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      var table = $('#data-table').DataTable({
+        "columns": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      });
+
+      // Function to fetch and update data
+      function loadData() {
+        $.ajax({
+          url: 'inventoryScript.php',
+          type: 'GET',
+          dataType: 'json',
+          success: function(data) {
+            // Clear the existing data and add the new data
+            table.clear();
+            $.each(data, function(index, row) {
+              var deleteButton = '<a href="../php/Inventory_data.php? deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a>&nbsp';
+              var updateButton = '<a href="../php/Inventory_update.php? updateid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></button></a>';
+              var imagesrc = '<div class="imagesrc"><img src="' + row.imagedata + '" style="width: 100px; height: 60px;" /></div>';
+
+              table.row.add([
+                row.inv_id,
+                imagesrc,
+                row.name,
+                row.stocks,
+                row.class,
+                row.date,
+                deleteButton + updateButton
+                // Add more columns as needed
+              ]);
+            });
+
+            // Draw the table to update the view with new data
+            table.draw(false);
+          },
+          error: function() {
+            console.error('Error loading data');
+          }
+        });
+      }
+
+      // Load data initially
+      loadData();
+
+      // Refresh data every X milliseconds (e.g., every 5 seconds)
+      setInterval(loadData, 5000); // 5000 milliseconds = 5 seconds
+    });
+  </script>
 
   <!--===== Bootstrap JS =====-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-  <!-- javascript -->
-  <script src="../js/script.js"></script>
 </body>
 
 </html>

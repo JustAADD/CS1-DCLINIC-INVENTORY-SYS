@@ -48,7 +48,7 @@ body {
   left: 0;
   height: 100%;
   width: 260px;
-  background-color: var(--first-color);
+  background-color: var(--dark-color-alt);
   z-index: 100;
   box-shadow: 0 10px 12px rgba(7, 35, 77, 0.668);
   transition: all 0.5s ease;
@@ -261,7 +261,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--dark-first-color);
+  background-color: var(--dark-color-alt);
   padding: 12px 0;
   transition: all 0.5s ease;
 }
@@ -442,9 +442,7 @@ body {
 }
 
 .header-table button {
-  justify-content: end;
-  align-items: end;
-  margin-left: 55rem;
+  margin-left: 5rem;
   background-color: var(--first-color);
 }
 
@@ -506,7 +504,7 @@ body {
 }
 
 #dash_upcoming_app button{
-  margin-left: 37%;
+  margin-left: 50%;
   display: var(--z-fixed);
   font-weight: var(--small-font-size);
   font-family: var(--font-nunito);

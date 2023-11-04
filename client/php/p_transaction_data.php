@@ -52,7 +52,6 @@ if (isset($_GET['deleteid'])) {
       $status = $row['status'];
       $patient_name = $row['patient_name'];
       $procedures = $row['procedures'];
-
       $session_time = $row['session_time'];
       $dateTime = $row['session_date'];
 

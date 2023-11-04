@@ -70,6 +70,13 @@ if (isset($_POST["add_transaction"])) {
   <!-- ===== Bootstrap CSS ===== -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
+  <!-- icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!--Datatables-->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
   <!-- Boxiocns CDN Link -->
   <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -259,19 +266,19 @@ if (isset($_POST["add_transaction"])) {
               </div>
             </div>
             <div class="body-table">
-              <table class="table table-hover table-bordered">
-                <thead>
+              <table id="data-table" class="display">
+                <thead class="table-light">
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Transaction no</th>
+                    <th scope="col">Name</th>
                     <th scope="col">Status</th>
                     <th scope="col">Session</th>
                     <th scope="col">Date</th>
-                   
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
-                <tbody id="transaction"></tbody>
+                <tbody id="data-table"></tbody>
               </table>
             </div>
           </div>
@@ -280,11 +287,71 @@ if (isset($_POST["add_transaction"])) {
     </div>
   </section>
 
-  <!--===== Bootstrap JS =====-->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
   <!-- javascript -->
   <script src="../js/script.js"></script>
+  <!--datatable-->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      var table = $('#data-table').DataTable({
+        "columns": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+
+        ]
+      });
+
+      // Function to fetch and update data
+      function loadData() {
+        $.ajax({
+          url: 'p_transactionScript.php',
+          type: 'GET',
+          dataType: 'json',
+          success: function(data) {
+            // Clear the existing data and add the new data
+            table.clear();
+            $.each(data, function(index, row) {
+              var deleteButton = '<a href="../php/p_transaction_data.php? deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a>&nbsp';
+              var updateButton = '<a href="../php/p_transaction_receipt.php? receiptid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></button></a>';
+              var timeDate = row.session_time + ' - ' + row.session_date;
+              var transacLink = '<a href="p_transaction_receipt.php' + row.transac_no + '">' + row.transac_no + '</a>';
+
+              table.row.add([
+                row.id,
+                transacLink,
+                row.name,
+                row.status,
+                row.procedures,
+                timeDate,
+                deleteButton + updateButton
+                // Add more columns as needed
+              ]);
+            });
+
+            // Draw the table to update the view with new data
+            table.draw(false);
+          },
+          error: function() {
+            console.error('Error loading data');
+          }
+        });
+      }
+
+      // Load data initially
+      loadData();
+
+      // Refresh data every X milliseconds (e.g., every 5 seconds)
+      setInterval(loadData, 5000); // 5000 milliseconds = 5 seconds
+    });
+  </script>
+  <!--===== Bootstrap JS =====-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 </html>

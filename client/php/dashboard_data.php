@@ -163,7 +163,7 @@ require '../../connection/connection.php';
       <div class="col">
         <div class="card" style="height: 70%; border-radius: 20px;">
           <div class="header-table" id="dash_upcoming_app" style="border-top-left-radius: 20px; border-top-right-radius: 20px; ">Upcoming Session
-            <a href="../php/upcoming_appointment.php"><button type="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary">Manage Upcoming Session</button></a>
+            <a href="../php/upcoming_appointment.php"><button type="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary">Manage Session</button></a>
           </div>
           <div class="body-table">
             <table class="table table-hover table-bordered">

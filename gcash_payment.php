@@ -8,12 +8,10 @@ if (isset($_SESSION['email'])) {
   $email = $_SESSION['email'];
 }
 
-
 $mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
 $stmt = $mysqli->prepare("SELECT fullname FROM user_registration WHERE email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
-
 
 // Bind the result to a variable
 $stmt->bind_result($fullname);
@@ -87,8 +85,6 @@ if (isset($_POST['submit'])) {
     }
   }
 }
-
-
 
 ?>
 

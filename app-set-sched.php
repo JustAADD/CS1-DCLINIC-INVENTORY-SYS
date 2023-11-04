@@ -300,6 +300,7 @@ if (isset($_POST['submit'])) {
 
                     $slots[] = convertTo12HourFormat($start->format("H:i"));
                     $start->add($interval)->add($cleanupInterval);
+                    
                   }
 
                   // for ($intStart = $start; $intStart < $end; $intStart->add($interval)->add($cleanupInterval)) {

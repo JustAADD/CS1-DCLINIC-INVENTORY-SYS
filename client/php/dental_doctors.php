@@ -73,8 +73,18 @@ if (isset($_POST["submit_doctors"])) {
   <!-- Boxiocns CDN Link -->
   <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
   <!-- ===== Bootstrap CSS ===== -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <!--Datatables-->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
 </head>
 
 <body>
@@ -220,67 +230,69 @@ if (isset($_POST["submit_doctors"])) {
 
     <!-- appointment/session table -->
 
-    <div class="container overflow-hidden mt-5">
+    <div class="container overflow-hidden mt-4">
       <div class="row">
         <div class="col">
-          <div class="card" id="cerds">
-            <div class="header-table">All Dental Doctors in Clinic
+          <div class="card mb-3" id="cerds">
+            <div class="header-table" style="display: flex; justify-content: space-between; align-items:center;">All Dental Doctors in Clinic
               <button type="btn" name="add_doctors" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary">Add Doctors</button>
             </div>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <form method="POST" action="">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Dental Doctors</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <form method="POST" action="">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Dental Doctors</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">Fullname</label>
+                      <input class="form-control" name="fullname" type="text" placeholder="Your Fullname:" aria-label="default input example">
                     </div>
-                    <div class="modal-body">
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Fullname</label>
-                        <input class="form-control" name="fullname" type="text" placeholder="Your Fullname:" aria-label="default input example">
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput2" class="form-label">Email address</label>
-                        <input type="email" name="email" class="form-control" id="exampleFormControlInput2" placeholder="Your Email Address:">
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput3" class="form-label">Contact Number</label>
-                        <input class="form-control" name="contact" type="text" placeholder="Your Specialties:" aria-label="default input example">
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput3" class="form-label">Specialties</label>
-                        <input class="form-control" name="specialties" type="text" placeholder="Your Specialties:" aria-label="default input example">
-                      </div>
+                    <div class="mb-3">
+                      <label for="exampleFormControlInput2" class="form-label">Email address</label>
+                      <input type="email" name="email" class="form-control" id="exampleFormControlInput2" placeholder="Your Email Address:">
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="submit" name="submit_doctors" class="btn btn-primary" style="background:#3785F9; border: none;">Save changes</button>
+                    <div class="mb-3">
+                      <label for="exampleFormControlInput3" class="form-label">Contact Number</label>
+                      <input class="form-control" name="contact" type="text" placeholder="Your Specialties:" aria-label="default input example">
                     </div>
-                  </form>
-                </div>
+                    <div class="mb-3">
+                      <label for="exampleFormControlInput3" class="form-label">Specialties</label>
+                      <input class="form-control" name="specialties" type="text" placeholder="Your Specialties:" aria-label="default input example">
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" name="submit_doctors" class="btn btn-primary" style="background:#3785F9; border: none;">Save changes</button>
+                  </div>
+                </form>
               </div>
             </div>
-
-            <div class="body-table">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Doctors ID</th>
-                    <th scope="col">Doctors Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Contact</th>
-                    <th scope="col">Specialties</th>
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody id="doctors">
-                </tbody>
-              </table>
-            </div>
           </div>
+
+
+          <div class="body-table">
+            <table id="data-table" class="display">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Doctors ID</th>
+                  <th scope="col">Doctors Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Contact</th>
+                  <th scope="col">Specialties</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody id="data-table">
+              </tbody>
+            </table>
+          </div>
+
         </div>
 
 
@@ -291,6 +303,68 @@ if (isset($_POST["submit_doctors"])) {
 
   <!-- javascript -->
   <script src="../js/script.js"></script>
+
+  <!--datatable-->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      var table = $('#data-table').DataTable({
+        "columns": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      });
+
+      // Function to fetch and update data
+      function loadData() {
+        $.ajax({
+          url: 'dental_doctors_scripts.php',
+          type: 'GET',
+          dataType: 'json',
+          success: function(data) {
+            // Clear the existing data and add the new data
+            table.clear();
+            $.each(data, function(index, row) {
+              var deleteButton = '<a href="../php/doctors_data.php?deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a>&nbsp';
+              var updateButton = '<a href="../php/doctors_update.php?updateid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></button></a>';
+
+              table.row.add([
+                row.id,
+                row.doctors_id,
+                row.doctors_name,
+                row.email,
+                row.contact,
+                row.specialties,
+                deleteButton + updateButton
+                // Add more columns as needed
+              ]);
+            });
+
+            // Draw the table to update the view with new data
+            table.draw(false);
+          },
+          error: function() {
+            console.error('Error loading data');
+          }
+        });
+      }
+
+      // Load data initially
+      loadData();
+
+      // Refresh data every X milliseconds (e.g., every 5 seconds)
+      setInterval(loadData, 5000); // 5000 milliseconds = 5 seconds
+    });
+  </script>
+
+
+
   <!--===== Bootstrap JS =====-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
