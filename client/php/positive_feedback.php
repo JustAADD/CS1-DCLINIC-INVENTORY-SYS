@@ -30,6 +30,10 @@ if (isset($_GET['logout'])) {
 
   <!-- ===== Bootstrap CSS ===== -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <!--Datatables-->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 </head>
 
@@ -89,10 +93,10 @@ if (isset($_GET['logout'])) {
       <li>
         <a href="../php/patient_lists.php">
           <i class='bx bx-list-check bx-sm'></i>
-          <span class="link_name">Patient Lists</span>
+          <span class="link_name">Patient History</span>
         </a>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="../php/patient_lists.php">Patient Lists</a></li>
+          <li><a class="link_name" href="../php/patient_lists.php">Patient History</a></li>
         </ul>
       </li>
       <li>
@@ -180,8 +184,8 @@ if (isset($_GET['logout'])) {
           <div class="card" id="cerds">
             <div class="header-table">Positive Feedback</div>
             <div class="body-table">
-              <table class="table table-hover table-bordered">
-                <thead>
+              <table id="data-table" class="display">
+                <thead class="table-light">
                   <tr>
                     <th>#</th>
                     <th>Patient Name</th>
@@ -190,7 +194,7 @@ if (isset($_GET['logout'])) {
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody id="positive">
+                <tbody id="data-table">
 
                 </tbody>
               </table>
@@ -205,6 +209,60 @@ if (isset($_GET['logout'])) {
 
   <!-- javascript -->
   <script src="../js/script.js"></script>
+
+  <!--datatable-->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      var table = $('#data-table').DataTable({
+        "columns": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      });
+
+      // Function to fetch and update data
+      function loadData() {
+        $.ajax({
+          url: 'positiveScript.php',
+          type: 'GET',
+          dataType: 'json',
+          success: function(data) {
+            // Clear the existing data and add the new data
+            table.clear();
+            $.each(data, function(index, row) {
+              var deleteButton = '<a href="../php/positive_feedbackData.php? deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a>&nbsp';
+
+              table.row.add([
+                row.id,
+                row.patient_name,
+                row.feedback,
+                row.date,
+                deleteButton
+                // Add more columns as needed
+              ]);
+            });
+
+            // Draw the table to update the view with new data
+            table.draw(false);
+          },
+          error: function() {
+            console.error('Error loading data');
+          }
+        });
+      }
+
+      // Load data initially
+      loadData();
+
+      // Refresh data every X milliseconds (e.g., every 5 seconds)
+      setInterval(loadData, 5000); // 5000 milliseconds = 5 seconds
+    });
+  </script>
   <!--===== Bootstrap JS =====-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 

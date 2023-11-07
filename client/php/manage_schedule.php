@@ -143,10 +143,10 @@ if (isset($_POST["submit_schedule"])) {
       <li>
         <a href="../php/patient_lists.php">
           <i class='bx bx-list-check bx-sm'></i>
-          <span class="link_name">Patient Lists</span>
+          <span class="link_name">Patient History</span>
         </a>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="../php/patient_lists.php">Patient Lists</a></li>
+          <li><a class="link_name" href="../php/patient_lists.php">Patient History</a></li>
         </ul>
       </li>
       <li>
