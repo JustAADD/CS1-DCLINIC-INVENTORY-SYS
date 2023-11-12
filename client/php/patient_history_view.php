@@ -99,21 +99,21 @@ if (isset($_POST['update'])) {
           <div class="col">
             <div class="mb-3">
               <label for="fullname" class="form-label">Fullname</label>
-              <input class="form-control" name="patient_name" type="text" value="<?php echo $patient_name; ?>" autocomplete="off">
+              <input class="form-control" name="patient_name" type="text" value="<?php echo $patient_name; ?>" aria-label="Disabled input example" disabled>
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
-              <input type="form-control" name="email" class="form-control" value="<?php echo $email; ?>" autocomplete="off">
+              <input type="form-control" name="email" class="form-control" value="<?php echo $email; ?>" aria-label="Disabled input example" disabled>
             </div>
           </div>
           <div class="col">
             <div class="mb-3">
               <label for="email" class="form-label">Contact</label>
-              <input type="form-control" name="contact" class="form-control" value="<?php echo $contact; ?>" autocomplete="off">
+              <input type="form-control" name="contact" class="form-control" value="<?php echo $contact; ?>" aria-label="Disabled input example" disabled>
             </div>
             <div class="mb-1">
               <label for="email" class="form-label">Gender</label>
-              <input type="form-control" name="gender" class="form-control" value="<?php echo $gender; ?>" autocomplete="off" >
+              <input type="form-control" name="gender" class="form-control" value="<?php echo $gender; ?>" aria-label="Disabled input example" disabled>
             </div>
           </div>
         </div>
@@ -122,26 +122,26 @@ if (isset($_POST['update'])) {
           <div class="col">
             <div class="mb-3">
               <label for="fullname" class="form-label">Dental Services</label>
-              <input class="form-control" name="dental-services" type="text" value="<?php echo $dentalservices; ?>" autocomplete="off">
+              <input class="form-control" name="dental-services" type="text" value="<?php echo $dentalservices; ?>" aria-label="Disabled input example" disabled>
             </div>
             <div class="mb-3">
               <label for="date" class="form-label">Date of Appointment</label>
-              <input type="date" name="date" class="form-control" value="<?php echo $date; ?>" autocomplete="off">
+              <input type="date" name="date" class="form-control" value="<?php echo $date; ?>" aria-label="Disabled input example" disabled>
             </div>
           </div>
           <div class="col">
             <div class="mb-3">
               <label for="email" class="form-label">Next Appointment</label>
-              <input type="form-control" name="next-appointment" class="form-control" value="<?php echo $nextappointment; ?>" autocomplete="off">
+              <input type="form-control" name="next-appointment" class="form-control" value="<?php echo $nextappointment; ?>" aria-label="Disabled input example" disabled>
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Status of appointment</label>
-              <input type="form-control" name="status-appointment" class="form-control" value="<?php echo $statusappointment; ?>" autocomplete="off">
+              <input type="form-control" name="status-appointment" class="form-control" value="<?php echo $statusappointment; ?>" aria-label="Disabled input example" disabled>
             </div>
           </div>
         </div>
 
-        <button type="submit" name="update" id="update" value="update" class="btn btn-primary mt-3 float-end">Update</button>
+        <a href="../php/patient_lists.php" class="btn btn-primary mt-4 float-end" style="width: 20%;">Back</a>
       </form>
     </div>
   </div>

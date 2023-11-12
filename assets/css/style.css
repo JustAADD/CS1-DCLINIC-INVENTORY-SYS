@@ -812,16 +812,15 @@ img {
 
 #update_card {
   box-shadow: 0 7px 4px rgba(126, 175, 249, 0.4);
-  height: 30rem;
+  height: 37rem;
   width: 50rem;
   margin-top: 5rem;
-  padding: 5%;
+  padding: 3%;
 }
 
-.update_title {
+.update_title{
   color: var(--first-color);
   font-weight: var(--normal-font-size);
-
 }
 
 #update_card button {

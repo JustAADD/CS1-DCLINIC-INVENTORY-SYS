@@ -33,7 +33,8 @@ if (isset($_GET['logout'])) {
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
   <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
   <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
+  <!-- icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
@@ -182,23 +183,24 @@ if (isset($_GET['logout'])) {
         <div class="col">
           <div class="card" id="cerds">
             <div class="header-table">Neutral Feedback</div>
-            <div class="body-table">
-              <table id="data-table" class="display">
-                <thead class="table-light">
-                  <tr>
-                    <th>#</th>
-                    <th>Patient Name</th>
-                    <th>Feedback</th>
-                    <th>Date</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="data-table">
-
-                </tbody>
-              </table>
-            </div>
           </div>
+          <div class="body-table">
+            <table id="data-table" class="display">
+              <thead class="table-light">
+                <tr>
+                  <th>#</th>
+                  <th>Patient Name</th>
+                  <th>Feedback</th>
+                  <th>Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="data-table">
+
+              </tbody>
+            </table>
+          </div>
+
         </div>
 
       </div>

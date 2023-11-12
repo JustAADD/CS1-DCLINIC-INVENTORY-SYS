@@ -20,7 +20,13 @@ if (isset($_POST["add_patient"])) {
   $fullname = $_POST["fullname"];
   $email = $_POST["email"];
   $contact = $_POST["contact"];
-  $date_of_birth = $_POST["date_of_birth"];
+  $gender = $_POST["gender"];
+  $dentalservices = $_POST["dental-services"];
+  $date = $_POST["date"];
+  $nextappointment = $_POST["next-appointment"];
+  $statusappointment = $_POST["status-appointment"];
+
+
 
 
   function generatePatientID()
@@ -40,8 +46,8 @@ if (isset($_POST["add_patient"])) {
 
   $patient_id = generatePatientID();
 
-  $sql = "INSERT INTO patient_list (patient_id, patient_name, email, contact, date_of_birth)
-  VALUES ('$patient_id','$fullname', '$email', '$contact', '$date_of_birth')";
+  $sql = "INSERT INTO patient_list (patient_id, patient_name, email, contact, gender, dental_services, date, next_appointment, stats_appointment)
+  VALUES ('$patient_id','$fullname', '$email', '$contact', '$gender', '$dentalservices', '$formattedDate', '$nextappointment', '$statusappointment')";
 
   // Execute the query and check if it was successful
   if ($con->query($sql) === TRUE) {
@@ -224,40 +230,64 @@ if (isset($_POST["add_patient"])) {
       <div class="row">
         <div class="col">
           <div class="card mb-3" id="cerds">
-            <div class="header-table" style="display: flex; justify-content: space-between; align-items:center;">Patient Lists
+            <div class="header-table" style="display: flex; justify-content: space-between; align-items:center;">Patient History
               <button type="btn" name="add_doctors" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary">Add Patients</button>
             </div>
           </div>
           <!-- Modal -->
           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content" style="padding: 2%;">
                 <form method="POST" action="">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Patient List</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Patient History</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                    <div class="mb-3">
-                      <label for="exampleFormControlInput1" class="form-label">Fullname</label>
-                      <input class="form-control" name="fullname" type="text" placeholder="Your Fullname:" aria-label="default input example">
-                    </div>
-                    <div class="mb-3">
-                      <label for="exampleFormControlInput2" class="form-label">Email address</label>
-                      <input type="email" name="email" class="form-control" id="exampleFormControlInput2" placeholder="Your Email Address:">
-                    </div>
-                    <div class="mb-3">
-                      <label for="exampleFormControlInput3" class="form-label">Contact Number</label>
-                      <input class="form-control" name="contact" type="text" placeholder="Your contact:" aria-label="default input example">
-                    </div>
-                    <div class="mb-3">
-                      <label for="exampleFormControlInput3" class="form-label">Date of birth</label>
-                      <input class="form-control" name="date_of_birth" type="date" placeholder="YYYY-MM-DD" aria-label="date of birth">
+                    <div class="row">
+                      <div class="col">
+                        <p class="update_title mb-3 mt-2" style="color: #3785F9;">Basic Information of Patient</p>
+                        <div class="mb-3">
+                          <label for="exampleFormControlInput1" class="form-label">Fullname</label>
+                          <input class="form-control" name="fullname" type="text" placeholder="Patient name:" autocomplete="off">
+                        </div>
+                        <div class="mb-3">
+                          <label for="exampleFormControlInput2" class="form-label">Email address</label>
+                          <input type="email" name="email" class="form-control" id="exampleFormControlInput2" placeholder="Email Address:" autocomplete="off">
+                        </div>
+                        <div class="mb-3">
+                          <label for="exampleFormControlInput3" class="form-label">Contact Number</label>
+                          <input class="form-control" name="contact" type="text" placeholder="Contact:" autocomplete="off">
+                        </div>
+                        <div class="mb-3">
+                          <label for="exampleFormControlInput3" class="form-label">Gender</label>
+                          <input class="form-control" name="gender" type="text" placeholder="Gender:" autocomplete="off">
+                        </div>
+                      </div>
+                      <div class="col">
+                        <p class="update_title mb-3 mt-2" style="color: #3785F9;">Dental Information of Patient</p>
+                        <div class="mb-3">
+                          <label for="exampleFormControlInput3" class="form-label">Dental Services</label>
+                          <input class="form-control" name="dental-services" type="text" placeholder="Services:" autocomplete="off">
+                        </div>
+                        <div class="mb-3">
+                          <label for="exampleFormControlInput3" class="form-label">Date</label>
+                          <input class="form-control" name="date" type="date" placeholder="Date of Appointment:" autocomplete="off">
+                        </div>
+                        <div class="mb-3">
+                          <label for="exampleFormControlInput3" class="form-label">Next Appointment</label>
+                          <input class="form-control" name="next-appointment" type="text" placeholder="Next Appointment:" autocomplete="off">
+                        </div>
+                        <div class="mb-3">
+                          <label for="exampleFormControlInput3" class="form-label">Status of Appointment</label>
+                          <input class="form-control" name="status-appointment" type="text" placeholder="Status of Appointment:" autocomplete="off">
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" name="add_patient" class="btn btn-primary" style="background:#3785F9; border: none;">Add Patient</button>
+                    <button type="submit" name="add_patient" class="btn btn-primary" style="background:#3785F9; border: none;">Save information</button>
                   </div>
                 </form>
               </div>
@@ -321,7 +351,8 @@ if (isset($_POST["add_patient"])) {
             table.clear();
             $.each(data, function(index, row) {
               var deleteButton = '<a href="../php/patient_data.php? deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a>&nbsp';
-              var updateButton = '<a href="../php/patient_update.php? updateid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></button></a>';
+              var updateButton = '<a href="../php/patient_update.php? updateid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></button></a>&nbsp';
+              var viewButton = '<a href="../php/patient_history_view.php? updateid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-file-import"></i></button></a>';
 
               table.row.add([
                 row.id,
@@ -329,8 +360,8 @@ if (isset($_POST["add_patient"])) {
                 row.patient_name,
                 row.email,
                 row.contact,
-                row.date_of_birth,
-                deleteButton + updateButton
+                row.gender,
+                deleteButton + updateButton + viewButton
                 // Add more columns as needed
               ]);
             });

@@ -229,59 +229,61 @@ if (isset($_POST["add_transaction"])) {
             <div class="header-table" id="button_patient_transaction">Patient Transaction
               <button type="btn" name="add_patient" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary">Add Patient Transaction</button>
             </div>
+          </div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <form method="POST" action="">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Patient Transaction</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <form method="POST" action="">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Patient Transaction</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">Transaction no</label>
+                      <input class="form-control" name="transactionNo" type="text" placeholder="Transaction no:" aria-label="default input example">
                     </div>
-                    <div class="modal-body">
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Transaction no</label>
-                        <input class="form-control" name="transactionNo" type="text" placeholder="Transaction no:" aria-label="default input example">
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Patient name</label>
-                        <input class="form-control" name="patient_name" type="text" placeholder="Patient name:" aria-label="default input example">
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Procedures</label>
-                        <input class="form-control" name="procedures" type="text" placeholder="Status:" aria-label="default input example">
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Status</label>
-                        <input class="form-control" name="status" type="text" placeholder="Status:" aria-label="default input example">
-                      </div>
+                    <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">Patient name</label>
+                      <input class="form-control" name="patient_name" type="text" placeholder="Patient name:" aria-label="default input example">
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="submit" name="add_transaction" class="btn btn-primary" style="background:#3785F9; border: none;">Add Patient Transaction</button>
+                    <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">Procedures</label>
+                      <input class="form-control" name="procedures" type="text" placeholder="Status:" aria-label="default input example">
                     </div>
-                  </form>
-                </div>
+                    <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">Status</label>
+                      <input class="form-control" name="status" type="text" placeholder="Status:" aria-label="default input example">
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" name="add_transaction" class="btn btn-primary" style="background:#3785F9; border: none;">Add Patient Transaction</button>
+                  </div>
+                </form>
               </div>
             </div>
-            <div class="body-table">
-              <table id="data-table" class="display">
-                <thead class="table-light">
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Transaction no</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Session</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody id="data-table"></tbody>
-              </table>
-            </div>
           </div>
+          <div class="body-table">
+            <table id="data-table" class="display">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Transaction no</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Session</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody id="data-table"></tbody>
+            </table>
+          </div>
+
         </div>
       </div>
     </div>

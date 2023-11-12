@@ -2,7 +2,7 @@
 
 require '../../connection/connection.php';
 
-$id = $_GET['updateid'];
+$id = $_GET['viewid'];
 // Fetch the doctor's data
 $sql = "SELECT * FROM dental_doctors WHERE id =$id";
 $result = mysqli_query($con, $sql);
@@ -15,59 +15,7 @@ $fullname = $row['doctors_name'];
 $email = $row['email'];
 $contact = $row['contact'];
 $specialties = $row['specialties'];
-
-if (isset($_POST['update'])) {
-  $fullname = $_POST['fullname'];
-  $email = $_POST['email'];
-  $contact = $_POST['contact'];
-  $specialties = $_POST['specialties'];
-
-  // Initialize the statement outside the loop
-  $stmt = $con->prepare("SELECT imagedata FROM dental_doctors WHERE id = ?");
-  if (!$stmt) {
-    echo "Failed to prepare statement: " . $con->error;
-    exit();
-  }
-
-  $stmt->bind_param("i", $id);
-  $stmt->execute();
-  $stmt->bind_result($existingImagedata);
-  $stmt->fetch();
-  $stmt->close();
-
-  $newImagedata = $existingImagedata; // Initialize with existing data
-  foreach ($_FILES['image']['tmp_name'] as $key => $tmp_name) {
-    $target_dir = "../imagedata/";
-    $target_file = $target_dir . uniqid() . '_' . basename($_FILES['image']['name'][$key]);
-
-    if (move_uploaded_file($_FILES['image']['tmp_name'][$key], $target_file)) {
-      // Append the new file name to the existing imagedata
-      $newImagedata .= ',' . $target_file;
-    } else {
-      echo "Failed to move uploaded file.";
-    }
-  }
-
-  // Update the database with the new imagedata
-  $stmt = $con->prepare("UPDATE dental_doctors SET doctors_name = ?, email = ?, contact = ?, specialties = ?, imagedata = ? WHERE id = ?");
-  if (!$stmt) {
-    echo "Failed to prepare statement: " . $con->error;
-    exit();
-  }
-
-  $stmt->bind_param("sssssi", $fullname, $email, $contact, $specialties, $newImagedata, $id);
-
-  if (!$stmt->execute()) {
-    echo "Failed to execute statement: " . $stmt->error;
-    exit();
-  }
-
-  $stmt->close();
-  $con->close();
-
-  header("Location: ../php/dental_doctors.php");
-}
-
+$imagedata = $row['imagedata'];
 
 ?>
 
@@ -133,37 +81,87 @@ if (isset($_POST['update'])) {
   <div class="container mt-5" id="update_container">
     <div class="card" id="update_card" style="height: 50%;">
       <form method="POST" action="" enctype="multipart/form-data">
-        <p class="update_title mt-2">Update Dental Doctors Information</p>
+        <p class="update_title mt-2">Doctor Information</p>
         <div class="row">
           <div class="col">
             <div class="mb-3">
               <label for="fullname" class="form-label">Fullname</label>
-              <input class="form-control" name="fullname" type="text" value="<?php echo $fullname; ?>" aria-label="default input example">
+              <input class="form-control" placeholder="Disabled input" aria-label="Disabled input example" disabled name="fullname" type="text" value="<?php echo $fullname; ?>" aria-label="default input example">
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Email address</label>
-              <input type="email" name="email" class="form-control" value="<?php echo $email; ?>">
+              <input type="email" placeholder="Disabled input" aria-label="Disabled input example" disabled name="email" class="form-control" value="<?php echo $email; ?>">
             </div>
           </div>
           <div class="col">
             <div class="mb-3">
               <label for="contact" class="form-label">Contact Number</label>
-              <input class="form-control" name="contact" type="text" value="<?php echo $contact; ?>" aria-label="default input example">
+              <input class="form-control" placeholder="Disabled input" aria-label="Disabled input example" disabled name="contact" type="text" value="<?php echo $contact; ?>" aria-label="default input example">
             </div>
-            <div class="mb-3">
+            <div class="mb-5">
               <label for="specialties" class="form-label">Specialties</label>
-              <input class="form-control" name="specialties" type="text" value="<?php echo $specialties; ?>" aria-label="default input example">
+              <input class="form-control" placeholder="Disabled input" aria-label="Disabled input example" disabled name="specialties" type="text" value="<?php echo $specialties; ?>" aria-label="default input example">
             </div>
           </div>
-          <p class="update_title mt-3">Doctor's documents</p>
-          <div class="input-group mb-3">
-            <input type="file" name="image[]" class="form-control" id="image" placeholder="Upload your photos" multiple>
-            <label class="input-group-text" for="formfile">Upload</label>
-          </div>
-          <p class="fw-light" style="font-size: small;">Note: Adding Document: This is the soft copy of doctor's requirements for backup purposes.</p>
         </div>
 
-        <button type="submit" name="update" id="update" value="Upload Image" class="btn btn-primary mt-3">Update</button>
+        <!--Requirements soft copy-->
+        <table class="table table-bordered" id="requirements">
+          <thead class="table-light">
+            <tr>
+              <th scope="col sm-0">#</th>
+              <th scope="col">Documents</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <?php
+            $sql = "SELECT * FROM dental_doctors WHERE id =$id";
+
+            $result = mysqli_query($con, $sql);
+            $counter = 1;
+            while ($row = mysqli_fetch_assoc($result)) {
+
+
+              $imagedata = $row['imagedata'];
+
+              // Split the comma-separated file names into an array
+              $fileArray = explode(',', $imagedata);
+
+              echo '<tr>
+            <td> ' . $counter . '</td>
+            <td>
+                <div style="margin-bottom: 1rem;">
+                    <div style="display: flex; flex-wrap: wrap; margin-top: 0.5rem;">';
+
+              // Loop through the array and display each file name as a link
+              foreach ($fileArray as $file) {
+                echo '
+                    <div style="margin-right: 1rem;">
+                        <a href="' . $file . '" download>' . basename($file) . '</a>
+                    </div>';
+              }
+
+              echo '</div></div></td></tr>';
+
+              $counter++;
+            }
+            ?>
+
+
+          </tbody>
+
+        </table>
+
+        <p class="fw-light" style="color: #636363; font-size: 14px;">click to download the file</p>
+
+
+
+        <div class="d-flex justify-content-end">
+          <a href="../php/dental_doctors.php" class="btn btn-primary mt-4" style="width: 20%;">Back</a>
+          <!-- <a href="../php/dental_doctors.php" class="btn btn-primary btn-lg disabled" tabindex="-1" role="button" aria-disabled="true">Primary link</a> -->
+        </div>
       </form>
     </div>
   </div>

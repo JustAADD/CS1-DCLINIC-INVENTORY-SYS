@@ -17,13 +17,11 @@ if (isset($_GET['logout'])) {
 
 require '../../connection/connection.php';
 
-
-// ADD QUERY DOCTORS
 if (isset($_POST["submit_doctors"])) {
-  $fullname = $_POST["fullname"];
-  $email = $_POST["email"];
-  $contact = $_POST["contact"];
-  $specialties = $_POST["specialties"];
+  $fullname = $_POST['fullname'];
+  $email = $_POST['email'];
+  $contact = $_POST['contact'];
+  $specialties = $_POST['specialties'];
 
   function generateDoctorsID()
   {
@@ -42,19 +40,81 @@ if (isset($_POST["submit_doctors"])) {
 
   $doctors_id = generateDoctorsID();
 
-  $sql = "INSERT INTO dental_doctors (doctors_id, doctors_name, email, contact, specialties)
-  VALUES ('$doctors_id','$fullname', '$email', '$contact', '$specialties')";
-
-  // Execute the query and check if it was successful
-  if ($con->query($sql) === TRUE) {
-    // echo "Event data saved successfully.";
-    header("Location: ../php/dental_doctors.php");
-  } else {
-    echo "Error: " . $sql . "<br>" . $con->error;
+  // Initialize the statement outside the loop
+  $stmt = $con->prepare("INSERT INTO dental_doctors (doctors_id,doctors_name, email, contact, specialties, imagedata) VALUES (?, ?, ?, ?, ?, ?)");
+  if (!$stmt) {
+    echo "Failed to prepare statement: " . $con->error;
+    exit();
   }
-  // Close the database connection
+
+  $fileNames = [];
+
+  foreach ($_FILES['image']['tmp_name'] as $key => $tmp_name) {
+    $target_dir = "../imagedata/";
+    $target_file = $target_dir . uniqid() . '_' . basename($_FILES['image']['name'][$key]);
+
+    if (move_uploaded_file($_FILES['image']['tmp_name'][$key], $target_file)) {
+
+      $fileNames[] = $target_file;
+    } else {
+      echo "failed to move upload file";
+    }
+  }
+
+  $imagedata = implode(',', $fileNames);
+
+  $stmt->bind_param("ssssss", $doctors_id, $fullname, $email, $contact, $specialties, $imagedata);
+
+  if (!$stmt->execute()) {
+    echo "Failed to execute statement: " . $stmt->error;
+    exit();
+  }
+
+  $stmt->close();
   $con->close();
+
+  header("Location: ../php/dental_doctors.php");
 }
+
+
+
+// // ADD QUERY DOCTORS
+// if (isset($_POST["submit_doctors"])) {
+//   $fullname = $_POST["fullname"];
+//   $email = $_POST["email"];
+//   $contact = $_POST["contact"];
+//   $specialties = $_POST["specialties"];
+
+//   function generateDoctorsID()
+//   {
+//     $prefix = 'DD-';
+//     $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+//     // Generate a random 5-character string
+//     $random_string = '';
+//     for ($i = 0; $i < 5; $i++) {
+//       $random_string .= $characters[mt_rand(0, strlen($characters) - 1)];
+//     }
+
+//     $doctors_id = $prefix . $random_string;
+//     return $doctors_id;
+//   }
+
+//   $doctors_id = generateDoctorsID();
+
+//   $sql = "INSERT INTO dental_doctors (doctors_id, doctors_name, email, contact, specialties)
+//   VALUES ('$doctors_id','$fullname', '$email', '$contact', '$specialties')";
+
+//   // Execute the query and check if it was successful
+//   if ($con->query($sql) === TRUE) {
+//     // echo "Event data saved successfully.";
+//     header("Location: ../php/dental_doctors.php");
+//   } else {
+//     echo "Error: " . $sql . "<br>" . $con->error;
+//   }
+//   // Close the database connection
+//   $con->close();
+// }
 
 ?>
 
@@ -242,7 +302,7 @@ if (isset($_POST["submit_doctors"])) {
           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
-                <form method="POST" action="">
+                <form method="POST" action="" enctype="multipart/form-data">
                   <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Dental Doctors</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -264,10 +324,17 @@ if (isset($_POST["submit_doctors"])) {
                       <label for="exampleFormControlInput3" class="form-label">Specialties</label>
                       <input class="form-control" name="specialties" type="text" placeholder="Your Specialties:" aria-label="default input example">
                     </div>
+                    <p class="update_title mt-3">Doctor's documents</p>
+                    <div class="input-group mb-3">
+                      <input type="file" name="image[]" class="form-control" id="image" placeholder="Upload your photos" multiple>
+                      <label class="input-group-text" for="formfile">Upload</label>
+                    </div>
+                    <p class="fw-light" style="color: #636363; font-size: 14px;">Upload Requirements: This is the soft copy of doctor's requirements for backup purposes.</p>
+
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" name="submit_doctors" class="btn btn-primary" style="background:#3785F9; border: none;">Save changes</button>
+                    <button type="submit" value="Upload Image" name="submit_doctors" class="btn btn-primary" style="background:#3785F9; border: none;">Save</button>
                   </div>
                 </form>
               </div>
@@ -332,7 +399,8 @@ if (isset($_POST["submit_doctors"])) {
             table.clear();
             $.each(data, function(index, row) {
               var deleteButton = '<a href="../php/doctors_data.php?deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a>&nbsp';
-              var updateButton = '<a href="../php/doctors_update.php?updateid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></button></a>';
+              var updateButton = '<a href="../php/doctors_update.php?updateid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></button></a>&nbsp';
+              var viewButton = '<a href="../php/doctors_viewing.php?viewid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-file-import"></i></button></a>';
 
               table.row.add([
                 row.id,
@@ -341,7 +409,7 @@ if (isset($_POST["submit_doctors"])) {
                 row.email,
                 row.contact,
                 row.specialties,
-                deleteButton + updateButton
+                deleteButton + updateButton + viewButton
                 // Add more columns as needed
               ]);
             });
