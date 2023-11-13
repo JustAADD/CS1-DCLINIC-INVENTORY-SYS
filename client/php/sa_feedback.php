@@ -27,10 +27,14 @@ if (isset($_GET['logout'])) {
   <!-- Boxiocns CDN Link -->
   <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+  <!-- icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!--Datatables-->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
@@ -121,28 +125,16 @@ if (isset($_GET['logout'])) {
             <i class='bx bx-message-dots'></i>
             <span class="link_name">Feedback</span>
           </a>
-          <i class='bx bxs-chevron-down arrow'></i>
         </div>
-        <ul class="sub-menu">
-          <li><a class="link_name" href="#">Feedback</a></li>
-          <li><a href="../php/positive_feedback.php">Positive Feedback</a></li>
-          <li><a href="../php/negative_feedback.php">Negative Feedback</a></li>
-          <li><a href="../php/neutral_feedback.php">Neutral Feedback</a></li>
-        </ul>
       </li>
       <li>
         <div class="iocn-link">
-          <a href="#">
+          <a href="../php/settings.php">
             <i class='bx bx-cog'></i>
             <span class="link_name">Settings</span>
           </a>
-          <i class='bx bxs-chevron-down arrow'></i>
+        
         </div>
-        <ul class="sub-menu">
-          <li><a class="link_name" href="#">Settings</a></li>
-          <li><a href="#">Page Settings</a></li>
-          <li><a href="#">Admin Settings</a></li>
-        </ul>
       </li>
 
 
@@ -165,21 +157,284 @@ if (isset($_GET['logout'])) {
 
 
   <section class="home-section">
-
-    <!--  real time data -->
-    <script type="text/javascript" src="../js/autoload.js"></script>
-
     <div class="home-content">
       <i class='bx bx-menu'></i>
     </div>
 
-    <!-- appointment/session table -->
-    <div class="container overflow-hidden mt-5">
-      <div id="feedbackSettings">
 
+    <!--Feedback content-->
+    <div class="card" id="feedback-content">
+      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Positive feedback</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Negative feedback</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Neutral Feedback</button>
+        </li>
+      </ul>
+      <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+
+          <div class="container overflow-hidden">
+            <div class="row">
+              <div class="col">
+                <div class="body-table">
+                  <table id="data-table" class="display">
+                    <thead class="table-light">
+                      <tr>
+                        <th scope="col">#</th>
+
+                        <th scope="col">Patient Name</th>
+                        <th scope="col">Feedback</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="data-table">
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+
+        </div>
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+          <div class="container overflow-hidden">
+            <div class="row">
+              <div class="col">
+                <div class="body-table">
+                  <table id="data-table2" class="display">
+                    <thead class="table-light">
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Patient Name</th>
+                        <th scope="col">Feedback</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="data-table2">
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+          <div class="container overflow-hidden">
+            <div class="row">
+              <div class="col">
+                <div class="body-table">
+                  <table id="data-table3" class="display">
+                    <thead class="table-light">
+                      <tr>
+                        <th scope="col">#</th>
+
+                        <th scope="col">Patient Name</th>
+                        <th scope="col">Feedback</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="data-table3">
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- javascript -->
+    <script src="../js/script.js"></script>
+
+    <!--datatable-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        var table = $('#data-table').DataTable({
+          "columns": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "columnDefs": [{
+            "width": "50%",
+            "targets": 2
+          }]
+        });
+
+        // Function to fetch and update data
+        function loadData() {
+          $.ajax({
+            url: 'sa_feedback_script.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+              // Clear the existing data and add the new data
+              var data = data.data;
+
+              table.clear();
+              $.each(data, function(index, row) {
+                var deleteButton = '<a href="../php/patient_data.php? deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a>&nbsp';
+
+                table.row.add([
+                  row.id,
+                  row.patient_name,
+                  row.feedback,
+                  row.date,
+                  deleteButton
+                  // Add more columns as needed
+                ]);
+              });
+
+              // Draw the table to update the view with new data
+              table.draw(false);
+            },
+            error: function() {
+              console.error('Error loading data');
+            }
+          });
+        }
+
+        // Load data initially
+        loadData();
+
+        // Refresh data every X milliseconds (e.g., every 5 seconds)
+        setInterval(loadData, 5000); // 5000 milliseconds = 5 seconds
+      });
+
+
+      /* second */
+
+      $(document).ready(function() {
+        var table = $('#data-table2').DataTable({
+          "columns": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "responsive": true,
+
+        });
+
+        // Function to fetch and update data
+        function loadData() {
+          $.ajax({
+            url: 'sa_feedback_script.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data2) {
+
+              var data2 = data2.data2;
+              // Clear the existing data and add the new data
+              table.clear();
+              $.each(data2, function(index, row2) {
+                var deleteButton = '<a href="../php/patient_data.php?deleteid=' + row2.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a>&nbsp';
+
+                table.row.add([
+                  row2.id,
+                  row2.patient_name,
+                  row2.feedback,
+                  row2.date,
+                  deleteButton
+                  // Add more columns as needed
+                ]);
+              });
+
+              // Draw the table to update the view with new data
+              table.draw(false);
+            },
+            error: function() {
+              console.error('Error loading data');
+            }
+          });
+        }
+
+        // Load data initially
+        loadData();
+
+        // Refresh data every X milliseconds (e.g., every 5 seconds)
+        setInterval(function() {
+          loadData(table);
+        }, 5000); // 5000 milliseconds = 5 seconds
+      });
+
+      /* third */
+
+      $(document).ready(function() {
+        var table = $('#data-table3').DataTable({
+          "columns": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "responsive": true,
+        });
+
+        // Function to fetch and update data
+        function loadData() {
+          $.ajax({
+            url: 'sa_feedback_script.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data3) {
+
+              var data3 = data3.data3;
+              // Clear the existing data and add the new data
+              table.clear();
+              $.each(data3, function(index, row3) {
+                var deleteButton = '<a href="../php/patient_data.php?deleteid=' + row3.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a>&nbsp';
+
+                table.row.add([
+                  row3.id,
+                  row3.patient_name,
+                  row3.feedback,
+                  row3.date,
+                  deleteButton
+                  // Add more columns as needed
+                ]);
+              });
+
+              // Draw the table to update the view with new data
+              table.draw(false);
+            },
+            error: function() {
+              console.error('Error loading data');
+            }
+          });
+        }
+
+        // Load data initially
+        loadData(table);
+
+        // Refresh data every X milliseconds (e.g., every 5 seconds)
+        setInterval(function() {
+          loadData(table);
+        }, 5000); // 5000 milliseconds = 5 seconds 
+      });
+    </script>
+
+
   </section>
+
 
 
   <!-- javascript -->

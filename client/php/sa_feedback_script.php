@@ -17,11 +17,28 @@ if (!$con) {
 
 // Fetch data from the database
 $result = $con->query("SELECT * FROM positive_feedback ORDER BY ID DESC");
-
 $data = array();
 while ($row = $result->fetch_assoc()) {
   $data[] = $row;
 }
 
-echo json_encode($data);
+$query2 = "SELECT * FROM negative_feedback ORDER BY ID DESC";
+$result2 = $con->query($query2);
+$data2 = array();
+while ($row = $result2->fetch_assoc()) {
+  $data2[] = $row;
+}
+
+$query3 = "SELECT * FROM neutral_feedback ORDER BY ID DESC";
+$result3 = $con->query($query3);
+$data3 = array();
+while ($row = $result3->fetch_assoc()) {
+  $data3[] = $row;
+}
+
+echo json_encode(array(
+  'data' => $data,
+  'data2' => $data2,
+  'data3' => $data3
+));
 $con->close();

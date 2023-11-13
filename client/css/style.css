@@ -321,6 +321,31 @@ body {
   padding: 12px;
 }
 
+#feedback-content {
+  margin-top: 1rem;
+  border: 50%;
+  border-radius: 5px;
+  border-color: #282B3A;
+  height: auto;
+  padding: 2%;
+}
+
+#pills-tab {
+  background-color: #282B3A;
+  height: 5rem;
+  padding: 1.8%;
+  border-radius: 5px;
+}
+#pills-home-tab{
+  color: #fff;
+}
+#pills-profile-tab{
+  color: #fff;
+}
+#pills-contact-tab{
+  color: #fff;
+}
+
 .sidebar.close~.home-section {
   left: 78px;
   width: calc(100% - 78px);

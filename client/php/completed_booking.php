@@ -199,28 +199,19 @@ if (isset($_GET['logout'])) {
             <i class='bx bx-message-dots'></i>
             <span class="link_name">Feedback</span>
           </a>
-          <i class='bx bxs-chevron-down arrow'></i>
+          
         </div>
-        <ul class="sub-menu">
-          <li><a class="link_name" href="#">Feedback</a></li>
-          <li><a href="../php/positive_feedback.php">Positive Feedback</a></li>
-          <li><a href="../php/negative_feedback.php">Negative Feedback</a></li>
-          <li><a href="../php/neutral_feedback.php">Neutral Feedback</a></li>
-        </ul>
+      
       </li>
       <li>
         <div class="iocn-link">
-          <a href="#">
+          <a href="../php/settings.php">
             <i class='bx bx-cog'></i>
             <span class="link_name">Settings</span>
           </a>
-          <i class='bx bxs-chevron-down arrow'></i>
+
         </div>
-        <ul class="sub-menu">
-          <li><a class="link_name" href="#">Settings</a></li>
-          <li><a href="#">Page Settings</a></li>
-          <li><a href="#">Admin Settings</a></li>
-        </ul>
+
       </li>
 
 
