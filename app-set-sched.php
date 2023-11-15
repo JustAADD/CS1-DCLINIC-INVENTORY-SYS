@@ -237,8 +237,9 @@ if (isset($_POST['submit'])) {
 
             <input type="radio" class="btn-check" name="procedures" value="Dental Bridges" id="option17" autocomplete="off">
             <label class="btn btn-radio me-3" style="justify-content: center; align-items: center; height: 5rem; text-align: center;" value="Dental Bridges" for="option17">Dental Bridges</label>
-
           </div>
+
+          
 
 
 
@@ -250,9 +251,9 @@ if (isset($_POST['submit'])) {
                 <input type="text" class="form-control" name="patient_name" id="exampleInputEmail1" placeholder="Your Fullname" aria-describedby="default input example">
               </div>
               <p class="" style="font-size:smaller;">Dalino Dental Clinic kindly informs you that there is a <br> Placement fee: 80php
-            for the appointment reservations.</p>
+                for the appointment reservations.</p>
             </div>
-            
+
 
             <div class="col" id="ts2">
               <p class="timeslots">Timeslots</p>
@@ -300,7 +301,6 @@ if (isset($_POST['submit'])) {
 
                     $slots[] = convertTo12HourFormat($start->format("H:i"));
                     $start->add($interval)->add($cleanupInterval);
-                    
                   }
 
                   // for ($intStart = $start; $intStart < $end; $intStart->add($interval)->add($cleanupInterval)) {

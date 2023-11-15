@@ -46,7 +46,7 @@ if (isset($_GET['logout'])) {
           </div>
         </div>
 
-        <div class="nav__menu">
+        <!-- <div class="nav__menu">
           <ul class="nav__list">
             <li class="nav__item"><a href="#" class="nav__link"></a></li>
             <li class="nav__item"><a href="#services" class="nav__link"></a></li>
@@ -54,9 +54,9 @@ if (isset($_GET['logout'])) {
             <li class="nav__item"><a href="#about-us" class="nav__link"></a></li>
 
           </ul>
-        </div>
+        </div> -->
 
-        <div class="nav__social">
+        <div class="nav__social" style="margin-left: 42rem;">
           <a href="#" class="nav__social-icon"><ion-icon name="mail-outline"></ion-icon></a>
           <a href="#" class="nav__social-icon"><ion-icon name="logo-facebook"></ion-icon></a>
           <a href="?logout" name="logout" id="logout" class="nav__social-icon"> <ion-icon name="log-out-outline"></ion-icon></a>

@@ -125,7 +125,7 @@ function build_calendar($month, $year)
       if ($status === "Open") {
         if ($slotses > 0) {
           $calendar .= "<td class='booked $today' style ='background-color:#32CD32;' ><h4>$currentDay</h4> 
-                <a href='app-set-sched.php?date=" . $date . "' class='btn btn-success btn-xs' style='font-size: 10px; background-color: #3785F9; border: none;'>Book</a>
+                <a href='appointment_schedule.php?date=" . $date . "' class='btn btn-success btn-xs' style='font-size: 10px; background-color: #3785F9; border: none;'>Book</a>
                 <button class='btn btn-danger btn-xs' style='font-size: 10px; background-color: #3785F9; border: none;'>$slotses slots</button>
               </td>";
         } elseif ($slotses == 0) {
