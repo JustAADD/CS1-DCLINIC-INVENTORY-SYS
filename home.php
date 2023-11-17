@@ -38,8 +38,6 @@ if (!isset($_SESSION['email'])) {
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <!-- ===== css ===== -->
   <link rel="stylesheet" href="assets/css/content-style.css">
 
@@ -59,7 +57,7 @@ if (!isset($_SESSION['email'])) {
 
   <!-- second column and row -->
 
-  <section class="cons hidden" id="cons">
+  <section class="cons " id=cons">
     <div class="row m-0">
       <div class="col-sm-6" id="columnOne" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">
         <h2>We Care About <br> Your <span>Smile</span></h2>
@@ -391,10 +389,30 @@ if (!isset($_SESSION['email'])) {
 
   </section>
 
+  
+  <script>
+    function showLandingPage() {
+      const loaderWrapper = document.querySelector('.loader-wrapper');
+      const cons = document.querySelector('.cons');
+      const loader = document.querySelector('.loader');
+
+      loaderWrapper.style.display = 'none';
+      loader.style.display = 'none';
+      cons.style.display = 'block';
+
+      console.log('showLandingPage function is called');
+
+    }
 
 
+    //When the page is fully loaded
+    window.addEventListener('load', function() {
 
-
+      console.log('Window load event is triggered');
+      // Hide the loader
+      setTimeout(showLandingPage, 50);
+    });
+  </script>
   <!-- Animation-->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
@@ -427,25 +445,7 @@ if (!isset($_SESSION['email'])) {
     })
   </script>
 
-  <script>
-    function showLandingPage() {
-      const loaderWrapper = document.querySelector('.loader-wrapper');
-      const cons = document.querySelector('.cons');
-      const loader = document.querySelector('.loader');
 
-      loaderWrapper.style.display = 'none';
-      loader.style.display = 'none';
-      cons.style.display = 'block';
-
-    }
-
-
-    // When the page is fully loaded
-    window.addEventListener('load', function() {
-      // Hide the loader
-      setTimeout(showLandingPage, 100);
-    });
-  </script>
 
 </body>
 

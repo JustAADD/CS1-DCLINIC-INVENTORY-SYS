@@ -19,13 +19,13 @@ if (isset($_GET['deleteid'])) {
     $status = "Approved";
     $name = $row['name'];
     $patient_name = $row['patient_name'];
-    $procedures = $row['procedures'];
+    $procedures = $row['selectedProcedures'];
     $session_time = $row['session_time'];
-    $session_date = $row['session_date'];
+    $session_date = $row['date'];
     // ... (Add other columns as needed)
 
     // Insert the data into the 'deleted_schedule' table
-    $insert_query = "INSERT INTO booking_approved (id, transac_no, status, name, patient_name, procedures, session_time, session_date) VALUES 
+    $insert_query = "INSERT INTO booking_approved (id, transac_no, status, name, patient_name, selectedProcedures, session_time, date) VALUES 
     ('$id', '$transac_no', '$status', '$name', '$patient_name', '$procedures', '$session_time', '$session_date')";
     // ... (Add other columns as needed)
 
@@ -95,9 +95,9 @@ if (isset($_GET['deleteid'])) {
           $status = $row['status'];
           $transac_no = $row['transac_no'];
           $name = $row['name'];
-          $procedures = $row['procedures'];
+          $procedures = $row['selectedProcedures'];
           $session_time = $row['session_time'];
-          $session_date = $row['session_date'];
+          $session_date = $row['date'];
 
           echo '
          

@@ -115,6 +115,66 @@ if (isset($_POST['submit'])) {
   }
 }
 
+
+
+// Assume that $userSelectedTimes is an array containing the times already chosen by the user
+$userSelectedTimes = array("09:00", "11:00", "14:00"); // Replace this with the actual array
+
+// Function to generate time slots
+function generateTimeSlots($start, $end, $interval, $userSelectedTimes)
+{
+  $current = strtotime($start);
+  $end = strtotime($end);
+
+  $timeSlots = array();
+
+  while ($current <= $end) {
+    $currentTime = date("H:i", $current);
+
+    // Check if the current time slot is selected by the user
+    $isNotAvailable = in_array($currentTime, $userSelectedTimes);
+
+    $timeSlots[] = array(
+      'time' => $currentTime,
+      'notAvailable' => $isNotAvailable,
+    );
+
+    $current = strtotime('+' . $interval . ' minutes', $current);
+  }
+
+  return $timeSlots;
+}
+
+// Example usage
+$start = "09:00";
+$end = "17:00";
+$interval = 60; // minutes
+
+$allTimeSlots = generateTimeSlots($start, $end, $interval, $userSelectedTimes);
+?>
+
+<!-- Display time slots -->
+<div class="form-group">
+  <div class="button-row">
+    <?php foreach ($allTimeSlots as $counter => $timeSlot) : ?>
+      <?php if ($counter % 3 === 0) : ?>
+        <div class="row">
+        <?php endif; ?>
+
+        <div class="col-md-4">
+          <input type="radio" class="btn-check" name="timeslot" value="<?php echo $timeSlot['time']; ?>" id="radio<?php echo $counter; ?>" autocomplete="off" <?php echo $timeSlot['notAvailable'] ? 'disabled' : ''; ?>>
+          <label class="btn btn-radio-ts <?php echo $timeSlot['notAvailable'] ? 'disabled-label' : ''; ?>" for="radio<?php echo $counter; ?>"><?php echo $timeSlot['time']; ?></label>
+        </div>
+
+        <?php if ($counter % 3 === 2 || $counter === count($allTimeSlots) - 1) : ?>
+        </div>
+      <?php endif; ?>
+    <?php endforeach; ?>
+  </div>
+</div>
+?>
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -239,7 +299,7 @@ if (isset($_POST['submit'])) {
             <label class="btn btn-radio me-3" style="justify-content: center; align-items: center; height: 5rem; text-align: center;" value="Dental Bridges" for="option17">Dental Bridges</label>
           </div>
 
-          
+
 
 
 

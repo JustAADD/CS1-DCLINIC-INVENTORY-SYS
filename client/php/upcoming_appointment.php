@@ -130,7 +130,7 @@ if (isset($_GET['logout'])) {
             <i class='bx bx-message-dots'></i>
             <span class="link_name">Feedback</span>
           </a>
-        
+
         </div>
 
       </li>
@@ -247,15 +247,22 @@ if (isset($_GET['logout'])) {
                     <br>
                   ${row.patient_name}
               `;
+              var statusButton = `
+                  <td style="width: 5rem;">
+                      <button type="button" class="btn btn-primary" style="background-color:#31b522; width: 8rem; border: none;">
+                      <i class="fa-solid fa-gear fa-spin"></i> &nbsp; ${row.status}
+                      </button>
+                  </td>
+`;
 
 
               table.row.add([
                 row.id,
-                row.status,
+                statusButton,
                 transacAndName,
-                row.procedures,
+                row.selectedProcedures,
                 row.session_time,
-                row.session_date,
+                row.date,
                 approvedButton + completedButton + rejectedButton
                 // Add more columns as needed
               ]);

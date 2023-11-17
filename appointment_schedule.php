@@ -47,8 +47,8 @@ if (isset($_POST['submit'])) {
 
   $date = $_POST['date'];
 
-  $date_obj = DateTime::createFromFormat('Y-m-d', $date);
-  $formatted_date = $date_obj->format('d/m/y l');
+  // $date_obj = DateTime::createFromFormat('Y-m-d', $date);
+  // $formatted_date = $date_obj->format('d/m/y l');
 
   $mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
 
@@ -70,7 +70,7 @@ if (isset($_POST['submit'])) {
 
   $tr_no = generateTR_NO();
 
-  $stmt = $mysqli->prepare("INSERT INTO appointment_booking (transac_no, status, name, patient_name, selectedProcedures,  session_time, session_date) VALUES (?,?,?,?,?,?,?)");
+  $stmt = $mysqli->prepare("INSERT INTO appointment_booking (transac_no, status, name, patient_name, selectedProcedures, session_time, date) VALUES (?,?,?,?,?,?,?)");
 
   if (!$stmt) {
     echo "Failed to prepare statement: " . $mysqli->error;
@@ -79,7 +79,7 @@ if (isset($_POST['submit'])) {
 
   $selectedProcedures = implode(',', $_POST['selectedProcedures']);
 
-  $stmt->bind_param('sssssss', $tr_no, $status, $fullname, $patient_name, $selectedProcedures,  $selectedTimeslot, $formatted_date);
+  $stmt->bind_param('sssssss', $tr_no, $status, $fullname, $patient_name, $selectedProcedures,  $selectedTimeslot, $date);
   if ($stmt->execute()) {
 
     $stmt->close();
@@ -102,11 +102,12 @@ if (isset($_POST['submit'])) {
 
     $updateStmt->close();
     $mysqli->close();
-    // $msg = "<div class='alert alert-success'>Booking Successful</div>";
+    $msg = "<div class='alert alert-success'>Booking Successful</div>";
 
-    // $_SESSION['status'] = "Your Appointment Booking successfully";
-    // $_SESSION['status_code'] = "success";
-    header("refresh:0.1;url=gcash_payment.php");
+    $_SESSION['status'] = "Your Appointment Booking successfully";
+    $_SESSION['status_code'] = "success";
+    // header("refresh:0.1;url=gcash_payment.php");
+    header("refresh:0.1;url=appointment.php");
     exit();
   } else {
     echo "Failed to execute statement: " . $stmt->error;
@@ -135,15 +136,42 @@ if (isset($_POST['submit'])) {
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="./assets/js/sweetalert.min.js"></script>
 
-
   <?php include 'app-header.php'; ?>
-
+  
 </head>
 
 <body>
   <section>
     <div class="container-fluid d-flex justify-content-center align-items-center">
+
+
+
       <div class="card" id="cardform" style="margin-top: 6rem;">
+
+        <?php
+        if (isset($_SESSION['back'])) {
+
+          // Display the SweetAlert confirmation pop-up
+          echo "<script>
+            Swal.fire({
+              title: 'Cancel Appointment?',
+              text: 'Are you sure you want to cancel your appointment?',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Yes, cancel it!',
+              cancelButtonText: 'No, go back',
+            }).then((result) => {
+              if (result.isConfirmed) {
+               
+                window.location.href = 'appointment.php';
+              }
+            });
+          </script>";
+
+          unset($_SESSION['back']);
+        }
+        ?>
+
         <p class="card-form-text" style="margin-left: 2.2rem;">Dental Services <span style="font-size: 13px; color:#808080;">(This is our available services)</span></p>
         <form action="appointment_schedule.php" method="POST">
           <input type="hidden" name="date" value="<?php echo $date; ?>">
@@ -216,118 +244,118 @@ if (isset($_POST['submit'])) {
             <div class="col-md-3 mb-3" id="ts2">
               <p class="timeslots">Timeslots</p>
               <p>Choose Convenient Time</p>
-              <?php
 
+              <?php
 
               require 'connection\connection.php';
 
               if (isset($_GET['date'])) {
                 $date = $_GET['date'];
 
-                $sql = "SELECT start_time, end_time FROM manage_schedule WHERE date = '$date';";
-                $result = $con->query($sql);
+                // echo "Input Date: $date<br>";
 
-                // Check if the query was successful and fetch the values
+                $sql = "SELECT session_time FROM appointment_booking WHERE date = ?;";
+                $stmt = $con->prepare($sql);
+
+                $stmt->bind_param("s", $date);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                $selectedTimeSlots = [];
+
+                if ($result->num_rows > 0) {
+                  while ($row = $result->fetch_assoc()) {
+                    $selectedTimeSlots[] = $row['session_time'];
+                  }
+                }
+                // // Debugging statement
+                // echo "Selected Time Slots from Database: " . implode(', ', $selectedTimeSlots) . "<br>";
+                // var_dump($selectedTimeSlots);
+
+
+                $sql = "SELECT start_time, end_time FROM manage_schedule WHERE date = ?;";
+                $stmt = $con->prepare($sql);
+
+                $stmt->bind_param("s", $date);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+
                 if ($result && $result->num_rows > 0) {
                   $row = $result->fetch_assoc();
                   $start = $row['start_time'];
                   $end = $row['end_time'];
-                } else {
-                  // Handle the case where no data is found in the database or any other error
-                  echo "Error fetching data from the database: " . $con->error;
+                } else if ($stmt->error) {
+                  echo "Error: " . $stmt->error;
                 }
 
-                $duration = 60; //hours
-                $cleanup = 0; // minutes
-                // $start = "09:00";
-                // $end = "17:00";
-
-                function convertTo12HourFormat($time)
+                function generateTimeSlots($start, $end, $interval, $selectedTimeSlots)
                 {
-                  return date("g:iA", strtotime($time));
-                }
+                  $current = strtotime($start);
+                  $end = strtotime($end);
 
-                function timeslots($duration, $cleanup, $start, $end)
-                {
-                  $start = new DateTime($start);
-                  $end = new DateTime($end);
-                  $interval = new DateInterval("PT" . $duration . "M");
-                  $cleanupInterval = new DateInterval("PT" . $cleanup . "M");
-                  $slots = array();
+                  $timeSlots = array();
 
-                  while ($start < $end) {
+                  while ($current <= $end) {
+                    $currentTime = date("H:i:s", $current);
 
-                    $slots[] = convertTo12HourFormat($start->format("H:i"));
-                    $start->add($interval)->add($cleanupInterval);
+                    // Check if the current time slot is selected by the user
+                    $isNotAvailable = in_array($currentTime, $selectedTimeSlots);
+
+                    $timeSlots[] = array(
+                      'time' => $currentTime,
+                      'notAvailable' => $isNotAvailable,
+                    );
+
+                    $current = strtotime('+' . $interval . ' minutes', $current);
                   }
 
-                  return $slots;
+                  return $timeSlots;
                 }
 
-                $timeslots = timeslots($duration, $cleanup, $start, $end);
+                // Example usage
+                $interval = 60; // minutes
+                $allTimeSlots = generateTimeSlots($start, $end, $interval, $selectedTimeSlots);
               }
               ?>
 
               <?php
+              $selectedTimeSlots = isset($selectedTimeSlots) ? $selectedTimeSlots : [];
 
-              // foreach ($timeslots as $ts) {
-              // 
+              if (!empty($allTimeSlots)) :
               ?>
 
-
-              <?php  ?>
-
-              <?php if (!empty($timeslots)) : ?>
                 <div class="form-group">
                   <div class="button-row">
-                    <?php foreach ($timeslots as $counter => $ts) : ?>
+                    <?php foreach ($allTimeSlots as $counter => $timeSlot) : ?>
                       <?php if ($counter % 3 === 0) : ?>
                         <div class="row">
                         <?php endif; ?>
+
                         <div class="col-md-4">
-                          <input type="radio" class="btn-check" name="timeslot" value="<?php echo $ts; ?>" id="radio<?php echo $counter; ?>" autocomplete="off">
-                          <label class="btn btn-radio-ts" for="radio<?php echo $counter; ?>"><?php echo $ts; ?></label>
+                          <?php
+                          $isNotAvailable = $timeSlot['notAvailable'];
+                          $disabledAttribute = $isNotAvailable ? 'disabled' : '';
+                          $disabledClass = $isNotAvailable ? 'disabled-label' : '';
+                          ?>
+                          <input type="radio" class="btn-check" name="timeslot" value="<?php echo $timeSlot['time']; ?>" id="radio<?php echo $counter; ?>" autocomplete="off" <?php echo $disabledAttribute; ?>>
+                          <label class="btn btn-radio-ts <?php echo $disabledClass; ?>" for="radio<?php echo $counter; ?>"><?php echo $timeSlot['time']; ?></label>
                         </div>
-                        <?php if ($counter % 3 === 2 || $counter === count($timeslots) - 1) : ?>
+
+                        <?php if ($counter % 3 === 2 || $counter === count($allTimeSlots) - 1) : ?>
                         </div>
                       <?php endif; ?>
                     <?php endforeach; ?>
                   </div>
                 </div>
+
               <?php else : ?>
                 <p>No time slots available for the selected date.</p>
               <?php endif; ?>
 
-              <!-- <div class="form-group">
-                <div class="button-row">
-                  <?php
-                  $counter = 0; // Counter to keep track of the number of buttons
-                  foreach ($timeslots as $ts) {
-                    // Open a new row every third button
-                    if ($counter % 3 === 0) {
-                      echo '<div class="row">';
-                    }
-                    echo '<div class="col-md-4">';
-                    // echo '<button class="btn btn-success">' . $ts . '</button>';
-                    echo '<input type="radio" class="btn-check" name="timeslot" value="' . $ts . '" id="radio' . $counter . '" autocomplete="off">';
-                    echo '<label class="btn btn-radio-ts" for="radio' . $counter . '">' . $ts . '</label>';
-                    echo '</div>';
-                    // Close the row every third button
-                    if ($counter % 3 === 2) {
-                      echo '</div>';
-                    }
-                    $counter++;
-                  }
-                  // Close the row if the number of buttons is not a multiple of three
-                  if ($counter % 3 !== 0) {
-                    echo '</div>';
-                  }
-                  ?>
-                </div>
-              </div> -->
 
-              <p class="timeslots">Fill up for our info</p>
-              <p class="" style="font-size:smaller;">Please confirm whether you intend to use the name above; if not, kindly provide an alternative name.</p>
+              <p class="timeslots mt-3">Fill up for our info</p>
+              <p class="" style="font-size:smaller;"><span>Option:</span>&nbsp Please confirm whether you intend to use the name above; if not, kindly provide an alternative name.</p>
               <div class="mb-4 mt-3">
                 <label for="exampleInputEmail1" class="form-label m">Fullname</label>
                 <input type="text" class="form-control" name="patient_name" id="exampleInputEmail1" placeholder="Your Fullname" aria-describedby="default input example">
@@ -350,8 +378,14 @@ if (isset($_POST['submit'])) {
     </div>
   </section>
 
+  <!-- sweet alert -->
+  <script src="./assets/js/sweetalert.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <!--===== Bootstrap JS =====-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 </body>
 

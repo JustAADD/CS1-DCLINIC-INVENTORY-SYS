@@ -190,9 +190,9 @@ require '../../connection/connection.php';
                 $tr_no = $row['transac_no'];
                 $name = $row['name'];
                 $patient_name = $row['patient_name'];
-                $procedures = $row['procedures'];
+                $procedures = $row['selectedProcedures'];
                 $session_time = $row['session_time'];
-                $session_date = $row['session_date'];
+                $session_date = $row['date'];
 
                 echo '
                 <tbody>
