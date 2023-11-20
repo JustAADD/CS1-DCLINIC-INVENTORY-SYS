@@ -174,10 +174,31 @@ if (isset($_GET['logout'])) {
           <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Media Settings</button>
         </div>
         <div class="tab-content" id="v-pills-tabContent">
-          <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">...</div>
-          <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">...</div>
-          <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
-          <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+          <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+            <div class="card" id="gen1">
+              <p class="" style="font-size:smaller;"><span></span> This settings update admin dashboard name header.</p>
+              <div class="mb-4 mt-2">
+                <label for="exampleInputEmail1" class="form-label m">Dashboard name</label>
+                <input type="text" class="form-control" name="patient_name" id="exampleInputEmail1" placeholder=".." aria-describedby="default input example">
+              </div>
+              <p class="" style="font-size:smaller;"><span></span> This settings update's admin account.</p>
+              <div class="mb-2 mt-2">
+                <label for="exampleInputEmail1" class="form-label m">Name</label>
+                <input type="text" class="form-control" name="patient_name" id="exampleInputEmail1" placeholder=".." aria-describedby="default input example">
+              </div>
+              <div class="mb-2">
+                <label for="formfile" style="font-size:smaller;" class="form-label">Admin Profile</label>
+                <input type="file" name="image" class="form-control" id="image" placeholder="Upload your photos">
+              </div>
+              <button type="btn" id="savesettings" name="gensettings" class="btn btn-primary mt-3">save</button>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+            <div class="card" id="gen">
+
+            </div>
+
+          </div>
         </div>
       </div>
     </div>

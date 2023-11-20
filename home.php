@@ -257,7 +257,7 @@ if (!isset($_SESSION['email'])) {
               <p><?php
                   require 'connection/connection.php';
 
-                  $selectQuery = "SELECT feedback, patient_name FROM positive_feedback WHERE id = '5'";
+                  $selectQuery = "SELECT feedback, patient_name FROM positive_feedback WHERE id = '19'";
                   $result = mysqli_query($con, $selectQuery);
 
                   while ($row = mysqli_fetch_assoc($result)) {
@@ -276,7 +276,7 @@ if (!isset($_SESSION['email'])) {
               <p><?php
                   require 'connection/connection.php';
 
-                  $selectQuery = "SELECT feedback, patient_name FROM positive_feedback  WHERE id = '6'";
+                  $selectQuery = "SELECT feedback, patient_name FROM positive_feedback  WHERE id = '20'";
                   $result = mysqli_query($con, $selectQuery);
 
                   while ($row = mysqli_fetch_assoc($result)) {
@@ -294,7 +294,7 @@ if (!isset($_SESSION['email'])) {
               <p><?php
                   require 'connection/connection.php';
 
-                  $selectQuery = "SELECT feedback, patient_name FROM positive_feedback WHERE id = '7'";
+                  $selectQuery = "SELECT feedback, patient_name FROM positive_feedback WHERE id = '21'";
                   $result = mysqli_query($con, $selectQuery);
 
                   while ($row = mysqli_fetch_assoc($result)) {
