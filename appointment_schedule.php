@@ -357,8 +357,8 @@ if (isset($_POST['submit'])) {
               <p class="timeslots mt-3">Fill up for our info</p>
               <p class="" style="font-size:smaller;"><span>Option:</span>&nbsp Please confirm whether you intend to use the name above; if not, kindly provide an alternative name.</p>
               <div class="mb-4 mt-3">
-                <label for="exampleInputEmail1" class="form-label m">Fullname</label>
-                <input type="text" class="form-control" name="patient_name" id="exampleInputEmail1" placeholder="Your Fullname" aria-describedby="default input example">
+                <label for="exampleInputEmail1" class="form-label m">Patient name:  </label>
+                <input type="text" class="form-control" name="patient_name" id="exampleInputEmail1" placeholder="Patient name" aria-describedby="default input example">
               </div>
               <!-- <p class="" style="font-size:smaller;">Dalino Dental Clinic kindly informs you that there is a <br> Placement fee: 80php
               for the appointment reservations.</p> -->

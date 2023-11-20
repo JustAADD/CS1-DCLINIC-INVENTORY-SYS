@@ -294,7 +294,7 @@ if (isset($_POST["add_patient"])) {
                   <th scope="col">Patient Name</th>
                   <th scope="col">Email</th>
                   <th scope="col">Phone Number</th>
-                  <th scope="col">Date of birth</th>
+                  <th scope="col">Gender</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>

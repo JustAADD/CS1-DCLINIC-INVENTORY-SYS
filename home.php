@@ -39,14 +39,16 @@ if (!isset($_SESSION['email'])) {
 <head>
   <meta charset="UTF-8">
   <!-- ===== css ===== -->
-  <link rel="stylesheet" href="assets/css/content-style.css">
-
+  <link rel="stylesheet" href="./assets/css/content-style.css">
   <!-- OWL-Carousel-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <!-- Animation-->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
+  <!--loader-->
+  <script src="./assets/js/loader.js"></script>
 </head>
 
 <body>
@@ -57,7 +59,7 @@ if (!isset($_SESSION['email'])) {
 
   <!-- second column and row -->
 
-  <section class="cons " id=cons">
+  <section class="cons" id=cons">
     <div class="row m-0">
       <div class="col-sm-6" id="columnOne" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">
         <h2>We Care About <br> Your <span>Smile</span></h2>
@@ -95,13 +97,13 @@ if (!isset($_SESSION['email'])) {
 
               $fullname = $_SESSION['fullname'];
 
-              $selectQuery = "SELECT transac_no, session_time, session_date FROM appointment_booking WHERE name = '$fullname'";
+              $selectQuery = "SELECT transac_no, session_time, date FROM appointment_booking WHERE name = '$fullname'";
               $result = mysqli_query($con, $selectQuery);
 
               while ($row = mysqli_fetch_assoc($result)) {
                 $transac_no = $row['transac_no'];
                 $session_time = $row['session_time'];
-                $session_date = $row['session_date'];
+                $session_date = $row['date'];
 
                 echo "<div class='show' style='text-align:center; margin-top: 5px;'> $transac_no <br>
                     $session_time  - $session_date </div>";
@@ -113,9 +115,10 @@ if (!isset($_SESSION['email'])) {
 
         </div>
       </div>
+
       <div class="col-sm-6 p-0">
         <div class="rectangle" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">
-          <div class=" columntwo">
+          <div class="columntwo">
             <p> Our dental health services prioritize your oral well-being. <br>
               Trust your oral well-being. Trust our Experienced services to <br>
               Guide you on your journey to optimal dental health.
@@ -127,6 +130,7 @@ if (!isset($_SESSION['email'])) {
           </div>
         </div>
       </div>
+
     </div>
 
   </section>
@@ -230,6 +234,7 @@ if (!isset($_SESSION['email'])) {
 
         </div>
       </div>
+
     </div>
   </section>
 
@@ -375,49 +380,15 @@ if (!isset($_SESSION['email'])) {
 
               <p class="mid-gmail">dra.menchie@yahoo.com</p>
             </div>
-
-
           </div>
-
         </div>
-
       </div>
+
       <div class="end-footer">
         <p class="mid-owner">© Copyright Dalino Dental Clinic. All Rights Reserved</p>
       </div>
+    </section>
   </div>
-
-  </section>
-
-  
-  <script>
-    function showLandingPage() {
-      const loaderWrapper = document.querySelector('.loader-wrapper');
-      const cons = document.querySelector('.cons');
-      const loader = document.querySelector('.loader');
-
-      loaderWrapper.style.display = 'none';
-      loader.style.display = 'none';
-      cons.style.display = 'block';
-
-      console.log('showLandingPage function is called');
-
-    }
-
-
-    //When the page is fully loaded
-    window.addEventListener('load', function() {
-
-      console.log('Window load event is triggered');
-      // Hide the loader
-      setTimeout(showLandingPage, 50);
-    });
-  </script>
-  <!-- Animation-->
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    AOS.init();
-  </script>
 
   <!--owl-carousel-->
   <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -445,8 +416,11 @@ if (!isset($_SESSION['email'])) {
     })
   </script>
 
-
-
+  <!-- Animation-->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 </body>
 
 </html>
