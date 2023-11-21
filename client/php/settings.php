@@ -19,6 +19,77 @@ if (isset($_GET['logout'])) {
   exit();
 }
 
+require '../../connection/connection.php';
+
+if (isset($_POST["gensettings"])) {
+  $dashboard_name = $_POST["dash_name"];
+  $name = $_POST["admin_name"];
+  $password = $_POST["password"];
+  $cpassword = $_POST["cpassword"];
+
+  if ($password !== $cpassword) {
+    // echo "Password do not match.";
+
+    // $msg = "<div class='alert alert-success'>Changes saved</div>";
+
+    $_SESSION['password'] = "Password do not match";
+    $_SESSION['status_password'] = "Please check carefully your inputted password";
+
+  }
+
+  $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+  $stmt = $con->prepare("INSERT INTO settings (id,dash_name, name, imagedata, password, cpassword) VALUES (?, ?, ?, ?, ?, ?)");
+  if (!$stmt) {
+    echo "Failed to prepare statement: " . $con->error;
+    exit();
+  }
+
+  // $target_dir = "imagedata/";
+  $target_dir = "../imagedata/";
+
+  // specify the path to the image file
+  $target_file = $target_dir . basename($_FILES["image"]["name"]);
+
+  // move the uploaded file to the target directory
+  if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+    // display a success message if the file was uploaded successfully
+    // echo "The file " . basename($_FILES["image"]["name"]) . " has been uploaded.";
+    function settingsID()
+    {
+      $prefix = 'INV-';
+      $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+      // Generate a random 5-character string
+      $random_string = '';
+      for ($i = 0; $i < 5; $i++) {
+        $random_string .= $characters[mt_rand(0, strlen($characters) - 1)];
+      }
+
+      $settings_id = $prefix . $random_string;
+      return $settings_id;
+    }
+
+    $settings_id = settingsID();
+
+
+    $stmt->bind_param("ssssss", $settings_id, $dashboard_name, $name, $target_file, $hashedPassword, $cpassword);
+
+    if (!$stmt->execute()) {
+      echo "Failed to execute statement: " . $stmt->error;
+      exit();
+    }
+
+    $msg = "<div class='alert alert-success'>Changes saved</div>";
+
+    $_SESSION['status'] = "Your settings succesfully changed";
+    $_SESSION['status_code'] = "Saved";
+
+    $stmt->close();
+    $con->close();
+  }
+}
+
 ?>
 
 
@@ -40,6 +111,11 @@ if (isset($_GET['logout'])) {
   <!-- icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
+  <!-- SweetAlert 2 library -->
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="sweetalert2.min.css">
 
 </head>
 
@@ -167,7 +243,72 @@ if (isset($_GET['logout'])) {
       <i class='bx bx-menu'></i>
     </div>
 
+    <?php
+
+    if (isset($_SESSION['status']) && isset($_SESSION['status_code'])) {
+      $status = $_SESSION['status'];
+      $status_code = $_SESSION['status_code'];
+    ?>
+
+      <script>
+        // swal.fire({
+        //   title: "<?php echo $status; ?>",
+        //   text: "",
+        //   icon: "<?php echo $status_code; ?>",
+        //   button: "Done!",
+        //   customClass: {
+        //     popup: "custom-swal-popup",
+        //     title: "custom-swal-title",
+        //     confirmButton: "custom-swal-button",
+        //   },
+        // });
+
+        Swal.fire({
+          title: "<?php echo $status; ?>",
+          text: "<?php echo $status_code ?>",
+          icon: "success"
+        });
+      </script>
+    <?php
+      unset($_SESSION['status']);
+      unset($_SESSION['status_code']);
+    }
+    ?>
+
+    <?php
+
+    if (isset($_SESSION['password']) && isset($_SESSION['status_password'])) {
+      $password = $_SESSION['password'];
+      $status_password = $_SESSION['status_password'];
+    ?>
+
+      <script>
+        // swal.fire({
+        //   title: "<?php echo $status; ?>",
+        //   text: "",
+        //   icon: "<?php echo $status_code; ?>",
+        //   button: "Done!",
+        //   customClass: {
+        //     popup: "custom-swal-popup",
+        //     title: "custom-swal-title",
+        //     confirmButton: "custom-swal-button",
+        //   },
+        // });
+
+        Swal.fire({
+          title: "<?php echo $password; ?>",
+          text: "<?php echo $status_password ?>",
+          icon: "warning"
+        });
+      </script>
+    <?php
+      unset($_SESSION['password']);
+      unset($_SESSION['status_password']);
+    }
+    ?>
+
     <div class="settings-content">
+
       <div class="d-flex align-items-start">
         <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
           <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">General Settings</button>
@@ -176,21 +317,42 @@ if (isset($_GET['logout'])) {
         <div class="tab-content" id="v-pills-tabContent">
           <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
             <div class="card" id="gen1">
-              <p class="" style="font-size:smaller;"><span></span> This settings update admin dashboard name header.</p>
-              <div class="mb-4 mt-2">
-                <label for="exampleInputEmail1" class="form-label m">Dashboard name</label>
-                <input type="text" class="form-control" name="patient_name" id="exampleInputEmail1" placeholder=".." aria-describedby="default input example">
-              </div>
-              <p class="" style="font-size:smaller;"><span></span> This settings update's admin account.</p>
-              <div class="mb-2 mt-2">
-                <label for="exampleInputEmail1" class="form-label m">Name</label>
-                <input type="text" class="form-control" name="patient_name" id="exampleInputEmail1" placeholder=".." aria-describedby="default input example">
-              </div>
-              <div class="mb-2">
-                <label for="formfile" style="font-size:smaller;" class="form-label">Admin Profile</label>
-                <input type="file" name="image" class="form-control" id="image" placeholder="Upload your photos">
-              </div>
-              <button type="btn" id="savesettings" name="gensettings" class="btn btn-primary mt-3">save</button>
+              <form method="POST" action="" enctype="multipart/form-data">
+                <div class="row">
+                  <div class="col">
+                    <p class="" style="font-size:smaller;"><span></span> This settings update admin dashboard name header.</p>
+                    <div class="mb-4 mt-2">
+                      <label for="exampleInputEmail1" class="form-label m">Dashboard name</label>
+                      <input type="text" class="form-control" name="dash_name" id="exampleInputEmail1" placeholder=".." aria-describedby="default input example">
+                    </div>
+                    <p class="" style="font-size:smaller;"><span></span> This settings update's admin account.</p>
+                    <div class="mb-2 mt-2">
+                      <label for="exampleInputEmail1" class="form-label m">Name <span style="font-size: 13px;"> (must be fullname) </span></label>
+                      <input type="text" class="form-control" name="admin_name" id="exampleInputEmail1" placeholder=".." aria-describedby="default input example">
+                    </div>
+                    <div class="mb-2">
+                      <label for="formfile" style="font-size:smaller;" class="form-label mt-3">Admin Profile</label>
+                      <input type="file" name="image" class="form-control" id="image" placeholder="Upload your photos">
+                    </div>
+                  </div>
+
+                  <div class="col">
+
+                    <label for="inputPassword5" class="form-label">Password</label>
+                    <input type="password" name="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
+
+                    <label for="inputPassword5" class="form-label mt-3">Confirm Password</label>
+                    <input type="password" name="cpassword" id="inputPassword5" class="form-control mb-3" aria-describedby="passwordHelpBlock">
+                    <div id="passwordHelpBlock" class="form-text mb-3">
+                      Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+                    </div>
+                  </div>
+
+                </div>
+                <div class="d-flex justify-content-end">
+                  <button type="submit" value="Upload Image" id="savesettings" name="gensettings" class="btn btn-primary mt-3">save settings</button>
+                </div>
+              </form>
             </div>
           </div>
           <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
@@ -204,6 +366,14 @@ if (isset($_GET['logout'])) {
     </div>
 
   </section>
+
+  <!-- sweet alert -->
+  <!-- <script src="./assets/js/sweetalert.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="sweetalert2.min.js"></script>
+
 
   <!-- javascript -->
   <script src="../js/script.js"></script>

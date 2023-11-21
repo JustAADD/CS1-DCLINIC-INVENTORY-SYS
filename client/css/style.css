@@ -428,8 +428,6 @@ body {
 
 }
 
-.settings-content {}
-
 #v-pills-home-tab {
   color: #fff;
 }
@@ -589,7 +587,7 @@ body {
 
 #gen1 {
   background-color: #ffffff;
-  width: 32rem;
+  width: 60rem;
   height: 34rem;
   border-radius: 10px;
   border: none;
@@ -598,5 +596,5 @@ body {
 }
 
 #savesettings {
-  width: auto;
+  width: 40%;
 }

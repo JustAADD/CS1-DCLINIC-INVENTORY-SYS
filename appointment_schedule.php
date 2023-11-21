@@ -148,30 +148,6 @@ if (isset($_POST['submit'])) {
 
       <div class="card" id="cardform" style="margin-top: 6rem;">
 
-        <?php
-        if (isset($_SESSION['back'])) {
-
-          // Display the SweetAlert confirmation pop-up
-          echo "<script>
-            Swal.fire({
-              title: 'Cancel Appointment?',
-              text: 'Are you sure you want to cancel your appointment?',
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonText: 'Yes, cancel it!',
-              cancelButtonText: 'No, go back',
-            }).then((result) => {
-              if (result.isConfirmed) {
-               
-                window.location.href = 'appointment.php';
-              }
-            });
-          </script>";
-
-          unset($_SESSION['back']);
-        }
-        ?>
-
         <p class="card-form-text" style="margin-left: 2.2rem;">Dental Services <span style="font-size: 13px; color:#808080;">(This is our available services)</span></p>
         <form action="appointment_schedule.php" method="POST">
           <input type="hidden" name="date" value="<?php echo $date; ?>">
