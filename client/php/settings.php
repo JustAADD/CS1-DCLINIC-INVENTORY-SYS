@@ -22,6 +22,8 @@ if (isset($_GET['logout'])) {
 require '../../connection/connection.php';
 
 if (isset($_POST["gensettings"])) {
+
+  $id = "1";
   $dashboard_name = $_POST["dash_name"];
   $name = $_POST["admin_name"];
   $password = $_POST["password"];
@@ -34,12 +36,12 @@ if (isset($_POST["gensettings"])) {
 
     $_SESSION['password'] = "Password do not match";
     $_SESSION['status_password'] = "Please check carefully your inputted password";
-
   }
 
   $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-  $stmt = $con->prepare("INSERT INTO settings (id,dash_name, name, imagedata, password, cpassword) VALUES (?, ?, ?, ?, ?, ?)");
+  $stmt = $con->prepare("UPDATE settings SET dash_name=?, name=?, imagedata=?, password=?, cpassword=? WHERE id=?");
+
   if (!$stmt) {
     echo "Failed to prepare statement: " . $con->error;
     exit();
@@ -73,7 +75,7 @@ if (isset($_POST["gensettings"])) {
     $settings_id = settingsID();
 
 
-    $stmt->bind_param("ssssss", $settings_id, $dashboard_name, $name, $target_file, $hashedPassword, $cpassword);
+    $stmt->bind_param("ssssss", $dashboard_name, $name, $target_file, $hashedPassword, $cpassword, $id);
 
     if (!$stmt->execute()) {
       echo "Failed to execute statement: " . $stmt->error;
