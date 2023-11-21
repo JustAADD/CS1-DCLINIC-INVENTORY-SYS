@@ -20,7 +20,7 @@ if (isset($_POST["add_transaction"])) {
   $transactionNo = $_POST["transactionNo"];
   $patient_name = $_POST["patient_name"];
   $status = $_POST["status"];
-  $procedures = $_POST["procedures"];
+  $procedures = $_POST["selectedProcedures"];
   $name = "admin";
   $desired_date_time = '20/07/2023 10:23 AM';
   $date_time_obj = DateTime::createFromFormat('d/m/Y h:i A', $desired_date_time);
@@ -43,8 +43,8 @@ if (isset($_POST["add_transaction"])) {
 
   $formatted_time = $date_time_obj->format('h:i A');
 
-  $sql = "INSERT INTO patient_transaction (transac_no, status, name, patient_name, procedures, session_time, session_date)
-  VALUES ('$transactionNo', '$status','$name', '$patient_name',   '$procedures', '$formatted_time', '$formatted_date')";
+  $sql = "INSERT INTO patient_transaction (transac_no, status, name, patient_name, selectedProcedures, session_time, session_date)
+  VALUES ('$transactionNo', '$status','$name', '$patient_name', '$procedures', '$formatted_time', '$formatted_date')";
 
 
   if ($con->query($sql) === TRUE) {
@@ -264,7 +264,6 @@ if (isset($_POST["add_transaction"])) {
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Transaction no</th>
-                  <th scope="col">Name</th>
                   <th scope="col">Status</th>
                   <th scope="col">Session</th>
                   <th scope="col">Date</th>
@@ -294,7 +293,6 @@ if (isset($_POST["add_transaction"])) {
           null,
           null,
           null,
-          null,
           null
 
         ]
@@ -312,15 +310,23 @@ if (isset($_POST["add_transaction"])) {
             $.each(data, function(index, row) {
               var deleteButton = '<a href="../php/p_transaction_data.php? deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a>&nbsp';
               var updateButton = '<a href="../php/p_transaction_receipt.php? receiptid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></button></a>';
-              var timeDate = row.session_time + ' - ' + row.session_date;
+              var timeDate = row.session_time + ' - ' + row.date;
               var transacLink = '<a href="p_transaction_receipt.php' + row.transac_no + '">' + row.transac_no + '</a>';
+
+              var transacAndName = `
+                   ${transacLink}
+                    <br>
+                  ${row.patient_name}
+              `;
+              var statusButton = '<button type="button" class="btn btn-primary" style="background-color:#31b522; width: 8rem; border: none;">' + row.status + '</button>';
+
+
 
               table.row.add([
                 row.id,
-                transacLink,
-                row.name,
-                row.status,
-                row.procedures,
+                transacAndName,
+                statusButton,
+                row.selectedProcedures,
                 timeDate,
                 deleteButton + updateButton
                 // Add more columns as needed

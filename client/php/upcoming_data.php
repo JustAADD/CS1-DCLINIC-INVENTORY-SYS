@@ -19,14 +19,14 @@ if (isset($_GET['deleteid'])) {
     $status = "Approved";
     $name = $row['name'];
     $patient_name = $row['patient_name'];
-    $procedures = $row['selectedProcedures'];
+    $selectedProcedures = $row['selectedProcedures'];
     $session_time = $row['session_time'];
     $session_date = $row['date'];
     // ... (Add other columns as needed)
 
     // Insert the data into the 'deleted_schedule' table
     $insert_query = "INSERT INTO booking_approved (id, transac_no, status, name, patient_name, selectedProcedures, session_time, date) VALUES 
-    ('$id', '$transac_no', '$status', '$name', '$patient_name', '$procedures', '$session_time', '$session_date')";
+    ('$id', '$transac_no', '$status', '$name', '$patient_name', '$selectedProcedures', '$session_time', '$session_date')";
     // ... (Add other columns as needed)
 
     $insert_result = mysqli_query($con, $insert_query);
@@ -84,29 +84,29 @@ if (isset($_GET['deleteid'])) {
 
   <!-- appointment/session table -->
 
-      <tbody>
-        <!-- data -->
-        <?php
-        $selectquery = "SELECT * FROM appointment_booking ORDER BY ID DESC";
-        $result = mysqli_query($con, $selectquery);
+  <tbody>
+    <!-- data -->
+    <?php
+    $selectquery = "SELECT * FROM appointment_booking ORDER BY ID DESC";
+    $result = mysqli_query($con, $selectquery);
 
-        while ($row = mysqli_fetch_assoc($result)) {
-          $id = $row['id'];
-          $status = $row['status'];
-          $transac_no = $row['transac_no'];
-          $name = $row['name'];
-          $procedures = $row['selectedProcedures'];
-          $session_time = $row['session_time'];
-          $session_date = $row['date'];
+    while ($row = mysqli_fetch_assoc($result)) {
+      $id = $row['id'];
+      $status = $row['status'];
+      $transac_no = $row['transac_no'];
+      $name = $row['name'];
+      $selectedProcedures = $row['selectedProcedures'];
+      $session_time = $row['session_time'];
+      $session_date = $row['date'];
 
-          echo '
+      echo '
          
                   <tr class="centered-row">
                     <th scope ="row">' . $id . '</td>
                     <td style="width: 9rem;"><button type="button" class="btn btn-primary" style="background-color:#31b522; width: 8rem; border: none;" ><i class="fa-solid fa-gear fa-spin"></i> &nbsp' . $status . '</button></td>
                     <td><a href="../php/p_transaction.php">' . $transac_no .  '</a> <br>
                     ' . $name .  '</td>
-                    <td> ' . $procedures . '</td>
+                    <td> ' . $selectedProcedures . '</td>
                     <td> ' . $session_time . '</td>
                     <td> ' . $session_date . '</td>
                   
@@ -117,11 +117,11 @@ if (isset($_GET['deleteid'])) {
                    
                
           ';
-        }
+    }
 
-        $con->close();
-        ?>
-      </tbody>
+    $con->close();
+    ?>
+  </tbody>
 
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>

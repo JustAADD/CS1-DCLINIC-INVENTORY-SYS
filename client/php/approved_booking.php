@@ -280,6 +280,7 @@ if (isset($_GET['deleteid'])) {
           null,
           null,
           null
+
         ]
       });
 
@@ -302,14 +303,21 @@ if (isset($_GET['deleteid'])) {
                   ${row.patient_name}
               `;
 
+              var statusButton = `
+                  <td style="width: 5rem;">
+                      <button type="button" class="btn btn-primary" style="background-color:#31b522; width: 8rem; border: none;">
+                      &nbsp; ${row.status}
+                      </button>
+                  </td> `;
+
               table.row.add([
                 row.id,
-                row.status,
+                statusButton,
                 transacAndName,
-                row.procedures,
+                row.selectedProcedures,
                 row.session_time,
-                row.session_date,
-                deleteButton + updateButton
+                row.date,
+                deleteButton 
                 // Add more columns as needed
               ]);
             });

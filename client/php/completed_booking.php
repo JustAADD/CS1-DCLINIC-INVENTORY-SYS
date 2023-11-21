@@ -18,20 +18,20 @@ if (isset($_GET['deleteid'])) {
     $status = "Completed";
     $name = $row['name'];
     $patient_name = $row['patient_name'];
-    $procedures = $row['procedures'];
+    $procedures = $row['selectedProcedures'];
     $session_time = $row['session_time'];
-    $session_date = $row['session_date'];
+    $session_date = $row['date'];
 
 
     // Insert the data into the 'booking_completed' table
-    $insert_query = "INSERT INTO booking_completed (id, transac_no, status, name, patient_name, procedures, session_time, session_date) VALUES 
+    $insert_query = "INSERT INTO booking_completed (id, transac_no, status, name, patient_name, selectedProcedures, session_time, date) VALUES 
     ('$id', '$transac_no', '$status', '$name', '$patient_name', '$procedures', '$session_time', '$session_date')";
 
     $insert_result = mysqli_query($con, $insert_query);
 
     if ($insert_result) {
       // Now, insert the same data into the 'patient_transaction' table
-      $insert_sql = "INSERT INTO patient_transaction (id, transac_no, status, name, patient_name, procedures, session_time, session_date) VALUES 
+      $insert_sql = "INSERT INTO patient_transaction (id, transac_no, status, name, patient_name, selectedProcedures, session_time, date) VALUES 
       ('$id', '$transac_no', '$status', '$name', '$patient_name', '$procedures', '$session_time', '$session_date')";
 
       $sql_result = mysqli_query($con, $insert_sql);
@@ -199,9 +199,9 @@ if (isset($_GET['logout'])) {
             <i class='bx bx-message-dots'></i>
             <span class="link_name">Feedback</span>
           </a>
-          
+
         </div>
-      
+
       </li>
       <li>
         <div class="iocn-link">
@@ -313,14 +313,15 @@ if (isset($_GET['logout'])) {
 
               var statusButton = '<button type="button" class="btn btn-primary" style="background-color:#31b522; width: 8rem; border: none;">' + row.status + '</button>';
 
+              
               table.row.add([
                 row.id,
                 statusButton,
                 transacAndName,
-                row.procedures,
+                row.selectedProcedures,
                 row.session_time,
-                row.session_date,
-                deleteButton + updateButton
+                row.date,
+                deleteButton 
                 // Add more columns as needed
               ]);
             });
