@@ -126,7 +126,24 @@ if (isset($_POST["gensettings"])) {
     <div class="logo-details">
       <!-- <i class='bx bxl-c-plus-plus'></i> -->
       <img class="admin_logo" src="../image/dalino_logo.png">
-      <span class="logo_name">Dalino Dental Clinic</span>
+      <span class="logo_name">
+        <?php
+
+        require '../../connection/connection.php';
+
+        // <?php
+        //   $sql = "SELECT dash_name FROM settings";
+
+        //   $result = $con->query($sql);
+
+        //   if($result->num_rows > 0){
+        //     while($row = $result->)
+        //   }
+
+        // echo $fullname ?>
+
+        // ?>
+      </span>
     </div>
     <ul class="nav-links">
       <li>

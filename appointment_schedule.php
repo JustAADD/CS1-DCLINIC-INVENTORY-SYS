@@ -357,10 +357,7 @@ if (isset($_POST['submit'])) {
               <p class="timeslots mt-3">Fill up for our info</p>
 
 
-              <div class=" mt-3 mb-3"><span>Name:</span> <?php
-                                                          $_SESSION['fullname'] = $fullname;
-
-                                                          echo $fullname ?>
+              <div class=" mt-3 mb-3"><span>Name:</span> 000
               </div>
               <p class="" style="font-size:smaller;"><span>Option:</span>&nbsp Please confirm whether you intend to use the name above; if not, kindly provide an alternative name.</p>
               <div class="mb-4 mt-3">

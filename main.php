@@ -6,62 +6,10 @@ require 'connection/connection.php';
 if (isset($_SESSION['email'])) {
   header("Location: home.php");
   exit();
-}
-elseif (isset($_SESSION['isAdmin'])){
+} elseif (isset($_SESSION['isAdmin'])) {
   header("Location: client/php/dashboard.php");
   exit();
 }
-
-
-
-
-// if (isset($_POST['email']) && isset($_POST['password'])) {
-//   function validate($data)
-//   {
-//     $data = trim($data);
-//     $data = stripslashes($data);
-//     $data = htmlspecialchars($data);
-//     return $data;
-//   }
-
-//   $email = validate($_POST['email']);
-//   $password = validate($_POST['password']);
-
-//   if (empty($email)) {
-//     header("location: main.php?error=Email is required");
-//     exit();
-//   } elseif (empty($password)) {
-//     header("location: main.php?error=Password is required");
-//     exit();
-//   } else {
-
-//     $sql = "SELECT * FROM user_registration WHERE email='$email' AND password='$password'";
-
-//     $result = mysqli_query($con, $sql);
-//     if (mysqli_num_rows($result) === 1) {
-//       $row = mysqli_fetch_assoc($result);
-//       if ($row['email'] === $email && $row['password'] === $password) {
-//         $_SESSION['fullname'] = $row['fullname'];
-//         $_SESSION['id'] = $row['id'];
-//         $_SESSION['email'] = $row['email'];
-
-//         header("location: home.php");
-//         exit();
-//       } else {
-
-//         header("location: main.php?error=Incorrect Email and Password");
-//         exit();
-//       }
-//     } else {
-//       header("location: main.php?error=Incorrect Email and Password");
-//       exit();
-//     }
-//   }
-// }
-// } else {
-//   header("location: main.php");
-//   exit();
-// }
 
 ?>
 
@@ -73,13 +21,10 @@ elseif (isset($_SESSION['isAdmin'])){
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dalino Dental Clinic</title>
-
-
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <!-- Stylesheets css -->
   <link rel="stylesheet" href="assets\css\style.css">
-
 
   <!-- OWL-Carousel-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -94,7 +39,18 @@ elseif (isset($_SESSION['isAdmin'])){
 
     <div class="card" id="form-card">
       <div class="row g-0" id="form-row">
-        <div class="col" id="form-col1">
+        <div class="col-md-6" id="form-col1">
+          <div class="col1img">
+            <img src="./assets/image/dalino_logo.png"><span class="dalino">&nbsp;Dalino Dental Clinic</span>
+          </div>
+          <p class="discover-power mt-4">Discover the power <br>
+            of healthy,
+            <br>beautiful smile with us!
+          </p>
+
+          <img src="./assets/image/dalino_logo.png">
+        </div>
+        <div class="col" id="form-col2">
           <form action="main-lcode.php" method="POST">
             <p class="form-business-name"><span>DALINO</span>&nbsp;DENTAL CLINIC</p>
             <p class="form-title">Login</p>
@@ -115,11 +71,11 @@ elseif (isset($_SESSION['isAdmin'])){
             <?php } ?>
             <div class="mb-3">
               <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" name="email" id="email" placeholder="Your email address" aria-describedby="emailHelp"  autocomplete="off">
+              <input type="email" class="form-control" name="email" id="email" placeholder="Your email address" aria-describedby="emailHelp" autocomplete="off">
             </div>
             <div class="mb-4">
               <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" name="password" id="password" placeholder="Enter password"  autocomplete="off">
+              <input type="password" class="form-control" name="password" id="password" placeholder="Enter password" autocomplete="off">
 
             </div>
             <button type="submit" id="form-btn" name="submit" value="Login" class="btn btn-primary">Log in</button>
@@ -128,28 +84,14 @@ elseif (isset($_SESSION['isAdmin'])){
 
           </form>
         </div>
-        <div class="col" id="form-col2">
-         
-            <!-- owl carousel -->
-            <div class="owl-carousel owl-theme" id="form-carousel">
-
-              <div class="card" id="form-item1">
-                <img src="assets\image\sample1.jpg" alt="">
-                <!-- php img -->
-              </div>
-              <div class="card" id="form-item1">
-                <div class="image-form">
-                  <img src="assets\image\sample1.jpg" alt="">
-                </div>
-              </div>
-
-
-            </div>
-         
-        </div>
       </div>
 
     </div>
+
+    <svg id="background-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+      <path fill="#a5c0e8" fill-opacity="1" d="M0,96L48,133.3C96,171,192,245,288,256C384,267,480,213,576,192C672,171,768,181,864,186.7C960,192,1056,192,1152,170.7C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+    </svg>
+
   </div>
 
 

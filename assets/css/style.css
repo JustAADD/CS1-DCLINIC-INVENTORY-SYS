@@ -359,40 +359,75 @@ img {
 #main {
   margin: 0 auto;
   padding: 0;
-  height: 44rem;
+  height: 46.9rem;
   width: 100%;
-
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #form-card {
-  width: 60rem;
-  padding: 2%;
-  height: 30rem;
-
-  border-radius: 30px;
+  width: 70rem;
+  height: 35rem;
+  border-radius: 10px;
   box-shadow: 0 8px 8px rgba(100, 150, 200, 0.3);
+  z-index: 1;
+}
+
+#background-svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: -1;
+  opacity: 40%;
+  border: none;
 }
 
 
 #form-row {
   columns: 200px 2;
   height: 100%;
+  border: none;
 
 }
 
 #form-col1 {
+  background-color: var(--first-color);
+  border-radius: 10px 0 0 10px;
+  width: 350px;
+
+  padding: 2%;
+}
+
+.dalino {
+  color: #fff;
+  font-family: var(--body-font);
+
+}
+
+.discover-power {
+  color: #fff;
+  font-size: 20px;
+  margin-left: 15px;
+}
+
+.col1img img {
+  height: 40px;
+  width: 50px;
+}
+
+#form-col2 {
   display: flex;
   justify-content: center;
   align-items: center;
-
   padding: 0;
   margin: 0 auto;
-
-
-
+  width: 50px;
+  border: 25px;
+  border-color: #282B3A;
 }
 
 #form-inner-card {
@@ -437,10 +472,11 @@ img {
   background-color: var(--orange-color);
   border: var(--orange-color);
   width: 20rem;
-  border-radius: 20px;
+  border-radius: 5px;
 
   font-size: small;
 }
+
 
 .dh-acc {
   font-size: var(--small-font-size);
@@ -449,7 +485,7 @@ img {
 }
 
 .dh-accs a {
-  color: var(--orange-color);
+  color: var(--first-color);
   font-size: var(--small-font-size);
   font-family: var(--font-nunito);
 }
@@ -466,7 +502,7 @@ img {
 
 }
 
-#form-carousel {
+fo #form-carousel {
   width: 29rem;
   margin: 0 auto;
   padding: 0;
@@ -500,9 +536,9 @@ img {
   font-weight: bolder;
 }
 
-.form-business-name span {
+/* .form-business-name span {
   color: var(--orange-color);
-}
+} */
 
 /* form-media queries */
 
