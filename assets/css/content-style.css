@@ -172,9 +172,9 @@ body {
 
 #card-one {
   box-shadow: 0 7px 4px rgba(126, 175, 249, 0.4);
-  margin-left: 8.5rem;
+  margin-left: 9rem;
   margin-top: 10%;
-  padding: 2%;
+  padding: 1%;
   height: 8rem;
   border-radius: 10px;
   border-color: var(--light-color);
@@ -184,7 +184,7 @@ body {
 #card-one-body {
   margin: 0 auto;
   padding: 4%;
-  width: 22rem;
+  width: 24rem;
   border: 2px solid rgba(98, 96, 96, 0.553);
   border-radius: 10px;
 }
@@ -194,6 +194,15 @@ body {
   font-size: 12px;
   color: var(--dark-color-alt);
 
+}
+
+div.scroll {
+  width: 22rem;
+  height: 3rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: center;
+  padding: 2px;
 }
 
 /*===== MEDIA QUERIES =====*/

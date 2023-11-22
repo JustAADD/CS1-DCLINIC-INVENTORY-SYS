@@ -137,7 +137,7 @@ if (isset($_POST['submit'])) {
   <script src="./assets/js/sweetalert.min.js"></script>
 
   <?php include 'app-header.php'; ?>
-  
+
 </head>
 
 <body>
@@ -147,6 +147,30 @@ if (isset($_POST['submit'])) {
 
 
       <div class="card" id="cardform" style="margin-top: 6rem;">
+
+        <?php
+        if (isset($_SESSION['back'])) {
+
+          // Display the SweetAlert confirmation pop-up
+          echo "<script>
+            Swal.fire({
+              title: 'Cancel Appointment?',
+              text: 'Are you sure you want to cancel your appointment?',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Yes, cancel it!',
+              cancelButtonText: 'No, go back',
+            }).then((result) => {
+              if (result.isConfirmed) {
+               
+                window.location.href = 'appointment.php';
+              }
+            });
+          </script>";
+
+          unset($_SESSION['back']);
+        }
+        ?>
 
         <p class="card-form-text" style="margin-left: 2.2rem;">Dental Services <span style="font-size: 13px; color:#808080;">(This is our available services)</span></p>
         <form action="appointment_schedule.php" method="POST">
@@ -331,9 +355,16 @@ if (isset($_POST['submit'])) {
 
 
               <p class="timeslots mt-3">Fill up for our info</p>
+
+
+              <div class=" mt-3 mb-3"><span>Name:</span> <?php
+                                                          $_SESSION['fullname'] = $fullname;
+
+                                                          echo $fullname ?>
+              </div>
               <p class="" style="font-size:smaller;"><span>Option:</span>&nbsp Please confirm whether you intend to use the name above; if not, kindly provide an alternative name.</p>
               <div class="mb-4 mt-3">
-                <label for="exampleInputEmail1" class="form-label m">Patient name:  </label>
+                <!-- <label for="exampleInputEmail1" class="form-label m">Patient name:  </label> -->
                 <input type="text" class="form-control" name="patient_name" id="exampleInputEmail1" placeholder="Patient name" aria-describedby="default input example">
               </div>
               <!-- <p class="" style="font-size:smaller;">Dalino Dental Clinic kindly informs you that there is a <br> Placement fee: 80php

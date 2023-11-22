@@ -49,6 +49,18 @@ if (!isset($_SESSION['email'])) {
 
   <!--loader-->
   <script src="./assets/js/loader.js"></script>
+
+  <style>
+    div.scroll {
+      width: 22rem;
+      height: 3rem;
+      overflow-x: hidden;
+      overflow-y: auto;
+      text-align: center;
+      padding: 2px;
+    }
+  </style>
+
 </head>
 
 <body>
@@ -92,24 +104,26 @@ if (!isset($_SESSION['email'])) {
           <div class="card" id="card-one" style="width: 25rem;">
             <div class="card-body" id="card-one-body">
               <h5>Your Appointment Schedule:</h5>
-              <?php
-              require 'connection/connection.php';
+              <div class="scroll">
+                <?php
+                require 'connection/connection.php';
 
-              $fullname = $_SESSION['fullname'];
+                $fullname = $_SESSION['fullname'];
 
-              $selectQuery = "SELECT transac_no, session_time, date FROM appointment_booking WHERE name = '$fullname'";
-              $result = mysqli_query($con, $selectQuery);
+                $selectQuery = "SELECT transac_no, session_time, date FROM appointment_booking WHERE name = '$fullname'";
+                $result = mysqli_query($con, $selectQuery);
 
-              while ($row = mysqli_fetch_assoc($result)) {
-                $transac_no = $row['transac_no'];
-                $session_time = $row['session_time'];
-                $session_date = $row['date'];
+                while ($row = mysqli_fetch_assoc($result)) {
+                  $transac_no = $row['transac_no'];
+                  $session_time = $row['session_time'];
+                  $session_date = $row['date'];
 
-                echo "<div class='show' style='text-align:center; margin-top: 5px;'> $transac_no <br>
+                  echo "<div class='show' style='text-align:center; margin-top: 5px;'> $transac_no <br>
                     $session_time  - $session_date </div>";
-              }
-              mysqli_close($con);
-              ?>
+                }
+                mysqli_close($con);
+                ?>
+              </div>
             </div>
           </div>
 
