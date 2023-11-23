@@ -151,7 +151,6 @@ if (isset($_POST['submit'])) {
         <?php
         if (isset($_SESSION['back'])) {
 
-          // Display the SweetAlert confirmation pop-up
           echo "<script>
             Swal.fire({
               title: 'Cancel Appointment?',
@@ -164,6 +163,8 @@ if (isset($_POST['submit'])) {
               if (result.isConfirmed) {
                
                 window.location.href = 'appointment.php';
+              } else {
+                
               }
             });
           </script>";
@@ -297,7 +298,7 @@ if (isset($_POST['submit'])) {
                   $timeSlots = array();
 
                   while ($current <= $end) {
-                    $currentTime = date("H:i:s", $current);
+                    $currentTime = date("g:i A", $current);
 
                     // Check if the current time slot is selected by the user
                     $isNotAvailable = in_array($currentTime, $selectedTimeSlots);
@@ -325,7 +326,7 @@ if (isset($_POST['submit'])) {
               if (!empty($allTimeSlots)) :
               ?>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <div class="button-row">
                     <?php foreach ($allTimeSlots as $counter => $timeSlot) : ?>
                       <?php if ($counter % 3 === 0) : ?>
@@ -347,7 +348,22 @@ if (isset($_POST['submit'])) {
                       <?php endif; ?>
                     <?php endforeach; ?>
                   </div>
+                </div> -->
+
+                <div class="form-group">
+                  <label for="timeslot">Select a timeslot:</label>
+                  <select class="form-select mt-2" id="timeslot" name="timeslot">
+                    <?php foreach ($allTimeSlots as $counter => $timeSlot) : ?>
+                      <?php
+                      $isNotAvailable = $timeSlot['notAvailable'];
+                      $disabledAttribute = $isNotAvailable ? 'disabled' : '';
+                      $disabledClass = $isNotAvailable ? 'disabled-label' : '';
+                      ?>
+                      <option value="<?php echo $timeSlot['time']; ?>" <?php echo $disabledAttribute; ?>><?php echo $timeSlot['time']; ?></option>
+                    <?php endforeach; ?>
+                  </select>
                 </div>
+
 
               <?php else : ?>
                 <p>No time slots available for the selected date.</p>
@@ -357,7 +373,35 @@ if (isset($_POST['submit'])) {
               <p class="timeslots mt-3">Fill up for our info</p>
 
 
-              <div class=" mt-3 mb-3"><span>Name:</span> 000
+              <div class=" mt-3 mb-3"><span>Name:</span>
+
+                <?php
+                $mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
+                $stmt = $mysqli->prepare("SELECT fullname FROM user_registration WHERE email = ?");
+                $stmt->bind_param("s", $email);
+                $stmt->execute();
+
+                // Bind the result to a variable
+                $stmt->bind_result($fullname);
+
+                // Fetch the result
+                if ($stmt->fetch()) {
+                  // Fullname is retrieved from the database
+                  // Store it in the session variable
+                  $_SESSION['fullname'] = $fullname;
+
+                  echo $fullname;
+                }
+
+                $stmt->close();
+                $mysqli->close();
+
+
+                ?>
+
+
+
+
               </div>
               <p class="" style="font-size:smaller;"><span>Option:</span>&nbsp Please confirm whether you intend to use the name above; if not, kindly provide an alternative name.</p>
               <div class="mb-4 mt-3">
