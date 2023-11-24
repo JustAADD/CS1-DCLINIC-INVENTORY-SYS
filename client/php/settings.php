@@ -126,8 +126,8 @@ if (isset($_POST["gensettings"])) {
     <div class="logo-details">
       <!-- <i class='bx bxl-c-plus-plus'></i> -->
       <img class="admin_logo" src="../image/dalino_logo.png">
-      <span class="logo_name">
-        <?php
+      <span class="logo_name">Dalino Dental Clinic 
+        <!-- <?php
 
         require '../../connection/connection.php';
 
@@ -140,9 +140,10 @@ if (isset($_POST["gensettings"])) {
         //     while($row = $result->)
         //   }
 
-        // echo $fullname ?>
+        // echo $fullname 
+        ?>
 
-        // ?>
+        // ?> -->
       </span>
     </div>
     <ul class="nav-links">
@@ -376,7 +377,25 @@ if (isset($_POST["gensettings"])) {
           </div>
           <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
             <div class="card" id="gen">
+              <div class="mb-2">
+                <div class="row">
+                  <div class="col">
+                    <p class="" style="font-size:smaller;"><span></span> This settings update your dental services</p>
+                    <div class="mb-4 mt-2">
+                      <label for="exampleInputEmail1" class="form-label m">Dental Service</label>
+                      <input type="text" class="form-control" name="dash_service" id="exampleInputEmail1" placeholder=".." aria-describedby="default input example">
+                    </div>
+                    <label for="formfile" class="form-label mt-2">Upload Picture<span style="font-size: 13px;">&nbsp;(Provide sample photo of dental service)</span></label>
+                    <input type="file" name="image" class="form-control" id="image" placeholder="Upload your photos">
+                  </div>
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" value="Upload Image" id="savesettings" name="gensettings" class="btn btn-primary mt-5">add services</button>
+                  </div>
+                  <div class="col">
 
+                  </div>
+                </div>
+              </div>
             </div>
 
           </div>

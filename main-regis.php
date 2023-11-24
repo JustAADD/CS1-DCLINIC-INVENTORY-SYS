@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) {
         $_SESSION['insert'] = "Verify Your Account";
         $_SESSION['insert_code'] = "We already sent your Verification";
 
-        // header("refresh:0.1;url=main.php");
+        // header("refresh:0.1;url=main.php");  
         // echo "Sign up Successfully";
       } else {
 
@@ -153,7 +153,17 @@ if (isset($_POST['submit'])) {
     ?>
     <div class="card" id="form-card">
       <div class="row g-0" id="form-row">
-        <div class="col" id="form-col1">
+        <div class="col-md-6" id="form-col1">
+          <div class="col1img">
+            <img src="./assets/image/dalino_logo.png"><span class="dalino">&nbsp;Dalino Dental Clinic</span>
+          </div>
+          <p class="discover-power mt-4">Discover the power <br>
+            of healthy,
+            <br>beautiful smile with us!
+          </p>
+          <img src="./assets/image/dalino_logo.png">
+        </div>
+        <div class="col-md-6" id="form-col2">
           <form action="main-regis.php" method="POST">
             <p class="form-business-name"><span>DALINO</span>&nbsp;DENTAL CLINIC</p>
             <p class="form-title">Sign up</p>
@@ -162,43 +172,29 @@ if (isset($_POST['submit'])) {
               <label for="fullname" class="form-label">Fullname</label>
               <input class="form-control" type="text" name="fullname" autocomplete="off" placeholder=" <?php if (isset($fullname_day)) echo $fullname_day; ?>" aria-label="default input example">
             </div>
-            <div class="mb-3">
+            <div class="mb-2">
               <label for="exampleInputEmail1" class="form-label">Email address</label>
               <input type="email_one" class="form-control" name="email" autocomplete="off" placeholder="<?php if (isset($email_day)) echo $email_day; ?>">
             </div>
-            <div class="mb-4">
+            <div class="mb-2">
               <label for="exampleInputPassword1" class="form-label">Password</label>
               <input type="password" class="form-control" name="password" autocomplete="off" placeholder="<?php if (isset($password_day)) echo $password_day; ?>" id="exampleInputPassword1">
 
             </div>
-            <button type="submit" id="form-btn" name="submit" class="btn btn-primary">Sign up</button>
+            <button type="submit" id="form-btn" name="submit" class="btn btn-primary mt-3">Sign up</button>
 
             <p class="dh-acc mt-4"> Already have an account? <span class="dh-accs"><a href="main.php">Sign in.</a></span> </p>
 
           </form>
         </div>
-        <div class="col" id="form-col2">
-          <div class="card" id="form-inner-card">
-            <!-- owl carousel -->
-            <div class="owl-carousel owl-theme" id="form-carousel">
-
-              <div class="card" id="form-item1">
-                <img src="assets\image\sample1.jpg" alt="">
-                <!-- php img -->
-              </div>
-              <div class="card" id="form-item1">
-                <div class="image-form">
-                  <img src="assets\image\sample1.jpg" alt="">
-                </div>
-              </div>
-
-
-            </div>
-          </div>
-        </div>
       </div>
 
     </div>
+
+    <svg id="background-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+      <path fill="#a5c0e8" fill-opacity="1" d="M0,96L48,133.3C96,171,192,245,288,256C384,267,480,213,576,192C672,171,768,181,864,186.7C960,192,1056,192,1152,170.7C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+    </svg>
+
   </div>
 
 
