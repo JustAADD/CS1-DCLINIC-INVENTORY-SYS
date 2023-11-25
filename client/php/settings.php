@@ -40,12 +40,13 @@ if (isset($_POST["gensettings"])) {
 
   $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-  $stmt = $con->prepare("UPDATE settings SET dash_name=?, name=?, imagedata=?, password=?, cpassword=? WHERE id=?");
+  $stmtSettings = $con->prepare("UPDATE settings SET dash_name=?, name=?, imagedata=?, password=?, cpassword=? WHERE id=?");
 
-  if (!$stmt) {
+  if (!$stmtSettings) {
     echo "Failed to prepare statement: " . $con->error;
     exit();
   }
+
 
   // $target_dir = "imagedata/";
   $target_dir = "../imagedata/";
@@ -75,19 +76,20 @@ if (isset($_POST["gensettings"])) {
     $settings_id = settingsID();
 
 
-    $stmt->bind_param("ssssss", $dashboard_name, $name, $target_file, $hashedPassword, $cpassword, $id);
+    $stmtSettings->bind_param("ssssss", $dashboard_name, $name, $target_file, $hashedPassword, $cpassword, $id);
 
-    if (!$stmt->execute()) {
+    if (!$stmtSettings->execute()) {
       echo "Failed to execute statement: " . $stmt->error;
       exit();
     }
+    $stmtSettings->execute();
+    $stmtSettings->close();
 
     $msg = "<div class='alert alert-success'>Changes saved</div>";
 
     $_SESSION['status'] = "Your settings succesfully changed";
     $_SESSION['status_code'] = "Saved";
 
-    $stmt->close();
     $con->close();
   }
 }
@@ -126,24 +128,26 @@ if (isset($_POST["gensettings"])) {
     <div class="logo-details">
       <!-- <i class='bx bxl-c-plus-plus'></i> -->
       <img class="admin_logo" src="../image/dalino_logo.png">
-      <span class="logo_name">Dalino Dental Clinic 
-        <!-- <?php
+      <span class="logo_name">
 
+        <?php
         require '../../connection/connection.php';
 
-        // <?php
-        //   $sql = "SELECT dash_name FROM settings";
+        $sql = "SELECT dash_name FROM settings";
 
-        //   $result = $con->query($sql);
+        $result = $con->query($sql);
 
-        //   if($result->num_rows > 0){
-        //     while($row = $result->)
-        //   }
+        if ($result->num_rows > 0) {
+          while ($row = $result->fetch_assoc()) {
+            $fullname = $row['dash_name'];
+            echo $fullname;
+          }
+        } else {
+          echo "No data found";
+        }
 
-        // echo $fullname 
+        $con->close(); // Close the database connection
         ?>
-
-        // ?> -->
       </span>
     </div>
     <ul class="nav-links">
@@ -246,10 +250,49 @@ if (isset($_POST["gensettings"])) {
       <li>
         <div class="profile-details">
           <div class="profile-content">
-            <img src="image/profile.jpg" alt="profileImg">
+            <img src="
+                      <?php
+                      require '../../connection/connection.php';
+
+                      $sql = "SELECT imagedata FROM settings"; // Assuming 'imagedata' is the column name
+
+                      $result = $con->query($sql);
+
+                      if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                          $imagedata = $row['imagedata'];
+                          echo $imagedata;
+                        }
+                      } else {
+                        echo "No data found";
+                      }
+
+                      $con->close(); // Close the database connection
+                      ?>" alt="profileImg">
           </div>
+
           <div class="name-job">
-            <div class="profile_name">Mercedita</div>
+            <div class="profile_name">
+              <?php
+              require '../../connection/connection.php';
+
+              $sql = "SELECT name FROM settings";
+
+              $result = $con->query($sql);
+
+              if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                  $name = $row['name'];
+                  echo $name;
+                }
+              } else {
+                echo "No data found";
+              }
+
+              $con->close(); // Close the database connection
+              ?>
+
+            </div>
           </div>
           <a href="?logout" name="logout" id="logout"><i class='bx bx-log-out'></i></a>
         </div>
@@ -313,6 +356,7 @@ if (isset($_POST["gensettings"])) {
         //     title: "custom-swal-title",
         //     confirmButton: "custom-swal-button",
         //   },
+        
         // });
 
         Swal.fire({
@@ -356,7 +400,7 @@ if (isset($_POST["gensettings"])) {
                     </div>
                   </div>
 
-                  <div class="col">
+                  <!-- <div class="col">
 
                     <label for="inputPassword5" class="form-label">Password</label>
                     <input type="password" name="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
@@ -366,11 +410,11 @@ if (isset($_POST["gensettings"])) {
                     <div id="passwordHelpBlock" class="form-text mb-3">
                       Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
                     </div>
-                  </div>
+                  </div> -->
 
                 </div>
                 <div class="d-flex justify-content-end">
-                  <button type="submit" value="Upload Image" id="savesettings" name="gensettings" class="btn btn-primary mt-3">save settings</button>
+                  <button type="submit" value="Upload Image" id="savesettings" name="gensettings" class="btn btn-primary mt-4">save settings</button>
                 </div>
               </form>
             </div>

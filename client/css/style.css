@@ -573,7 +573,7 @@ body {
 
 #gen {
   background-color: #ffffff;
-  width: 60rem;
+  width: 35rem;
   height: 33rem;
   border-radius: 10px;
   border: none;
@@ -581,20 +581,17 @@ body {
   padding: 5rem;
 }
 
-#gen1 input {
-  width: 22rem;
-}
-
 #gen1 {
   background-color: #ffffff;
-  width: 60rem;
+  width: 35rem;
   height: 34rem;
   border-radius: 10px;
   border: none;
   box-shadow: 0 7px 4px rgba(126, 175, 249, 0.4);
-  padding: 5rem;
+  padding: 5.5rem;
+  padding-right: 4rem;
 }
 
 #savesettings {
-  width: 40%;
+  width: auto;
 }
