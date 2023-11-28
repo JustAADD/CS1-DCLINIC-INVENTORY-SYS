@@ -153,17 +153,7 @@ if (isset($_POST['submit'])) {
     ?>
     <div class="card" id="form-card">
       <div class="row g-0" id="form-row">
-        <div class="col-md-6" id="form-col1">
-          <div class="col1img">
-            <img src="./assets/image/dalino_logo.png"><span class="dalino">&nbsp;Dalino Dental Clinic</span>
-          </div>
-          <p class="discover-power mt-4">Discover the power <br>
-            of healthy,
-            <br>beautiful smile with us!
-          </p>
-          <img src="./assets/image/dalino_logo.png">
-        </div>
-        <div class="col-md-6" id="form-col2">
+        <div class="col" id="unang-col">
           <form action="main-regis.php" method="POST">
             <p class="form-business-name"><span>DALINO</span>&nbsp;DENTAL CLINIC</p>
             <p class="form-title">Sign up</p>
@@ -184,8 +174,17 @@ if (isset($_POST['submit'])) {
             <button type="submit" id="form-btn" name="submit" class="btn btn-primary mt-3">Sign up</button>
 
             <p class="dh-acc mt-4"> Already have an account? <span class="dh-accs"><a href="main.php">Sign in.</a></span> </p>
-
           </form>
+        </div>
+        <div class="col-md-6" id="pangalawang-col">
+          <div class="col1img">
+            <img src="./assets/image/dalino_logo.png"><span class="dalino">&nbsp;Dalino Dental Clinic</span>
+          </div>
+          <p class="discover-power mt-4">Discover the power <br>
+            of healthy,
+            <br>beautiful smile with us!
+          </p>
+          <img src="./assets/image/dalino_logo.png">
         </div>
       </div>
 

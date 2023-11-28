@@ -17,7 +17,7 @@ if (isset($_GET['receiptid'])) {
   while ($row = mysqli_fetch_assoc($result)) {
     $id = $row['id'];
     $status = $row['status'];
-    $transac_no = $row['transac_no'];
+    $transac_no = $row['transac_no']; 
     $patient_name = $row['patient_name'];
     $name = $row['name'];
     $procedures = $row['procedures'];

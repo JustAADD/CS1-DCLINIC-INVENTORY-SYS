@@ -24,7 +24,7 @@ if (isset($_SESSION['email'])) {
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <!-- Stylesheets css -->
-  <link rel="stylesheet" href="assets\css\style.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
 
   <!-- OWL-Carousel-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -39,18 +39,7 @@ if (isset($_SESSION['email'])) {
 
     <div class="card" id="form-card">
       <div class="row g-0" id="form-row">
-        <div class="col-md-6" id="form-col1">
-          <div class="col1img">
-            <img src="./assets/image/dalino_logo.png"><span class="dalino">&nbsp;Dalino Dental Clinic</span>
-          </div>
-          <p class="discover-power mt-4">Discover the power <br>
-            of healthy,
-            <br>beautiful smile with us!
-          </p>
-
-          <img src="./assets/image/dalino_logo.png">
-        </div>
-        <div class="col" id="form-col2">
+        <div class="col" id="unang-col">
           <form action="main-lcode.php" method="POST">
             <p class="form-business-name"><span>DALINO</span>&nbsp;DENTAL CLINIC</p>
             <p class="form-title">Login</p>
@@ -84,8 +73,20 @@ if (isset($_SESSION['email'])) {
 
           </form>
         </div>
-      </div>
+        <div class="col-lg-6" id="pangalawang-col">
 
+          <div class="col1img">
+            <img src="./assets/image/dalino_logo.png"><span class="dalino">&nbsp;Dalino Dental Clinic</span>
+          </div>
+          <p class="discover-power mt-4">Discover the power <br>
+            of healthy,
+            <br>beautiful smile with us!
+          </p>
+
+          <img src="./assets/image/dalino_logo.png">
+
+        </div>
+      </div>
     </div>
 
     <svg id="background-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">

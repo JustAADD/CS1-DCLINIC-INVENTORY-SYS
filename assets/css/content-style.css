@@ -354,8 +354,6 @@ div.scroll {
 }
 
 
-
-
 /*===== Second content =====*/
 
 .content-two {
@@ -672,6 +670,36 @@ div.scroll {
 
 /* all services */
 
+.services {
+  padding: 5%;
+  background-color: transparent;
+  border: none;
+
+}
+
+#dentures {
+  height: 100%;
+  width: 40%;
+  padding: 2%;
+  border-radius: 20px;
+  background-color: var(--light-orange);
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#dentures p {}
+
+.service_description {
+  color: var(--dark-color-alt);
+  font-size: var(--small-font-size);
+}
+
+
+#denturesrow {
+  color: var(--first-color);
+  font-size: var(--small-font-size);
+}
+
 #all-services {
 
   margin: 0 auto;
@@ -680,6 +708,8 @@ div.scroll {
   align-items: center;
   padding: 5%;
 }
+
+
 
 #service1 {
   display: flex;

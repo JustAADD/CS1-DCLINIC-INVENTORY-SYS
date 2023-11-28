@@ -26,21 +26,21 @@ if (isset($_POST["gensettings"])) {
   $id = "1";
   $dashboard_name = $_POST["dash_name"];
   $name = $_POST["admin_name"];
-  $password = $_POST["password"];
-  $cpassword = $_POST["cpassword"];
+  // $password = $_POST["password"];
+  // $cpassword = $_POST["cpassword"];
 
-  if ($password !== $cpassword) {
-    // echo "Password do not match.";
+  // if ($password !== $cpassword) {
+  //   // echo "Password do not match.";
 
-    // $msg = "<div class='alert alert-success'>Changes saved</div>";
+  //   // $msg = "<div class='alert alert-success'>Changes saved</div>";
 
-    $_SESSION['password'] = "Password do not match";
-    $_SESSION['status_password'] = "Please check carefully your inputted password";
-  }
+  //   $_SESSION['password'] = "Password do not match";
+  //   $_SESSION['status_password'] = "Please check carefully your inputted password";
+  // }
 
-  $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+  // $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-  $stmtSettings = $con->prepare("UPDATE settings SET dash_name=?, name=?, imagedata=?, password=?, cpassword=? WHERE id=?");
+  $stmtSettings = $con->prepare("UPDATE settings SET dash_name=?, name=?, imagedata=? WHERE id=?");
 
   if (!$stmtSettings) {
     echo "Failed to prepare statement: " . $con->error;
@@ -58,28 +58,11 @@ if (isset($_POST["gensettings"])) {
   if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
     // display a success message if the file was uploaded successfully
     // echo "The file " . basename($_FILES["image"]["name"]) . " has been uploaded.";
-    function settingsID()
-    {
-      $prefix = 'INV-';
-      $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-      // Generate a random 5-character string
-      $random_string = '';
-      for ($i = 0; $i < 5; $i++) {
-        $random_string .= $characters[mt_rand(0, strlen($characters) - 1)];
-      }
-
-      $settings_id = $prefix . $random_string;
-      return $settings_id;
-    }
-
-    $settings_id = settingsID();
-
-
-    $stmtSettings->bind_param("ssssss", $dashboard_name, $name, $target_file, $hashedPassword, $cpassword, $id);
+    $stmtSettings->bind_param("ssssss", $dashboard_name, $name, $target_file, $id);
 
     if (!$stmtSettings->execute()) {
-      echo "Failed to execute statement: " . $stmt->error;
+      echo "Failed to execute statement: " . $stmtSettings->error;
       exit();
     }
     $stmtSettings->execute();
@@ -89,8 +72,54 @@ if (isset($_POST["gensettings"])) {
 
     $_SESSION['status'] = "Your settings succesfully changed";
     $_SESSION['status_code'] = "Saved";
+  }
+}
 
-    $con->close();
+// Media query settings
+if (isset($_POST["savesettings"])) {
+
+  $dash_service = $_POST["dash_service"];
+  $dash_text = $_POST["dash_text"];
+  $type = $_POST["type_services"];
+
+  // Check if an image file is selected
+  if (isset($_FILES["image"])) {
+
+    $target_dir = "./../../imagedata/";
+    $target_file = $target_dir . basename($_FILES["image"]["name"]);
+
+    // Move the uploaded file to the target directory
+    if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+
+      // Prepare the SQL statement
+      $stmtMedia = $con->prepare("INSERT INTO media_settings (dash_service, dash_text, type_of_services, imagedata) VALUES (?, ?, ?, ?)");
+
+      if (!$stmtMedia) {
+        echo "Failed to prepare statement: " . $con->error;
+        exit();
+      }
+
+      // Execute the SQL statement
+      $stmtMedia->bind_param("ssss", $dash_service, $dash_text, $type, $target_file);
+      $values = [$target_file];
+      $stmtMedia->execute();
+      $stmtMedia->close();
+
+      // Close the database connection
+      $con->close();
+
+      // Display a success message
+      $msg = "<div class='alert alert-success'>Changes saved</div>";
+
+      $_SESSION['status'] = "Your settings successfully changed";
+      $_SESSION['status_code'] = "Saved";
+    } else {
+      // Display an error message if the file upload fails
+      echo "Error uploading the file.";
+    }
+  } else {
+    // Handle the case where no image file is selected
+    echo "No image file selected.";
   }
 }
 
@@ -356,7 +385,7 @@ if (isset($_POST["gensettings"])) {
         //     title: "custom-swal-title",
         //     confirmButton: "custom-swal-button",
         //   },
-        
+
         // });
 
         Swal.fire({
@@ -419,32 +448,48 @@ if (isset($_POST["gensettings"])) {
               </form>
             </div>
           </div>
+
+
           <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-            <div class="card" id="gen">
+            <div class="card" id="gen" style="width: 55rem;">
               <div class="mb-2">
-                <div class="row">
-                  <div class="col">
-                    <p class="" style="font-size:smaller;"><span></span> This settings update your dental services</p>
-                    <div class="mb-4 mt-2">
-                      <label for="exampleInputEmail1" class="form-label m">Dental Service</label>
-                      <input type="text" class="form-control" name="dash_service" id="exampleInputEmail1" placeholder=".." aria-describedby="default input example">
+                <form method="POST" action="" enctype="multipart/form-data">
+                  <div class="row">
+                    <div class="col">
+                      <p class="" style="font-size:smaller;"><span></span> This settings update your dental services</p>
+                      <div class="mb-4 mt-2">
+                        <label for="exampleInputEmail1" class="form-label m">Dental Service</label>
+                        <input type="text" class="form-control" name="dash_service" id="exampleInputEmail1" placeholder=".." aria-describedby="default input example">
+                      </div>
+                      <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" style="font-size:smaller;" class="form-label"> add info about your services</label>
+                        <textarea class="form-control" name="dash_text" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      </div>
                     </div>
-                    <label for="formfile" class="form-label mt-2">Upload Picture<span style="font-size: 13px;">&nbsp;(Provide sample photo of dental service)</span></label>
-                    <input type="file" name="image" class="form-control" id="image" placeholder="Upload your photos">
-                  </div>
-                  <div class="d-flex justify-content-end">
-                    <button type="submit" value="Upload Image" id="savesettings" name="gensettings" class="btn btn-primary mt-5">add services</button>
-                  </div>
-                  <div class="col">
 
+                    <div class="col">
+                      <p class="" style="font-size:smaller;"><span></span></p>
+                      <select class="form-select" name="type_services" aria-label="Default select example" style="margin-top: 68px;">
+                        <option selected>Choose type of services</option>
+                        <option value="Dental Services">Dental Services</option>
+                        <option value="Dental Prosthesis">Dental Prosthesis</option>
+                        <option value="Dentures">Dentures</option>
+                      </select>
+                      <label for="formfile" class="form-label mt-4">Upload Picture<span style="font-size: 13px;">&nbsp;(Provide sample photo of dental service)</span></label>
+                      <input type="file" name="image" class="form-control" id="image" placeholder="Upload your photos">
+                    </div>
+                    <div class="d-flex justify-content-end">
+                      <button type="submit" value="Upload Image" id="savesettings" name="savesettings" class="btn btn-primary mt-5">add services</button>
+                    </div>
                   </div>
-                </div>
               </div>
+              </form>
             </div>
-
           </div>
+
         </div>
       </div>
+    </div>
     </div>
 
   </section>
