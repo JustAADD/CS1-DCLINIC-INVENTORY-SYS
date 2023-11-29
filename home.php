@@ -4,6 +4,10 @@ include 'header.php';
 
 if (isset($_SESSION['email'])) {
   $email = $_SESSION['email'];
+} elseif (isset($_SESSION['email'])) {
+
+  header("Location: home.php");
+  exit();
 }
 
 $mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');

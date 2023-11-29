@@ -1,7 +1,11 @@
 <?php
 session_start();
+include 'header-home.php';
+
+
 if (isset($_SESSION['email'])) {
-  $email = $_SESSION['email'];
+  header("Location: home.php");
+  exit();
 }
 
 $mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
@@ -22,12 +26,11 @@ if ($stmt->fetch()) {
 $stmt->close();
 $mysqli->close();
 
-require_once 'header.php';
 
-if (!isset($_SESSION['email'])) {
+// if (!isset($_SESSION['email'])) {
 
-  header("Location: main.php");
-}
+//   header("Location: main.php");
+// }
 
 ?>
 
@@ -80,49 +83,33 @@ if (!isset($_SESSION['email'])) {
           we'll help out. <br>
         </p>
         <div class="d-flex justify-content-center justify-content-lg-start mt-4" id="boton">
-          <a href="#feedback" class="btn-get-started me-3">Patient Feedback</a>
-          <a href="appointment.php" class="btn-get-appointment">Make an Appointment</a>
+          <a href="main.php" class="btn-get-started me-3">Sign in account</a>
+          <a href="main-regis.php" class="btn-get-appointment">Register account</a>
         </div>
 
-
-
-        <!-- <?php
-              if (isset($_SESSION['user'])) {
-              ?>
-          <div class="alert alert-success" style="height: 2rem; padding: 5%; display: flex; align-items: center; justify-content:center;">
-            <p class="verify" style="font-size:12px; margin: 0 auto; padding: 0;"><?= $_SESSION['user']; ?></p>
-          </div>
-        <?php
-                unset($_SESSION['user']);
-              }
-
-        ?> -->
-
-        <!-- Your Appointment Schedule -->
-        <!-- <h4> Welcome, <?php echo $fullname ?></h4> -->
         <div class="App-sched mt-5">
           <div class="card" id="card-one" style="width: 25rem;">
             <div class="card-body" id="card-one-body">
               <h5>Your Appointment Schedule:</h5>
-              <div class="scroll">
-                <?php
-                require 'connection/connection.php';
+              <div class="scroll mt-4"> Register and set an appointment!
+                <!-- <?php
+                      require 'connection/connection.php';
 
-                $fullname = $_SESSION['fullname'];
+                      $fullname = $_SESSION['fullname'];
 
-                $selectQuery = "SELECT transac_no, session_time, date FROM appointment_booking WHERE name = '$fullname'";
-                $result = mysqli_query($con, $selectQuery);
+                      $selectQuery = "SELECT transac_no, session_time, date FROM appointment_booking WHERE name = '$fullname'";
+                      $result = mysqli_query($con, $selectQuery);
 
-                while ($row = mysqli_fetch_assoc($result)) {
-                  $transac_no = $row['transac_no'];
-                  $session_time = $row['session_time'];
-                  $session_date = $row['date'];
+                      while ($row = mysqli_fetch_assoc($result)) {
+                        $transac_no = $row['transac_no'];
+                        $session_time = $row['session_time'];
+                        $session_date = $row['date'];
 
-                  echo "<div class='show' style='text-align:center; margin-top: 5px;'> $transac_no <br>
+                        echo "<div class='show' style='text-align:center; margin-top: 5px;'> $transac_no <br>
                     $session_time  - $session_date </div>";
-                }
-                mysqli_close($con);
-                ?>
+                      }
+                      mysqli_close($con);
+                      ?> -->
               </div>
             </div>
           </div>

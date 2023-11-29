@@ -1,4 +1,5 @@
 <?php
+session_start();
 require 'connection/connection.php';
 
 session_start();
@@ -114,6 +115,11 @@ if (isset($_POST['submit'])) {
     $mysqli->close();
     exit();
   }
+}
+
+if (!isset($_SESSION['email'])) {
+
+  header("Location: main.php");
 }
 
 ?>

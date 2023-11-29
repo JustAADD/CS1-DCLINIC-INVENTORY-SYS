@@ -266,7 +266,7 @@ if (isset($_POST["savesettings"])) {
       </li>
       <li>
         <div class="iocn-link">
-          <a href="#">
+          <a href="settings.php">
             <i class='bx bx-cog'></i>
             <span class="link_name">Settings</span>
           </a>
@@ -406,6 +406,7 @@ if (isset($_POST["savesettings"])) {
         <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
           <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">General Settings</button>
           <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Media Settings</button>
+          <button class="nav-link" id="v-pills-reports-tab" data-bs-toggle="pill" data-bs-target="#v-pills-reports" type="button" role="tab" aria-controls="v-pills-reports" aria-selected="false">Overall Reports</button>
         </div>
         <div class="tab-content" id="v-pills-tabContent">
           <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
@@ -486,10 +487,15 @@ if (isset($_POST["savesettings"])) {
               </form>
             </div>
           </div>
+          <div class="tab-pane fade" id="v-pills-reports" role="tabpanel" aria-labelledby="v-pills-reports-tab">
+            <div class="card" id="gen" style="width: 55rem;">
+              <p class="">Print your reports</p>
+            
 
+            </div>
+          </div>
         </div>
       </div>
-    </div>
     </div>
 
   </section>
