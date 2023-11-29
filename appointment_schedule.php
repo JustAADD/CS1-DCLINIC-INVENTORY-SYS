@@ -35,8 +35,6 @@ if (isset($_POST['back'])) {
 }
 
 
-
-
 if (isset($_POST['submit'])) {
 
   $status = "pending";
@@ -298,6 +296,7 @@ if (isset($_POST['submit'])) {
                   $timeSlots = array();
 
                   while ($current <= $end) {
+                    // $currentTime = date("H:i:s", $current);
                     $currentTime = date("g:i A", $current);
 
                     // Check if the current time slot is selected by the user
@@ -359,10 +358,14 @@ if (isset($_POST['submit'])) {
                       $disabledAttribute = $isNotAvailable ? 'disabled' : '';
                       $disabledClass = $isNotAvailable ? 'disabled-label' : '';
                       ?>
+                      <!-- Debugging: Output the content of $timeSlot -->
+                      <?php var_dump($timeSlot); ?>
+
                       <option value="<?php echo $timeSlot['time']; ?>" <?php echo $disabledAttribute; ?>><?php echo $timeSlot['time']; ?></option>
                     <?php endforeach; ?>
                   </select>
                 </div>
+
 
 
               <?php else : ?>

@@ -149,7 +149,6 @@ include 'app-data.php';
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
       font-family: 'Arial', sans-serif;
     }
-
   </style>
 
 </head>
@@ -174,7 +173,7 @@ include 'app-data.php';
               text: "",
               icon: "<?php echo $_SESSION['status_code'] ?>",
               button: "Done!",
-              customClass:{
+              customClass: {
                 popup: "custom-swal-popup",
                 title: "custom-swal-title",
                 confirmButton: "custom-swal-button",
@@ -207,61 +206,7 @@ include 'app-data.php';
     </section>
   </div>
 
-  <div class="spacing" style="padding-top: 10%;"></div>
-
-  <section>
-    <div class="container" id="banner-services">
-      <div class="banner-services">
-        <h3>Our Services & Treatments</h3>
-        <h4>We would like to present our services that we offer:</h4>
-
-        <!-- ===== CAROUSEL ===== -->
-        <div class="container-fluid mb-5 mt-4" id="slider">
-          <div class="owl-carousel owl-theme">
-            <div class="item" id="item-one">
-              <div class="card" id="owl-card">
-                <p>
-                  Dental Examine
-
-                <h5>Routine dental exam are essential to maintain good oral <br>
-                  health. They include a thorough examination of the teeth, <br>
-                  gums, and mount to check for any signs of tooth decay, <br>
-                  gum disease, or other oral health problems.</h5>
-                </p>
-
-                <div class="card" id="owl-card-body">
-                  <img src="assets\image\sample1.jpg" alt="">
-                  <!-- php img -->
-                </div>
-              </div>
-            </div>
-
-            <div class="item" id="item-one">
-              <div class="card" id="owl-card-two">
-                <p>
-                  Teeth Cleaning
-
-                <h5>Teeth cleaning is a preventative dental treatment that <br>
-                  removes plaque and tartar from the teeth and gum line. <br>
-                  Regular teeth cleaning can help prevent cavities, gum <br>
-                  disease, and other dental problems.</h5>
-                </p>
-
-                <div class="card" id="owl-card-body">
-                  <img src="assets\image\sample2.jpg" alt="">
-                  <!-- php img -->
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-
-
-      </div>
-    </div>
-  </section>
+  <div class="spacing" style="padding-top: 5%;"></div>
 
   <div class="footer">
 

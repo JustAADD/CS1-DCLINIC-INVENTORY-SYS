@@ -1,6 +1,5 @@
 <?php
 
-
 require 'connection/connection.php';
 
 $mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
@@ -35,6 +34,12 @@ if (isset($_GET['logout'])) {
   VALUES ('$fullname','$status', '$time', '$date')";
 
   if ($con->query($sql) === TRUE) {
+
+    // Set session variables for a confirmation message
+    $_SESSION['back'] = "Are you sure you want to logout?";
+
+    // Redirect to 'main.php'
+    header("Location: main.php");
   } else {
     echo "Error: " . $sql . "<br>" . $con->error;
   }
@@ -42,7 +47,7 @@ if (isset($_GET['logout'])) {
   session_unset();
 
   session_destroy();
-  header("Location: main.php");
+  // header("Location: main.php");
   exit();
 }
 ?>
@@ -58,6 +63,10 @@ if (isset($_GET['logout'])) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <!-- ===== CSS ===== -->
   <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- SweetAlert 2 library -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="./assets/js/sweetalert.min.js"></script>
 
   <title>Dalino Dental Clinic</title>
 </head>
@@ -88,14 +97,15 @@ if (isset($_GET['logout'])) {
             <li class="nav__item"><a href="#services" class="nav__link">Services</a></li>
             <li class="nav__item"><a href="appointment.php" class="nav__link">Appointment</a></li>
             <li class="nav__item"><a href="#about-us" class="nav__link">About us</a></li>
-
           </ul>
         </div>
 
         <div class="nav__social">
           <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon"><ion-icon name="mail-outline"></ion-icon></a>
           <a href="https://www.facebook.com/menchie.dalino" class="nav__social-icon"><ion-icon name="logo-facebook"></ion-icon></a>
-          <a href="?logout" name="logout" id="logout" class="nav__social-icon"> <ion-icon name="log-out-outline"></ion-icon></a>
+          <a href="?logout" name="logout" id="logout" class="nav__social-icon">
+            <ion-icon name="log-out-outline"></ion-icon>
+          </a>
         </div>
       </div>
 
@@ -103,7 +113,9 @@ if (isset($_GET['logout'])) {
 
   </header>
 
-
+  <!-- sweet alert -->
+  <script src="./assets/js/sweetalert.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- ===== IONICONS ===== -->
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

@@ -1,7 +1,5 @@
 <?php
 session_start();
-include 'header.php';
-
 if (isset($_SESSION['email'])) {
   $email = $_SESSION['email'];
 }
@@ -24,40 +22,13 @@ if ($stmt->fetch()) {
 $stmt->close();
 $mysqli->close();
 
-
+require_once 'header.php';
 
 if (!isset($_SESSION['email'])) {
 
   header("Location: main.php");
 }
 
-?>
-
-<?php
-if (isset($_SESSION['back'])) {
-  // Debugging: Check if $_SESSION['back'] is set correctly
-  var_dump($_SESSION['back']);
-
-  echo "<script>
-          console.log('Script executed'); // Debugging: Check if script is executed
-          Swal.fire({
-            title: 'Logout?',
-            text: 'Are you sure you want to logout?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes',
-            cancelButtonText: 'No, go back',
-          }).then((result) => {
-            if (result.isConfirmed) {
-              window.location.href = 'main.php';
-            } else {
-              // Handle cancellation if needed
-            }
-          });
-        </script>";
-
-  unset($_SESSION['back']);
-}
 ?>
 
 <!DOCTYPE html>
@@ -75,9 +46,6 @@ if (isset($_SESSION['back'])) {
 
   <!-- Animation-->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <!-- SweetAlert 2 library -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="./assets/js/sweetalert.min.js"></script>
 
   <!--loader-->
   <script src="./assets/js/loader.js"></script>
@@ -461,10 +429,6 @@ if (isset($_SESSION['back'])) {
       }
     })
   </script>
-
-  <!-- sweet alert -->
-  <script src="./assets/js/sweetalert.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- Animation-->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
