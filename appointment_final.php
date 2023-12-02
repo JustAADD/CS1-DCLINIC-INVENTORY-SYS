@@ -124,7 +124,7 @@ if (isset($_POST['proceed'])) {
     if ($selectedPaymentMethod === 'gcash-api') {
       $paymentStatus = 'paid';
       // Create payment link
-      $amount = 100;
+      $amount = 50;
       $redirect_url = 'http://localhost/cs1-dclinic-inventory-sys/appointment.php';
       $paymentLinkData = createNextPayPaymentLink($amount, $redirect_url);
 

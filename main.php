@@ -37,6 +37,8 @@ if (isset($_SESSION['email'])) {
 
   <div class="container-fluid" id="main">
 
+
+
     <div class="card" id="form-card">
       <div class="row g-0" id="form-row">
         <div class="col" id="unang-col">
@@ -73,6 +75,18 @@ if (isset($_SESSION['email'])) {
 
           </form>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
         <div class="col-lg-6" id="pangalawang-col">
 
           <div class="col1img">

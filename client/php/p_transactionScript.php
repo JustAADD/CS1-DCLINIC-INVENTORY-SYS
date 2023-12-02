@@ -16,7 +16,7 @@ if (!$con) {
 }
 
 // Fetch data from the database
-$result = $con->query("SELECT * FROM patient_transaction ORDER BY ID DESC");
+$result = $con->query("SELECT * FROM app_final_process ORDER BY ID DESC");
 
 $data = array();
 while ($row = $result->fetch_assoc()) {

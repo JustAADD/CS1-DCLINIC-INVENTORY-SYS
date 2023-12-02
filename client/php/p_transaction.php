@@ -298,7 +298,7 @@ if (isset($_POST["add_transaction"])) {
                       <input class="form-control" name="procedures" type="text" placeholder="Status:" aria-label="default input example">
                     </div>
                     <div class="mb-3">
-                      <label for="exampleFormControlInput1" class="form-label">Status</label>
+                      <label for="exampleFormControlInput1" class="form-label">Payment</label>
                       <input class="form-control" name="status" type="text" placeholder="Status:" aria-label="default input example">
                     </div>
                   </div>
@@ -316,8 +316,9 @@ if (isset($_POST["add_transaction"])) {
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Transaction no</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Session</th>
+                  <th scope="col">Services</th>
+                  <th scope="col">Payment</th>
+                  <th scope="col">Time</th>
                   <th scope="col">Date</th>
                   <th scope="col">Action</th>
                 </tr>
@@ -340,6 +341,7 @@ if (isset($_POST["add_transaction"])) {
     $(document).ready(function() {
       var table = $('#data-table').DataTable({
         "columns": [
+          null,
           null,
           null,
           null,
@@ -370,16 +372,17 @@ if (isset($_POST["add_transaction"])) {
                     <br>
                   ${row.patient_name}
               `;
-              var statusButton = '<button type="button" class="btn btn-primary" style="background-color:#31b522; width: 8rem; border: none;">' + row.status + '</button>';
+              var paymentButton = '<button type="button" class="btn btn-primary" style="background-color:#31b522; width: 8rem; border: none;">' + row.payment + '</button>';
 
 
 
               table.row.add([
                 row.id,
                 transacAndName,
-                statusButton,
                 row.selectedProcedures,
-                timeDate,
+                paymentButton,
+                row.session_time,
+                row.date,
                 deleteButton + updateButton
                 // Add more columns as needed
               ]);
