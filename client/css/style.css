@@ -456,7 +456,7 @@ body {
 
 #content-card {
   background-color: var(--dark-color-alt);
-  border-radius: 50px;
+  border-radius: 15px;
   box-shadow: 0 9px 10px rgba(0, 0, 0, 0.20);
   border: none;
 }

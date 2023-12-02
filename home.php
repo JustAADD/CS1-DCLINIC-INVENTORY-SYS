@@ -120,24 +120,10 @@ if (isset($_SESSION['back'])) {
           <a href="appointment.php" class="btn-get-appointment">Make an Appointment</a>
         </div>
 
-
-
-        <!-- <?php
-              if (isset($_SESSION['user'])) {
-              ?>
-          <div class="alert alert-success" style="height: 2rem; padding: 5%; display: flex; align-items: center; justify-content:center;">
-            <p class="verify" style="font-size:12px; margin: 0 auto; padding: 0;"><?= $_SESSION['user']; ?></p>
-          </div>
-        <?php
-                unset($_SESSION['user']);
-              }
-
-        ?> -->
-
         <!-- Your Appointment Schedule -->
         <!-- <h4> Welcome, <?php echo $fullname ?></h4> -->
         <div class="App-sched mt-5">
-          <div class="card" id="card-one" style="width: 25rem;">
+          <div class="card" id="card-one">
             <div class="card-body" id="card-one-body">
               <h5>Your Appointment Schedule:</h5>
               <div class="scroll">
@@ -146,15 +132,15 @@ if (isset($_SESSION['back'])) {
 
                 $fullname = $_SESSION['fullname'];
 
-                $selectQuery = "SELECT transac_no, session_time, date FROM appointment_booking WHERE name = '$fullname'";
+                $selectQuery = "SELECT session_time, date FROM appointment_booking WHERE name = '$fullname'";
                 $result = mysqli_query($con, $selectQuery);
 
                 while ($row = mysqli_fetch_assoc($result)) {
-                  $transac_no = $row['transac_no'];
+
                   $session_time = $row['session_time'];
                   $session_date = $row['date'];
 
-                  echo "<div class='show' style='text-align:center; margin-top: 5px;'> $transac_no <br>
+                  echo "<div class='show' style='text-align:center; margin-top: 20px;'>
                     $session_time  - $session_date </div>";
                 }
                 mysqli_close($con);
@@ -175,7 +161,7 @@ if (isset($_SESSION['back'])) {
             </p>
 
             <div class="model">
-              <img src="assets/image/model1.png" alt="">
+              <img src="assets/image/model1.png" alt="img" role="img">
             </div>
           </div>
         </div>
@@ -195,8 +181,8 @@ if (isset($_SESSION['back'])) {
     <p class="services-title" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">OUR SERVICES</p>
     <div class="row g-0">
       <div class="col-sm-6 col-md-8">
-        <h2 class="services-title" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">We specialize in you,<br>
-          Whatever your specialty</h2>
+        <h3 class="services-description" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">We specialize in you,<br>
+          Whatever your specialty</h3>
       </div>
       <div class="col-6 col-md-4" style="display: flex; justify-content: center; align-items: center;">
         <a href="more-about.php" class="btn-get-started me-3" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">MORE ABOUT</a>
@@ -394,9 +380,11 @@ if (isset($_SESSION['back'])) {
           <div class="icon-about">
             <div class="row gy-4">
               <div class="social-links d-flex mt-4">
-                <a href=""><ion-icon name="call-outline"></ion-icon></a>
-                <a href=""><ion-icon name="logo-facebook"></ion-icon></a>
-                <a href=""><ion-icon name="mail-outline"></ion-icon></a>
+                <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon" title="Contact Dr. Menchie">
+                  <ion-icon name="mail-outline" role="img" class="md hydrated"></ion-icon></a>
+                <a href="https://www.facebook.com/menchie.dalino" class="nav__social-icon" title="Contact Dr. Menchie"><ion-icon name="logo-facebook" role="img" class="md hydrated"></ion-icon></a>
+                <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon" title="Contact Dr. Menchie">
+                  <ion-icon name="mail-outline" role="img" class="md hydrated"></ion-icon></a>
               </div>
             </div>
           </div>
@@ -412,13 +400,15 @@ if (isset($_SESSION['back'])) {
             <div class="column-small small">
               <ul class="social-link">
                 <li>
-                  <a href=""><ion-icon name="call-outline"></ion-icon></a>
+                  <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon" title="Contact Dr. Menchie">
+                    <ion-icon name="mail-outline" role="img" class="md hydrated"></ion-icon></a>
                 </li>
                 <li>
-                  <a href=""><ion-icon name="logo-facebook"></ion-icon></a>
+                  <a href="https://www.facebook.com/menchie.dalino" class="nav__social-icon" title="Contact Dr. Menchie"><ion-icon name="logo-facebook" role="img" class="md hydrated"></ion-icon></a>
                 </li>
                 <li>
-                  <a href=""><ion-icon name="mail-outline"></ion-icon></a>
+                  <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon" title="Contact Dr. Menchie">
+                    <ion-icon name="mail-outline" role="img" class="md hydrated"></ion-icon></a>
                 </li>
               </ul>
 

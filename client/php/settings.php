@@ -489,8 +489,11 @@ if (isset($_POST["savesettings"])) {
           </div>
           <div class="tab-pane fade" id="v-pills-reports" role="tabpanel" aria-labelledby="v-pills-reports-tab">
             <div class="card" id="gen" style="width: 55rem;">
-              <p class="">Print your reports</p>
-            
+              <p class="">Information above are the overall records in every month.
+                click here to print reports and save as a soft copy.</p>
+
+                
+
 
             </div>
           </div>

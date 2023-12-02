@@ -75,11 +75,11 @@ if (isset($_GET['logout'])) {
   <header class="header">
     <a href="#" class="header__logo">Dalino Dental Clinic</a>
 
-    <ion-icon name="menu-outline" class="header__toggle" id="nav-toggle"></ion-icon>
+    <ion-icon name="menu-outline" class="header__toggle md hydrated" id="nav-toggle" role="img"></ion-icon>
 
     <nav class="nav" id="nav-menu">
       <div class="bd-grid" id="nav__content">
-        <ion-icon name="close-outline" class="nav__close" id="nav-close"></ion-icon>
+        <ion-icon name="close-outline" class="nav__close md hydrated" id="nav-close" role="img"></ion-icon>
 
         <div class="nav__perfil">
           <div class="nav__img">
@@ -87,13 +87,13 @@ if (isset($_GET['logout'])) {
           </div>
 
           <div>
-            <a href="#" class="nav__name">Dalino Dental Clinic</a>
+            <a href="home.php" class="nav__name">Dalino Dental Clinic</a>
           </div>
         </div>
 
         <div class="nav__menu">
           <ul class="nav__list">
-            <li class="nav__item"><a href="#" class="nav__link">Home</a></li>
+            <li class="nav__item"><a href="home.php" class="nav__link">Home</a></li>
             <li class="nav__item"><a href="#services" class="nav__link">Services</a></li>
             <li class="nav__item"><a href="appointment.php" class="nav__link">Appointment</a></li>
             <li class="nav__item"><a href="#about-us" class="nav__link">About us</a></li>
@@ -101,10 +101,11 @@ if (isset($_GET['logout'])) {
         </div>
 
         <div class="nav__social">
-          <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon"><ion-icon name="mail-outline"></ion-icon></a>
-          <a href="https://www.facebook.com/menchie.dalino" class="nav__social-icon"><ion-icon name="logo-facebook"></ion-icon></a>
-          <a href="?logout" name="logout" id="logout" class="nav__social-icon">
-            <ion-icon name="log-out-outline"></ion-icon>
+          <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon" title="Contact Dr. Menchie">
+            <ion-icon name="mail-outline" role="img" class="md hydrated"></ion-icon></a>
+          <a href="https://www.facebook.com/menchie.dalino" class="nav__social-icon" title="Contact Dr. Menchie"><ion-icon name="logo-facebook" role="img" class="md hydrated"></ion-icon></a>
+          <a href="?logout" name="logout" id="logout" title="logout" class="nav__social-icon">
+            <ion-icon name="log-out-outline" role="img" class="md hydrated"></ion-icon>
           </a>
         </div>
       </div>

@@ -38,11 +38,12 @@ require '../../connection/connection.php';
 <body>
   <!-- monitoring -->
   <div class="container" id="dashboard-container">
-    <div class="cardBox"></div>
+    <div class="cardBox" style="background-color: #FFFFF9;"></div>
+
     <div class="row g-0 " id="cards">
       <div class="col g-2" id="col_cards">
         <a href="../php/upcoming_appointment.php" style="text-decoration: none;">
-          <div class="card" id="content-card" style=" width: 18rem; height: 11rem; padding: 10%;">
+          <div class="card" id="content-card" style=" width: 15rem; height: 11rem; padding: 10%;">
             <div class="row">
               <div class="col" id="column">
                 <i class="fa-regular fa-calendar-check fa-5x" style="color: #ffff;"></i>
@@ -70,24 +71,40 @@ require '../../connection/connection.php';
       </div>
       <div class="col g-2" id="col_cards">
         <a href="../php/patient_lists.php" style="text-decoration: none;">
-          <div class="card" id="content-card" style=" width: 18rem; height: 11rem; padding: 10%;">
+          <div class="card" id="content-card" style=" width: 15rem; height: 11rem; padding: 10%;">
             <div class="row">
               <div class="col" id="column">
                 <i class="fa-regular fa-address-book fa-5x" style="color: #ffff;"></i>
               </div>
               <div class="col">
                 <?php
-                $selectQuery = "SELECT COUNT(*) AS total_rows FROM patient_list";
-                $result = mysqli_query($con, $selectQuery);
+                
+                $selectPatientListQuery = "SELECT COUNT(*) AS total_rows FROM patient_list";
+                $resultPatientList = mysqli_query($con, $selectPatientListQuery);
 
-                if ($result) {
-                  $row = mysqli_fetch_assoc($result);
-                  $totalRows = $row['total_rows'];
-
-                  echo '<p class="total-rows"> ' . $totalRows . '</p>';
+                if ($resultPatientList) {
+                  $rowPatientList = mysqli_fetch_assoc($resultPatientList);
+                  $totalRowsPatientList = $rowPatientList['total_rows'];
                 } else {
-                  echo "ERROR" . mysqli_error($con);
+                  die("Error: " . mysqli_error($con));
                 }
+
+
+                $selectBookingCompletedQuery = "SELECT COUNT(*) AS total_rows FROM booking_completed";
+                $resultBookingCompleted = mysqli_query($con, $selectBookingCompletedQuery);
+
+                if ($resultBookingCompleted) {
+                  $rowBookingCompleted = mysqli_fetch_assoc($resultBookingCompleted);
+                  $totalRowsBookingCompleted = $rowBookingCompleted['total_rows'];
+                } else {
+                  die("Error: " . mysqli_error($con));
+                }
+
+                $combinedTotalRows = $totalRowsPatientList + $totalRowsBookingCompleted;
+
+
+                echo '<p class="total-rows"> ' . $combinedTotalRows . '</p>';
+
 
                 ?>
               </div>
@@ -98,7 +115,7 @@ require '../../connection/connection.php';
       </div>
       <div class="col g-2" id="col_cards">
         <a href="../php/Inventory.php" style="text-decoration: none;">
-          <div class="card" id="content-card" style=" width: 18rem; height: 11rem; padding: 10%;">
+          <div class="card" id="content-card" style=" width: 15rem; height: 11rem; padding: 10%;">
             <div class="row">
               <div class="col" id="column">
                 <i class="fa-solid fa-suitcase-medical fa-5x" style="color: #ffff;"></i>
@@ -126,7 +143,7 @@ require '../../connection/connection.php';
       </div>
       <div class="col g-2" id="col_cards">
         <a href="../php/p_transaction.php" style="text-decoration: none;">
-          <div class="card" id="content-card" style=" width: 18rem; height: 11rem; padding: 10%;">
+          <div class="card" id="content-card" style=" width: 15rem; height: 11rem; padding: 10%;">
             <div class="row">
               <div class="col" id="column">
                 <i class="fa-solid fa-receipt fa-5x" style="color: #ffff;"></i>

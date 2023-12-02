@@ -117,8 +117,11 @@ body {
 
 /*===== 2 button =====*/
 
+
+
 #boton {
   padding-left: 10%;
+  padding-top: 1.8rem;
 }
 
 #columnOne .btn-get-started {
@@ -178,13 +181,14 @@ body {
   height: 8rem;
   border-radius: 10px;
   border-color: var(--light-color);
+  width: 24rem;
 
 }
 
 #card-one-body {
   margin: 0 auto;
   padding: 4%;
-  width: 24rem;
+  width: 23rem;
   border: 2px solid rgba(98, 96, 96, 0.553);
   border-radius: 10px;
 }
@@ -316,40 +320,99 @@ div.scroll {
 
 
 /* tablet */
-@media screen and (max-width: 560px) {
+@media screen and (min-width: 401px) and (max-width: 560px) {
 
   #boton {
-
     margin: 0 auto;
-    padding: 0;
+    padding: 0px;
     width: 100%;
-
+    padding-top: 20px;
+    padding-left: 25px;
+    padding-right: 25px;
   }
 
   #columnOne .btn-get-started {
     margin: 0 auto;
     padding: 0;
-
     font-family: var(--body-font);
     font-weight: var(--normal-font-size);
     font-size: 15px;
     text-decoration: none;
-    letter-spacing: 1px;
     display: fixed;
-    padding: 15px 20px;
+    padding: 15px 40px;
     border-radius: 50px;
     transition: 0.3s;
     color: var(--white-color);
     background: var(--first-color);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
     border: 0px solid rgba(255, 255, 255, 0.1);
-    margin-left: 3.1rem;
 
   }
 
   #columnOne .btn-get-started:hover {
     border-color: rgb(47, 106, 244);
     background-color: rgb(47, 106, 244);
+  }
+
+  #card-one {
+    width: 85%;
+  }
+
+  #card-one-body {
+    width: 98%;
+  }
+
+  .rectangle {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--light-color);
+    border-bottom-left-radius: 0px;
+  }
+
+  .model img {
+    height: 80%;
+    width: 83%;
+    margin-left: 2rem;
+    margin-top: 2rem;
+  }
+
+  .columntwo p {
+    text-align: center;
+    margin-top: 10%;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #2c2b2b;
+
+  }
+
+  .services-title {
+    margin-left: 1.5rem;
+  }
+
+  .services-description
+  {
+    margin-left: 1.5rem;
+  }
+
+  .content-two .btn-get-started {
+    font-family: var(--body-font);
+    font-weight: var(--small-font-size);
+    font-size: 13px;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 15px 20px;
+    width: 50%;
+    border-radius: 50px;
+    transition: 0.3s;
+    color: var(--white-color);
+    background: var(--first-color);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+    border: 0px solid rgba(255, 255, 255, 0.1);
+    margin-left: 8rem;
   }
 }
 
@@ -369,9 +432,10 @@ div.scroll {
   font-size: 22px;
 }
 
-.content-two h2 {
-  font-size: 40px;
+.content-two h3 {
+  font-size: 35px;
   font-weight: bolder;
+  margin-left: 1.5rem;
 }
 
 .content-two .btn-get-started {
@@ -390,7 +454,7 @@ div.scroll {
   background: var(--first-color);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
   border: 0px solid rgba(255, 255, 255, 0.1);
-  margin-left: 8rem;
+  margin-left: 10rem;
 }
 
 .content-two .btn-get-started:hover {
@@ -674,7 +738,6 @@ div.scroll {
   padding: 5%;
   background-color: transparent;
   border: none;
-
 }
 
 #dentures {
@@ -686,8 +749,6 @@ div.scroll {
   border: none;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-
-#dentures p {}
 
 .service_description {
   color: var(--dark-color-alt);

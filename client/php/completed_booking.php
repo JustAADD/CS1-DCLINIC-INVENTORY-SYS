@@ -116,7 +116,25 @@ if (isset($_GET['logout'])) {
     <div class="logo-details">
       <!-- <i class='bx bxl-c-plus-plus'></i> -->
       <img class="admin_logo" src="../image/dalino_logo.png">
-      <span class="logo_name">Dalino Dental Clinic</span>
+      <span class="logo_name">
+        <?php
+        require '../../connection/connection.php';
+
+        $sql = "SELECT dash_name FROM settings";
+
+        $result = $con->query($sql);
+
+        if ($result->num_rows > 0) {
+          while ($row = $result->fetch_assoc()) {
+            $fullname = $row['dash_name'];
+            echo $fullname;
+          }
+        } else {
+          echo "No data found";
+        }
+
+        $con->close(); // Close the database connection
+        ?></span>
     </div>
     <ul class="nav-links">
       <li>
@@ -220,10 +238,46 @@ if (isset($_GET['logout'])) {
       <li>
         <div class="profile-details">
           <div class="profile-content">
-            <img src="../image/dp_admin.jpg" alt="profileImg">
+            <img src="
+                      <?php
+                      require '../../connection/connection.php';
+
+                      $sql = "SELECT imagedata FROM settings"; // Assuming 'imagedata' is the column name
+
+                      $result = $con->query($sql);
+
+                      if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                          $imagedata = $row['imagedata'];
+                          echo $imagedata;
+                        }
+                      } else {
+                        echo "No data found";
+                      }
+
+                      $con->close(); // Close the database connection
+                      ?>" alt="profileImg">
           </div>
           <div class="name-job">
-            <div class="profile_name">Mercedita</div>
+            <div class="profile_name"> <?php
+                                        require '../../connection/connection.php';
+
+                                        $sql = "SELECT name FROM settings";
+
+                                        $result = $con->query($sql);
+
+                                        if ($result->num_rows > 0) {
+                                          while ($row = $result->fetch_assoc()) {
+                                            $name = $row['name'];
+                                            echo $name;
+                                          }
+                                        } else {
+                                          echo "No data found";
+                                        }
+
+                                        $con->close(); // Close the database connection
+                                        ?>
+            </div>
 
           </div>
           <a href="?logout" name="logout" id="logout"><i class='bx bx-log-out'></i></a>
@@ -313,7 +367,7 @@ if (isset($_GET['logout'])) {
 
               var statusButton = '<button type="button" class="btn btn-primary" style="background-color:#31b522; width: 8rem; border: none;">' + row.status + '</button>';
 
-              
+
               table.row.add([
                 row.id,
                 statusButton,
@@ -321,7 +375,7 @@ if (isset($_GET['logout'])) {
                 row.selectedProcedures,
                 row.session_time,
                 row.date,
-                deleteButton 
+                deleteButton
                 // Add more columns as needed
               ]);
             });
