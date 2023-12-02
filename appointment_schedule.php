@@ -2,7 +2,6 @@
 session_start();
 require 'connection/connection.php';
 
-session_start();
 if (isset($_SESSION['email'])) {
   $email = $_SESSION['email'];
 }
@@ -101,12 +100,12 @@ if (isset($_POST['submit'])) {
 
     $updateStmt->close();
     $mysqli->close();
-    $msg = "<div class='alert alert-success'>Booking Successful</div>";
+    // $msg = "<div class='alert alert-success'>Booking Successful</div>";
 
-    $_SESSION['status'] = "Your Appointment Booking successfully";
-    $_SESSION['status_code'] = "success";
+    // $_SESSION['status'] = "Your Appointment Booking successfully";
+    // $_SESSION['status_code'] = "success";
     // header("refresh:0.1;url=gcash_payment.php");
-    header("refresh:0.1;url=appointment.php");
+    header("refresh:0.1;url=appointment_final.php");
     exit();
   } else {
     echo "Failed to execute statement: " . $stmt->error;
@@ -147,10 +146,7 @@ if (!isset($_SESSION['email'])) {
 <body>
   <section>
     <div class="container-fluid d-flex justify-content-center align-items-center">
-
-
-
-      <div class="card" id="cardform" style="margin-top: 6rem;">
+      <div class="card" id="cardform" style="margin-top: 7rem; margin-bottom: 4rem;">
 
         <?php
         if (isset($_SESSION['back'])) {
@@ -177,78 +173,78 @@ if (!isset($_SESSION['email'])) {
         }
         ?>
 
-        <p class="card-form-text" style="margin-left: 2.2rem;">Dental Services <span style="font-size: 13px; color:#808080;">(This is our available services)</span></p>
+        <p class="card-form-text-title" style="margin-left: 2.2rem;">Dental Services <span style="font-size: 13px; color:#808080;">(This is our available services)</span></p>
         <form action="appointment_schedule.php" method="POST">
           <input type="hidden" name="date" value="<?php echo $date; ?>">
-          <div class="row gx-5" style="margin-left: 12px;">
+
+          <div class="row gx-5" id="rows" style="margin-left: 12px;">
             <div class="col-md-4 mb-3">
-              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Dental Checkups" id="option1" autocomplete="off">
-              <label class="btn btn-radio me-3 mb-3" style=" justify-content: center; align-items: center; height: 5rem; text-align: center;" value="Dental Checkups" for="option1">Dental Checkups</label>
+              <p class="service-title">Retainer</p>
+              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Invisible/clear" id="option1" autocomplete="off">
+              <label class="btn btn-radio me-3 mb-3 " style="height: 4.5rem;" value="Invisible/clear" for="option1">Invisible/clear</label>
 
-              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Oral Prophylaxis" id="option2" autocomplete="off">
-              <label class="btn btn-radio me-3 mb-3" style="justify-content: center; align-items: center; height: 5rem; text-align: center;" value="Oral Prophylaxis" for="option2">Oral Prophylaxis</label>
+              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Hawley" id="option2" autocomplete="off">
+              <label class="btn btn-radio me-3 mb-3 " style="justify-content: center; align-items: center; height: 4.5rem; text-align: center;" value="Hawley" for="option2">Hawley</label>
 
-              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Dental Fillings" id="option3" autocomplete="off">
-              <label class="btn btn-radio me-3 mb-3" style="justify-content: center; align-items: center; height: 5rem; text-align: center;" value="Dental Fillings" for="option3">Dental Fillings</label>
+              <p class="service-title">Orthodontic Treatment</p>
+              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Conventional" id="option3" autocomplete="off">
+              <label class="btn btn-radio me-3 mb-3  " style="height: 4.5rem;" value="Conventional" for="option3">Conventional</label>
 
-              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Teeth Cleaning" id="option4" autocomplete="off">
-              <label class="btn btn-radio me-3 mb-3" style="justify-content: center; align-items: center; height: 5rem; text-align: center;" value="Teeth Cleaning" for="option4">Teeth Cleaning</label>
+              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Ceramic" id="option4" autocomplete="off">
+              <label class="btn btn-radio me-3 mb-3  " style="justify-content: center; align-items: center; height: 4.5rem; text-align: center;" value="Ceramic" for="option4">Ceramic</label>
 
-              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Tooth Extraction" id="option5" autocomplete="off">
-              <label class="btn btn-radio me-3 mb-3" style="justify-content: center; align-items: center; height: 5rem; text-align: center;" value="Tooth Extraction" for="option5">Tooth Extraction</label>
+              <p class="service-title">Restorative Services | Tooth Extraction</p>
+              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Composite Restoration per Surface" id="option10" autocomplete="off">
+              <label class="btn btn-radio me-3 mb-3" style="justify-content: center; align-items: center;  height: 4.5rem; text-align: center;" value="Composite Restoration per Surface" for="option10">Composite Restoration </label>
 
-              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Tooth Restoration" id="option6" autocomplete="off">
-              <label class="btn btn-radio me-3 mb-3" style="justify-content: center; align-items: center; height: 5rem; text-align: center;" value="Tooth Restoration" for="option6">Tooth Restoration</label>
+              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Tooth Extraction" id="option11" autocomplete="off">
+              <label class="btn btn-radio me-3 mb-3" style="justify-content: center; align-items: center;  height: 4.5rem; text-align: center;" value="Tooth Extraction" for="option11">Tooth Extraction</label>
 
-              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Orthodontics" id="option7" autocomplete="off">
-              <label class="btn btn-radio me-3 mb-3" style="justify-content: center; align-items: center; height: 5rem; text-align: center;" value="Orthodontics" for="option7">Orthodontics</label>
+              <p class="service-title">Veneers</p>
 
-              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Dental X-rays" id="option8" autocomplete="off">
-              <label class="btn btn-radio me-3 mb-3" style="justify-content: center; align-items: center; height: 5rem; text-align: center;" value="Dental X-rays" for="option8">Dental X-rays</label>
+              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Direct Composite" id="option15" autocomplete="off">
+              <label class="btn btn-radio me-3 mb-3 " style="height: 4.5rem; " value="Direct Composite" for="option15">Direct Composite </label>
 
-              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Teeth Whitening" id="option9" autocomplete="off">
-              <label class="btn btn-radio me-3" style="justify-content: center; align-items: center; height: 5rem; text-align: center;" value="Teeth Whitening" for="option9">Teeth Whitening</label>
+              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Emax" id="option16" autocomplete="off">
+              <label class="btn btn-radio me-3 mb-3 " style=" height: 4.5rem;" value="Emax" for="option16">Emax</label>
 
-              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Root Canal Treatment" id="option10" autocomplete="off">
-              <label class="btn btn-radio me-3" style="justify-content: center; align-items: center; height: 5rem; text-align: center;" value="Root Canal Treatment" for="option10">Root Canal Treatment</label>
+              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Zirconia" id="option17" autocomplete="off">
+              <label class="btn btn-radio me-3" style="justify-content: center; align-items: center; height: 4.5rem; text-align: center;" value="Zirconia" for="option17">Zirconia</label>
 
             </div>
-
-
             <div class="col-md-4 mb-3">
+              <p class="service-title">Teeth Whitening / Consultation</p>
+              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="In-Office" id="option5" autocomplete="off">
+              <label class="btn btn-radio me-3 mb-3" style="justify-content: center; align-items: center; height: 4.5rem; text-align: center;" value="In-Office" for="option5">In-Office</label>
 
-              <p class="card-form-text">Dental Prosthesis</p>
+              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Consultation" id="option6" autocomplete="off">
+              <label class="btn btn-radio me-3 mb-3" style="justify-content: center; align-items: center; height: 4.5rem; text-align: center;" value="Consultation" for="option6">Consultation</label>
 
-              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Removable Partial Dentures" id="option11" autocomplete="off">
-              <label class="btn btn-radio me-3 mb-3" style="justify-content: center; align-items: center; height: 5rem; text-align: center;" value="Removable Partial Dentures" for="option11">Removable Partial Dentures</label>
+              <p class="service-title">Periodontal Treatment | Odontotomy</p>
+              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Periodontal Treatment Per Quadrant" id="option12" autocomplete="off">
+              <label class="btn btn-radio me-3 mb-3" style="justify-content: center; align-items: center;  height: 4.5rem; text-align: center;" value="Periodontal Treatment Per Quadrant" for="option12">Periodontal Treatment </label>
+              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Odontotomy" id="option13" autocomplete="off">
+              <label class="btn btn-radio me-3 mb-3" style="justify-content: center; align-items: center;  height: 4.5rem; text-align: center;" value="Odontotomy" for="option13">Odontotomy</label>
 
-              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Complete Partial Dentures" id="option12" autocomplete="off">
-              <label class="btn btn-radio me-3 mb-3" style="justify-content: center; align-items: center; height: 5rem; text-align: center;" value="Complete Partial Dentures" for="option12">Complete Partial Dentures</label>
+              <p class="service-title">Preventive Services</p>
+              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Oral Prophylaxis Cleaning" id="option7" autocomplete="off">
+              <label class="btn btn-radio me-3 mb-3" style="justify-content: center; align-items: center; height: 4.5rem; text-align: center;" value="Oral Prophylaxis Cleaning" for="option7">Oral Prophylaxis Cleaning</label>
 
-              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Flexible Partial Dentures" id="option13" autocomplete="off">
-              <label class="btn btn-radio me-3" style="justify-content: center; align-items: center; height: 5rem; text-align: center;" value="Flexible Partial Dentures" for="option13">Flexible Partial Dentures</label>
+              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Fluoride Treatment" id="option8" autocomplete="off">
+              <label class="btn btn-radio me-3 mb-3" style="justify-content: center; align-items: center; height: 4.5rem; text-align: center;" value="Fluoride Treatment" for="option8">Fluoride Treatment</label>
 
-              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Acrylic Partial Dentures" id="option14" autocomplete="off">
-              <label class="btn btn-radio me-3" style="justify-content: center; align-items: center; height: 5rem; text-align: center;" value="Acrylic Partial Dentures" for="option14">Acrylic Partial Dentures</label>
-
-              <p class="card-form-text mt-3">Dentures</p>
-
-
-              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Dental Crowns" id="option15" autocomplete="off">
-              <label class="btn btn-radio me-3 mb-3" style="justify-content: center; align-items: center; height: 5rem; text-align: center;" value="Dental Crowns" for="option15">Dental Crowns</label>
-
-              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Dental Implants" id="option16" autocomplete="off">
-              <label class="btn btn-radio me-3 mb-3" style="justify-content: center; align-items: center; height: 5rem; text-align: center;" value="Dental Implants" for="option16">Dental Implants</label>
-
-              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Dental Bridges" id="option17" autocomplete="off">
-              <label class="btn btn-radio me-3" style="justify-content: center; align-items: center; height: 5rem; text-align: center;" value="Dental Bridges" for="option17">Dental Bridges</label>
-
+              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Pit and Fissure Sealant" id="option9" autocomplete="off">
+              <label class="btn btn-radio me-3" style="justify-content: center; align-items: center; height: 4.5rem; text-align: center;" value="Pit and Fissure Sealant" for="option9">Pit and Fissure Sealant</label>
             </div>
 
-            <!--Choose Timee-->
-            <div class="col-md-3 mb-3" id="ts2">
-              <p class="timeslots">Timeslots</p>
-              <p>Choose Convenient Time</p>
+            <div class="col-md-4" id="ts2">
+              <p class="service-title">Any Surgery with Bone Reduction</p>
+              <input type="checkbox" class="btn-check" name="selectedProcedures[]" value="Surgery with bone reduction" id="option14" autocomplete="off">
+              <label class="btn btn-radio me-3" style="justify-content: center; align-items: center;  height: 4.5rem; text-align: center;" value="Surgery with bone reduction" for="option14">Fee 10,000 – 15,000</label>
+
+              <!--Choose Timee-->
+
+              <p class="timeslots mt-4">Timeslots</p>
 
               <?php
 
@@ -331,33 +327,9 @@ if (!isset($_SESSION['email'])) {
               if (!empty($allTimeSlots)) :
               ?>
 
-                <!-- <div class="form-group">
-                  <div class="button-row">
-                    <?php foreach ($allTimeSlots as $counter => $timeSlot) : ?>
-                      <?php if ($counter % 3 === 0) : ?>
-                        <div class="row">
-                        <?php endif; ?>
-
-                        <div class="col-md-4">
-                          <?php
-                          $isNotAvailable = $timeSlot['notAvailable'];
-                          $disabledAttribute = $isNotAvailable ? 'disabled' : '';
-                          $disabledClass = $isNotAvailable ? 'disabled-label' : '';
-                          ?>
-                          <input type="radio" class="btn-check" name="timeslot" value="<?php echo $timeSlot['time']; ?>" id="radio<?php echo $counter; ?>" autocomplete="off" <?php echo $disabledAttribute; ?>>
-                          <label class="btn btn-radio-ts <?php echo $disabledClass; ?>" for="radio<?php echo $counter; ?>"><?php echo $timeSlot['time']; ?></label>
-                        </div>
-
-                        <?php if ($counter % 3 === 2 || $counter === count($allTimeSlots) - 1) : ?>
-                        </div>
-                      <?php endif; ?>
-                    <?php endforeach; ?>
-                  </div>
-                </div> -->
-
                 <div class="form-group">
                   <label for="timeslot">Select a timeslot:</label>
-                  <select class="form-select mt-2" id="timeslot" name="timeslot">
+                  <select class="form-select mt-3" id="timeslot" name="timeslot">
                     <?php foreach ($allTimeSlots as $counter => $timeSlot) : ?>
                       <?php
                       $isNotAvailable = $timeSlot['notAvailable'];
@@ -365,7 +337,7 @@ if (!isset($_SESSION['email'])) {
                       $disabledClass = $isNotAvailable ? 'disabled-label' : '';
                       ?>
                       <!-- Debugging: Output the content of $timeSlot -->
-                      <?php var_dump($timeSlot); ?>
+                      <!-- <?php var_dump($timeSlot); ?> -->
 
                       <option value="<?php echo $timeSlot['time']; ?>" <?php echo $disabledAttribute; ?>><?php echo $timeSlot['time']; ?></option>
                     <?php endforeach; ?>
@@ -382,7 +354,7 @@ if (!isset($_SESSION['email'])) {
               <p class="timeslots mt-3">Fill up for our info</p>
 
 
-              <div class=" mt-3 mb-3"><span>Name:</span>
+              <!-- <div class=" mt-3 mb-3"><span>Name:</span>
 
                 <?php
                 $mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
@@ -406,34 +378,39 @@ if (!isset($_SESSION['email'])) {
                 $mysqli->close();
 
 
-                ?>
+                ?> 
 
+            </div> -->
 
-
-
-              </div>
-              <p class="" style="font-size:smaller;"><span>Option:</span>&nbsp Please confirm whether you intend to use the name above; if not, kindly provide an alternative name.</p>
+              <p class="text" style="font-size:smaller;"><span>Option:</span>&nbsp Please confirm whether you intend to use the name above; if not, kindly provide an alternative name.</p>
               <div class="mb-4 mt-3">
-                <!-- <label for="exampleInputEmail1" class="form-label m">Patient name:  </label> -->
+                <!-- <label for="exampleInputEmail1" class="form-label m">Patient name: </label> -->
                 <input type="text" class="form-control" name="patient_name" id="exampleInputEmail1" placeholder="Patient name" aria-describedby="default input example">
               </div>
-              <!-- <p class="" style="font-size:smaller;">Dalino Dental Clinic kindly informs you that there is a <br> Placement fee: 80php
-              for the appointment reservations.</p> -->
+              <p class="" style="font-size:smaller;">The prices of services may vary depending on the patient's case and the required treatment; therefore, several services offer fixed prices.
+              </p>
+
               <div class="row">
-                <div class="col-md-6">
-                  <button type="submit" name="submit" id="app-submit" class="btn btn-primary mt-5 me-5">Set Appointment</button>
-                </div>
-                <div class="col-md-6">
-                  <button type="submit" name="back" id="app-back" class="btn btn-primary mt-5">Back</button>
+                <div class="col text-end mt-5">
+                  <button type="submit" name="back" id="app-back" class="btn btn-primary">Back</button>
+                  <button type="submit" name="submit" id="app-submit" class="btn btn-primary me-2">Proceed</button>
                 </div>
               </div>
-            </div>
 
-          </div>
+            </div>
         </form>
       </div>
     </div>
   </section>
+
+  <div class="footer">
+
+    <div class="owner">
+      <p> ® Dalino Dental Clinic</p>
+    </div>
+
+  </div>
+
 
   <!-- sweet alert -->
   <script src="./assets/js/sweetalert.min.js"></script>

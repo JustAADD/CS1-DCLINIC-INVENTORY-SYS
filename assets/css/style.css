@@ -17,7 +17,7 @@
   --light-orange: #F9F5EC;
   --first-color: #3785F9;
   --dark-color: #000000;
-  --dark-color-alt: #282B3A;
+  --dark-color-altab: #282B3A;
   --white-color: #fff;
 
   /*===== Fuente y tipografia =====*/
@@ -715,10 +715,11 @@ fo #form-carousel {
 
 .footer .owner {
   margin: 0 auto;
-  padding: 4%;
-  background-color: var(--first-color);
-  height: 50px;
-
+  background-color: var(--dark-color-altab);
+  padding: 1.5rem;
+  text-align: start;
+  justify-content: center;
+  align-items: center;
 
 }
 
@@ -730,23 +731,81 @@ fo #form-carousel {
 
 #card-form {
   margin: 0 auto;
-  padding: 4%;
+  padding: 2%;
   width: 70%;
   height: auto;
   border-radius: 50px;
   box-shadow: 0 7px 4px rgba(126, 175, 249, 0.4);
 }
 
+#card-form input {
+  width: 40rem;
+}
+
 #cardform {
   box-shadow: 0 7px 4px rgba(126, 175, 249, 0.4);
-  border-radius: 30px;
-  padding: 2rem;
+  border-radius: 10px;
+  padding: 1rem;
+  padding-top: 2rem;
   width: 90rem;
 }
 
-.card-form-text {
+.card-form-text-title {
   color: var(--first-color);
-  font-size: var(--normal-font-size);
+  font-size: 18px;
+}
+
+.card-form-text {
+  color: var(--dark-color-altab);
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+/* final form */
+
+#finalform {
+  box-shadow: 0 7px 4px rgba(126, 175, 249, 0.4);
+  border-radius: 10px;
+  padding: 3rem;
+  width: 55rem;
+  height: 38rem;
+  margin-top: 7rem;
+}
+
+.payment-process {
+  color: var(--dark-color-altab);
+  font-size: 15px;
+}
+
+.payment-process-description {
+  color: var(--dark-color-alt);
+  font-size: 13px;
+}
+
+#gcash-api {
+  width: 12rem;
+  background-color: var(--first-color);
+  border-radius: 10px;
+  font-family: var(--font-nunito);
+  font-size: medium;
+  border: none;
+}
+
+.gcash-logo{
+  width: 30px;
+  height: 25px;
+}
+
+#counter {
+  width: 12rem;
+  border: none;
+  border-radius: 10px;
+  font-family: var(--font-nunito);
+  font-size: medium;
+}
+
+#btn-payment-group{
+  width: 30rem;
 }
 
 /* select procedures */
@@ -793,10 +852,11 @@ fo #form-carousel {
 }
 
 #app-submit {
-  width: 10rem;
+  width: 12rem;
   background-color: var(--first-color);
   border-radius: 20px;
   font-family: var(--font-nunito);
+  border: none;
 }
 
 #app-back {
@@ -804,6 +864,23 @@ fo #form-carousel {
   background-color: var(--first-color);
   border-radius: 20px;
   font-family: var(--font-nunito);
+  border: none;
+}
+
+#form-submit {
+  width: 12rem;
+  background-color: var(--first-color);
+  border-radius: 10px;
+  font-family: var(--font-nunito);
+  border: none;
+}
+
+#form-back {
+  width: 10rem;
+  background-color: var(--first-color);
+  border-radius: 10px;
+  font-family: var(--font-nunito);
+  border: none;
 }
 
 /* .timeslot {
@@ -818,6 +895,10 @@ fo #form-carousel {
 .timeslots {
   color: var(--first-color);
   font-size: var(--normal-font-size);
+}
+
+#ts2 {
+  padding-right: 5rem;
 }
 
 .button-row {
