@@ -147,7 +147,7 @@ if (isset($_GET['deleteid'])) {
         </div>
         <ul class="sub-menu">
           <li><a href="../php/approved_booking.php">Approved</a></li>
-          <li><a href="../php/completed_booking.php">Completed</a></li>
+          <!-- <li><a href="../php/completed_booking.php">Completed</a></li> -->
           <li><a href="../php/rejected_booking.php">Rejected</a></li>
         </ul>
       </li>
@@ -301,6 +301,7 @@ if (isset($_GET['deleteid'])) {
                     <th scope="col">Service</th>
                     <th scope="col">Session Time</th>
                     <th scope="col">Session Date</th>
+                    <th scope="col">Payment</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
@@ -331,6 +332,7 @@ if (isset($_GET['deleteid'])) {
           null,
           null,
           null,
+          null,
           null
 
         ]
@@ -346,8 +348,8 @@ if (isset($_GET['deleteid'])) {
             // Clear the existing data and add the new data
             table.clear();
             $.each(data, function(index, row) {
-              var deleteButton = '<a href="../php/approved_booking_data.php? deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a>&nbsp';
-              var updateButton = '<a href="../php/approved_booking.php? deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></button></a>';
+              var deleteButton = '<a href="../php/approved_booking_data.php? deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-check"></i></button></a>&nbsp';
+              // var updateButton = '<a href="../php/approved_booking.php? deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-check"></i></button></a>';
               var transacLink = '<a href="' + row.transac_no + '">' + row.transac_no + '</a>';
               var transacAndName = `
                    ${transacLink}
@@ -369,6 +371,7 @@ if (isset($_GET['deleteid'])) {
                 row.selectedProcedures,
                 row.session_time,
                 row.date,
+                row.payment,
                 deleteButton
                 // Add more columns as needed
               ]);

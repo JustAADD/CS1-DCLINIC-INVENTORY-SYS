@@ -126,7 +126,7 @@ if (isset($_POST["add_transaction"])) {
         </div>
         <ul class="sub-menu">
           <li><a href="../php/approved_booking.php">Approved</a></li>
-          <li><a href="../php/completed_booking.php">Completed</a></li>
+          <!-- <li><a href="../php/completed_booking.php">Completed</a></li> -->
           <li><a href="../php/rejected_booking.php">Rejected</a></li>
         </ul>
       </li>

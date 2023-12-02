@@ -4,20 +4,69 @@ require '../../connection/connection.php';
 
 if (isset($_GET['deleteid'])) {
 
-  $delete_id = $_GET['deleteid'];
-  $delete_query = "DELETE FROM booking_approved WHERE id = '$delete_id'";
+    $delete_id = $_GET['deleteid'];
 
-  if ($con->query($delete_query) === TRUE) {
+    // Begin the transaction
+    mysqli_begin_transaction($con);
 
+    try {
+        // Step 1: Insert into the patient_transaction table
+        $insert_query = "INSERT INTO patient_transaction (transac_no, status, name, patient_name, selectedProcedures, payment, session_time, date) 
+                         SELECT transac_no, status, name, patient_name, selectedProcedures, payment, session_time, date
+                         FROM booking_approved
+                         WHERE id = ?";
+        $stmt_insert = mysqli_prepare($con, $insert_query);
 
-    header("Location: ../php/approved_booking.php");
-  } else {
-  }
+        if (!$stmt_insert) {
+            throw new Exception("Error preparing insert statement: " . mysqli_error($con));
+        }
 
-  $con->close();
+        mysqli_stmt_bind_param($stmt_insert, "i", $delete_id);
+
+        if (!mysqli_stmt_execute($stmt_insert)) {
+            throw new Exception("Error executing insert statement: " . mysqli_stmt_error($stmt_insert));
+        }
+
+        // Step 2: Delete from the approved_booking table
+        $delete_query = "DELETE FROM booking_approved WHERE id = ?";
+        $stmt_delete = mysqli_prepare($con, $delete_query);
+
+        if (!$stmt_delete) {
+            throw new Exception("Error preparing delete statement: " . mysqli_error($con));
+        }
+
+        mysqli_stmt_bind_param($stmt_delete, "i", $delete_id);
+
+        if (!mysqli_stmt_execute($stmt_delete)) {
+            throw new Exception("Error executing delete statement: " . mysqli_stmt_error($stmt_delete));
+        }
+
+        // If everything is successful, commit the transaction
+        mysqli_commit($con);
+        header("Location: ../php/approved_booking.php");
+    } catch (Exception $e) {
+        // If an exception occurred, roll back the transaction
+        mysqli_rollback($con);
+        echo "Transaction failed: " . $e->getMessage();
+    } finally {
+        // Close the prepared statements if they were successfully created
+        if ($stmt_insert) {
+            mysqli_stmt_close($stmt_insert);
+        }
+        if ($stmt_delete) {
+            mysqli_stmt_close($stmt_delete);
+        }
+    }
+
+    // Close the database connection
+    // mysqli_close($con);
 }
 
+
 ?>
+
+
+
 
 
 <!DOCTYPE html>
@@ -63,7 +112,7 @@ if (isset($_GET['deleteid'])) {
 
       <!-- data -->
       <?php
-      $selectquery = "SELECT * FROM booking_approved ORDER BY ID DESC";
+      $selectquery = "SELECT * FROM app_final_process ORDER BY ID DESC";
       $result = mysqli_query($con, $selectquery);
 
       while ($row = mysqli_fetch_assoc($result)) {
@@ -71,9 +120,9 @@ if (isset($_GET['deleteid'])) {
         $status = $row['status'];
         $transac_no = $row['transac_no'];
         $name = $row['name'];
-        $procedures = $row['procedures'];
+        $procedures = $row['selectedProcedures'];
         $session_time = $row['session_time'];
-        $session_date = $row['session_date'];
+        $session_date = $row['date'];
 
         echo '
           <tbody>

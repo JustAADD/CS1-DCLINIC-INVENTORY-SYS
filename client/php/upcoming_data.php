@@ -1,4 +1,5 @@
 <?php
+
 require '../../connection/connection.php';
 
 // Check if the "deleteid" parameter is present in the URL
@@ -7,7 +8,7 @@ if (isset($_GET['deleteid'])) {
   $delete_id = $_GET['deleteid'];
 
   // Fetch the data to be deleted from the 'manage_schedule' table for the given ID
-  $select_query = "SELECT * FROM appointment_booking WHERE id = '$delete_id'";
+  $select_query = "SELECT * FROM app_final_process WHERE id = '$delete_id'";
   $result = mysqli_query($con, $select_query);
 
   if ($result) {
@@ -22,11 +23,12 @@ if (isset($_GET['deleteid'])) {
     $selectedProcedures = $row['selectedProcedures'];
     $session_time = $row['session_time'];
     $session_date = $row['date'];
+    $payment = $row['payment'];
     // ... (Add other columns as needed)
 
     // Insert the data into the 'deleted_schedule' table
-    $insert_query = "INSERT INTO booking_approved (id, transac_no, status, name, patient_name, selectedProcedures, session_time, date) VALUES 
-    ('$id', '$transac_no', '$status', '$name', '$patient_name', '$selectedProcedures', '$session_time', '$session_date')";
+    $insert_query = "INSERT INTO booking_approved (id, transac_no, status, name, patient_name, selectedProcedures, payment, session_time, date) VALUES 
+    ('$id', '$transac_no', '$status', '$name', '$patient_name', '$selectedProcedures', '$payment', '$session_time', '$session_date' )";
     // ... (Add other columns as needed)
 
     $insert_result = mysqli_query($con, $insert_query);
@@ -35,7 +37,7 @@ if (isset($_GET['deleteid'])) {
       // Data transfer to 'deleted_schedule' successful
 
       // Now, delete the record from the 'manage_schedule' table
-      $delete_query = "DELETE FROM appointment_booking WHERE id = '$delete_id'";
+      $delete_query = "DELETE FROM app_final_process WHERE id = '$delete_id'";
       $delete_result = mysqli_query($con, $delete_query);
 
       if ($delete_result) {

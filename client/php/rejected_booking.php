@@ -7,7 +7,7 @@ if (isset($_GET['deleteid'])) {
   $delete_id = $_GET['deleteid'];
 
   // Fetch the data to be deleted from the 'manage_schedule' table for the given ID
-  $select_query = "SELECT * FROM appointment_booking WHERE id = '$delete_id'";
+  $select_query = "SELECT * FROM app_final_process WHERE id = '$delete_id'";
   $result = mysqli_query($con, $select_query);
 
   if ($result) {
@@ -20,13 +20,14 @@ if (isset($_GET['deleteid'])) {
     $name = $row['name'];
     $patient_name = $row['patient_name'];
     $procedures = $row['selectedProcedures'];
+    $payment = $row['payment'];
     $session_time = $row['session_time'];
     $session_date = $row['date'];
     // ... (Add other columns as needed)
 
     // Insert the data into the 'deleted_schedule' table
-    $insert_query = "INSERT INTO booking_rejected (id, transac_no, status, name, patient_name, selectedProcedures, session_time, date) VALUES 
-    ('$id', '$transac_no', '$status', '$name', '$patient_name', '$procedures', '$session_time', '$session_date')";
+    $insert_query = "INSERT INTO booking_rejected (id, transac_no, status, name, patient_name, selectedProcedures, payment, session_time, date) VALUES 
+    ('$id', '$transac_no', '$status', '$name', '$patient_name', '$procedures', '$payment', '$session_time', '$session_date')";
     // ... (Add other columns as needed)
 
     $insert_result = mysqli_query($con, $insert_query);
@@ -35,7 +36,7 @@ if (isset($_GET['deleteid'])) {
       // Data transfer to 'deleted_schedule' successful
 
       // Now, delete the record from the 'manage_schedule' table
-      $delete_query = "DELETE FROM appointment_booking WHERE id = '$delete_id'";
+      $delete_query = "DELETE FROM app_final_process WHERE id = '$delete_id'";
       $delete_result = mysqli_query($con, $delete_query);
 
       if ($delete_result) {
@@ -147,7 +148,7 @@ if (isset($_GET['logout'])) {
         </div>
         <ul class="sub-menu">
           <li><a href="../php/approved_booking.php">Approved</a></li>
-          <li><a href="../php/completed_booking.php">Completed</a></li>
+          <!-- <li><a href="../php/completed_booking.php">Completed</a></li> -->
           <li><a href="../php/rejected_booking.php">Rejected</a></li>
         </ul>
       </li>

@@ -131,7 +131,7 @@ if (isset($_POST["submit_schedule"])) {
         </div>
         <ul class="sub-menu">
           <li><a href="../php/approved_booking.php">Approved</a></li>
-          <li><a href="../php/completed_booking.php">Completed</a></li>
+          <!-- <li><a href="../php/completed_booking.php">Completed</a></li> -->
           <li><a href="../php/rejected_booking.php">Rejected</a></li>
         </ul>
       </li>
@@ -429,12 +429,33 @@ if (isset($_POST["submit_schedule"])) {
                 var deleteButton = '<a href="../php/manage_schedule_data.php? deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a>&nbsp';
                 var updateButton = '<a href="../php/manage_schedule_update.php? updateid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></button></a>';
 
+                // Parse date and time strings
+                var sessionDate = new Date(row.session_date + 'T00:00:00'); // Assuming only date without time
+                var startTime = new Date('1970-01-01T' + row.start_time);
+                var endTime = new Date('1970-01-01T' + row.end_time);
+
+                // Format date
+                var formattedDate = sessionDate.toLocaleDateString();
+
+                // Format time to AM/PM
+                var formattedStartTime = startTime.toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  hour12: true
+                });
+                var formattedEndTime = endTime.toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  hour12: true
+                });
+
+
                 table.row.add([
                   row.id,
                   row.slots,
                   row.session_date,
-                  row.start_time,
-                  row.end_time,
+                  formattedStartTime,
+                  formattedEndTime,
                   row.status,
                   deleteButton + updateButton
                   // Add more columns as needed

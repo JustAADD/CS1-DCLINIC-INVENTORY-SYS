@@ -86,7 +86,7 @@ if (isset($_GET['logout'])) {
         </div>
         <ul class="sub-menu">
           <li><a href="../php/approved_booking.php">Approved</a></li>
-          <li><a href="../php/completed_booking.php">Completed</a></li>
+          <!-- <li><a href="../php/completed_booking.php">Completed</a></li> -->
           <li><a href="../php/rejected_booking.php">Rejected</a></li>
         </ul>
       </li>
@@ -241,6 +241,7 @@ if (isset($_GET['logout'])) {
                     <th scope="col">Services</th>
                     <th scope="col">Session Time</th>
                     <th scope="col">Session Date</th>
+                    <th scope="col">Payment</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
@@ -273,6 +274,7 @@ if (isset($_GET['logout'])) {
           null,
           null,
           null,
+          null,
           null
 
         ]
@@ -288,9 +290,11 @@ if (isset($_GET['logout'])) {
             // Clear the existing data and add the new data
             table.clear();
             $.each(data, function(index, row) {
-              var approvedButton = '<a href="../php/upcoming_data.php? deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-thumbs-up"></i></button></a>&nbsp';
-              var completedButton = '<a href="../php/completed_booking.php? deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-square-check"></i></button></a>&nbsp';
-              var rejectedButton = '<a href="../php/rejected_booking.php? deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-thumbs-down"></i></button></a>';
+              var approvedButton = '<a href="../php/upcoming_data.php? deleteid=' + row.id +
+                '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-thumbs-up"></i></button></a>&nbsp';
+              // var completedButton = '<a href="../php/completed_booking.php? deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-square-check"></i></button></a>&nbsp';
+              var rejectedButton = '<a href="../php/rejected_booking.php? deleteid=' + row.id +
+                '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-thumbs-down"></i></button></a>';
               // var transacAndName = row.transac_no + ' - ' + row.patient_name;
               var transacLink = '<a href="' + row.transac_no + '">' + row.transac_no + '</a>';
 
@@ -315,7 +319,9 @@ if (isset($_GET['logout'])) {
                 row.selectedProcedures,
                 row.session_time,
                 row.date,
-                approvedButton + completedButton + rejectedButton
+                row.payment,
+                approvedButton + rejectedButton,
+
                 // Add more columns as needed
               ]);
             });
@@ -338,8 +344,10 @@ if (isset($_GET['logout'])) {
   </script>
 
 
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
+  </script>
   </script>
 </body>
 
