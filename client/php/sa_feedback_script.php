@@ -15,30 +15,32 @@ if (!$con) {
   die("Connection failed: " . mysqli_connect_error());
 }
 
-// Fetch data from the database
-$result = $con->query("SELECT * FROM positive_feedback ORDER BY ID DESC");
-$data = array();
-while ($row = $result->fetch_assoc()) {
-  $data[] = $row;
+// Fetch positive feedback
+$queryPositive = "SELECT * FROM feedback_table WHERE sentiment = 'positive' ORDER BY ID DESC";
+$resultPositive = $con->query($queryPositive);
+$dataPositive = array();
+while ($row = $resultPositive->fetch_assoc()) {
+  $dataPositive[] = $row;
 }
 
-$query2 = "SELECT * FROM negative_feedback ORDER BY ID DESC";
-$result2 = $con->query($query2);
-$data2 = array();
-while ($row = $result2->fetch_assoc()) {
-  $data2[] = $row;
+// Fetch negative feedback
+$queryNegative = "SELECT * FROM feedback_table WHERE sentiment = 'negative' ORDER BY ID DESC";
+$resultNegative = $con->query($queryNegative);
+$dataNegative = array();
+while ($row = $resultNegative->fetch_assoc()) {
+  $dataNegative[] = $row;
 }
 
-$query3 = "SELECT * FROM neutral_feedback ORDER BY ID DESC";
-$result3 = $con->query($query3);
-$data3 = array();
-while ($row = $result3->fetch_assoc()) {
-  $data3[] = $row;
+// Fetch neutral feedback
+$queryNeutral = "SELECT * FROM feedback_table WHERE sentiment = 'neutral' ORDER BY ID DESC";
+$resultNeutral = $con->query($queryNeutral);
+$dataNeutral = array();
+while ($row = $resultNeutral->fetch_assoc()) {
+  $dataNeutral[] = $row;
 }
-
 echo json_encode(array(
-  'data' => $data,
-  'data2' => $data2,
-  'data3' => $data3
+  'data' => $dataPositive,
+  'data2' => $dataNegative,
+  'data3' => $dataNeutral
 ));
 $con->close();

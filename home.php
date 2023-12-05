@@ -86,12 +86,12 @@ if (isset($_SESSION['back'])) {
   <!--loader-->
   <script src="./assets/js/loader.js"></script>
   <?php
-  include 'header.php';
+  include 'header-home.php';
 
   ?>
   <style>
     div.scroll {
-      width: 27rem;
+      width: 22rem;
       height: 3rem;
       overflow-x: hidden;
       overflow-y: auto;
@@ -135,17 +135,32 @@ if (isset($_SESSION['back'])) {
 
                 $fullname = $_SESSION['fullname'];
 
-                $selectQuery = "SELECT session_time, date FROM appointment_booking WHERE name = '$fullname'";
+                $selectQuery = "SELECT session_time, date, status FROM booking_approved WHERE name = '$fullname'";
                 $result = mysqli_query($con, $selectQuery);
 
-                while ($row = mysqli_fetch_assoc($result)) {
 
-                  $session_time = $row['session_time'];
-                  $session_date = $row['date'];
+                if (mysqli_num_rows($result) > 0) {
+                  while ($row = mysqli_fetch_assoc($result)) {
+                    $session_time = $row['session_time'];
+                    $session_date = $row['date'];
+                    $approval_status = $row['status'];
 
+                    echo "<div class='show' style='text-align:center; margin-top: 20px;'>";
+
+                    if ($approval_status == 'Approved') {
+                      echo "Approved: $session_time - $session_date";
+                    } else {
+                      echo "Please wait for the approval";
+                    }
+
+                    echo "</div>";
+                  }
+                } else {
                   echo "<div class='show' style='text-align:center; margin-top: 20px;'>
-                    $session_time  - $session_date </div>";
+                    Please wait for the approval
+                  </div>";
                 }
+
                 mysqli_close($con);
                 ?>
               </div>
@@ -204,7 +219,7 @@ if (isset($_SESSION['back'])) {
               <h5>At our dental clinic, we pride ourselves on providing
                 exceptional dental consultation services to all our patients.
                 Our dedicated team of experienced dentists is committed to offering
-                personalized care and attention to address your unique dental needs.</h5>
+                personalized care.</h5>
               </p>
 
               <div class="card" id="owl-card-body">
@@ -222,9 +237,7 @@ if (isset($_SESSION['back'])) {
               <h5>Our teeth cleaning service is designed to give you
                 a bright and healthy smile that you can be proud of.
                 We understand the importance of maintaining excellent
-                oral hygiene, and our team of skilled dental hygienists
-                is dedicated to providing you with a thorough and gentle
-                cleaning experience.</h5>
+                oral hygiene.</h5>
               </p>
 
               <div class="card" id="owl-card-body">
@@ -259,9 +272,7 @@ if (isset($_SESSION['back'])) {
 
               <h5>At our dental clinic, we offer comprehensive braces services
                 to help you achieve a straighter and more aligned smile.
-                Our team of skilled orthodontists is committed to providing
-                personalized and effective orthodontic treatment for patients
-                of all ages.</h5>
+              </h5>
               </p>
 
               <div class="card" id="owl-card-body">
@@ -293,59 +304,13 @@ if (isset($_SESSION['back'])) {
         <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner" id="inner" style="background-color: transparent;">
             <div class="carousel-item active" data-bs-interval="10000">
-              <p><?php
-                  require 'connection/connection.php';
 
-                  $selectQuery = "SELECT feedback, patient_name FROM positive_feedback WHERE id = '19'";
-                  $result = mysqli_query($con, $selectQuery);
-
-                  while ($row = mysqli_fetch_assoc($result)) {
-                    $feedback = $row['feedback'];
-                    $patient_name = $row['patient_name'];
-
-
-                    echo "$feedback <br><br>
-                    - $patient_name";
-                  }
-                  mysqli_close($con);
-                  ?>
-              </p>
             </div>
             <div class="carousel-item" data-bs-interval="10000">
-              <p><?php
-                  require 'connection/connection.php';
 
-                  $selectQuery = "SELECT feedback, patient_name FROM positive_feedback  WHERE id = '20'";
-                  $result = mysqli_query($con, $selectQuery);
-
-                  while ($row = mysqli_fetch_assoc($result)) {
-                    $feedback = $row['feedback'];
-                    $patient_name = $row['patient_name'];
-
-                    echo "$feedback <br><br>
-                    - $patient_name";
-                  }
-                  mysqli_close($con);
-                  ?>
-              </p>
             </div>
             <div class="carousel-item " data-bs-interval="20000">
-              <p><?php
-                  require 'connection/connection.php';
 
-                  $selectQuery = "SELECT feedback, patient_name FROM positive_feedback WHERE id = '21'";
-                  $result = mysqli_query($con, $selectQuery);
-
-                  while ($row = mysqli_fetch_assoc($result)) {
-                    $feedback = $row['feedback'];
-                    $patient_name = $row['patient_name'];
-
-                    echo "$feedback <br> <br>
-                     - $patient_name";
-                  }
-                  mysqli_close($con);
-                  ?>
-              </p>
             </div>
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
@@ -369,68 +334,76 @@ if (isset($_SESSION['back'])) {
       <div class="row" id="about-row">
         <div class="col me-5" id="col-about">
           <p class="about">ABOUT US</p>
-          <p class="about-dalino">Mercedita Batoc-Dalino Dental Clinic was established in the year 2006, <br>
-            it was first located at P. Burgos Street San Jose Pasig City and later on <br>
-            moved to Malinao Pasig in front of Ado’s Panciteria in the year 2019. <br>
-            For the past years it was serving the people quality dental services <br>
-            worthy of its cost. <br>
-            <br>
-            The clinic is owned by Dr. Mercedita Batoc-Dalino, who graduated<br>
-            Doctor of Dental Medicine in Centro Escolar University-Manila.
-          </p>
+          <div class="about-dalino">
+            <p class="about-dalino">Mercedita Batoc-Dalino Dental Clinic was established in the year 2006,
+              it was first located at P. Burgos Street San Jose Pasig City and later on
+              moved to Malinao Pasig in front of Ado’s Panciteria in the year 2019.
+              For the past years it was serving the people quality dental services
+              worthy of its cost.
+              <br>
+              <br>
+              The clinic is owned by Dr. Mercedita Batoc-Dalino, who graduated
+              Doctor of Dental Medicine in Centro Escolar University-Manila.
+            </p>
+            <div class="about-dalino">
 
 
-          <div class="icon-about">
-            <div class="row gy-4">
-              <div class="social-links d-flex mt-4">
-                <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon" title="Contact Dr. Menchie">
-                  <ion-icon name="mail-outline" role="img" class="md hydrated"></ion-icon></a>
-                <a href="https://www.facebook.com/menchie.dalino" class="nav__social-icon" title="Contact Dr. Menchie"><ion-icon name="logo-facebook" role="img" class="md hydrated"></ion-icon></a>
-                <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon" title="Contact Dr. Menchie">
-                  <ion-icon name="mail-outline" role="img" class="md hydrated"></ion-icon></a>
+              <div class="icon-about">
+                <div class="row gy-4">
+                  <div class="social-links d-flex mt-4">
+                    <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon" title="Contact Dr. Menchie">
+                      <ion-icon name="mail-outline" role="img" class="md hydrated"></ion-icon></a>
+                    <a href="https://www.facebook.com/menchie.dalino" class="nav__social-icon" title="Contact Dr. Menchie"><ion-icon name="logo-facebook" role="img" class="md hydrated"></ion-icon></a>
+                    <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon" title="Contact Dr. Menchie">
+                      <ion-icon name="mail-outline" role="img" class="md hydrated"></ion-icon></a>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+            <!-- <div class="col" style="margin-left: 150px;"> -->
+
+            <p class="contact-info mt-5">
+              CONTACT US
+            </p>
+            <div class="container-column">
+              <div class="column-small small">
+                <ul class="social-link">
+                  <li>
+                    <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon" title="Contact Dr. Menchie">
+                      <ion-icon name="mail-outline" role="img" class="md hydrated"></ion-icon></a>
+                  </li>
+                  <li>
+                    <a href="https://www.facebook.com/menchie.dalino" class="nav__social-icon" title="Contact Dr. Menchie"><ion-icon name="logo-facebook" role="img" class="md hydrated"></ion-icon></a>
+                  </li>
+                  <li>
+                    <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon" title="Contact Dr. Menchie">
+                      <ion-icon name="mail-outline" role="img" class="md hydrated"></ion-icon></a>
+                  </li>
+                </ul>
+
+              </div>
+              <div class="column-mid">
+                <p class="mid-number">+63 956 073 4201</p>
+
+                <p class="mid-fb">Menchi Batoc-Dalino</p>
+
+                <p class="mid-gmail">dra.menchie@yahoo.com</p>
               </div>
             </div>
           </div>
-
-
+        </div>
+        <div class="col" id="mapa">
+          <h5 class="mb-2" id="mapa">Location Map</h5>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30890.508969491348!2d120.95043177910162!3d14.581196799999987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397ca27af509b3f%3A0x7daeec78a2e1d9d7!2sMercedita%20Marcelino%20Medical%20Clinic!5e0!3m2!1sen!2sph!4v1701773057728!5m2!1sen!2sph" width="700" height="550" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
         </div>
 
-        <!-- <div class="col" style="margin-left: 150px;"> -->
-
-          <p class="contact-info mt-5">
-            CONTACT US
-          </p>
-          <div class="container-column">
-            <div class="column-small small">
-              <ul class="social-link">
-                <li>
-                  <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon" title="Contact Dr. Menchie">
-                    <ion-icon name="mail-outline" role="img" class="md hydrated"></ion-icon></a>
-                </li>
-                <li>
-                  <a href="https://www.facebook.com/menchie.dalino" class="nav__social-icon" title="Contact Dr. Menchie"><ion-icon name="logo-facebook" role="img" class="md hydrated"></ion-icon></a>
-                </li>
-                <li>
-                  <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon" title="Contact Dr. Menchie">
-                    <ion-icon name="mail-outline" role="img" class="md hydrated"></ion-icon></a>
-                </li>
-              </ul>
-
-            </div>
-            <div class="column-mid">
-              <p class="mid-number">+63 956 073 4201</p>
-
-              <p class="mid-fb">Menchi Batoc-Dalino</p>
-
-              <p class="mid-gmail">dra.menchie@yahoo.com</p>
-            </div>
-          </div>
+        <div class="end-footer" style="padding-top: 6rem; margin-bottom: -4rem;">
+          <p class="mid-owner">© Copyright Dalino Dental Clinic. All Rights Reserved</p>
         </div>
-      </div>
-
-      <div class="end-footer">
-        <p class="mid-owner">© Copyright Dalino Dental Clinic. All Rights Reserved</p>
-      </div>
     </section>
   </div>
 

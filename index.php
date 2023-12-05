@@ -2,8 +2,10 @@
 session_start();
 include 'header-home.php';
 
-
 if (isset($_SESSION['email'])) {
+  $email = $_SESSION['email'];
+} elseif (isset($_SESSION['email'])) {
+
   header("Location: home.php");
   exit();
 }
@@ -26,12 +28,33 @@ if ($stmt->fetch()) {
 $stmt->close();
 $mysqli->close();
 
+?>
 
-// if (!isset($_SESSION['email'])) {
+<?php
+if (isset($_SESSION['back'])) {
+  // Debugging: Check if $_SESSION['back'] is set correctly
+  var_dump($_SESSION['back']);
 
-//   header("Location: main.php");
-// }
+  echo "<script>
+          console.log('Script executed'); // Debugging: Check if script is executed
+          Swal.fire({
+            title: 'Logout?',
+            text: 'Are you sure you want to logout?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No, go back',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = 'main.php';
+            } else {
+              // Handle cancellation if needed
+            }
+          });
+        </script>";
 
+  unset($_SESSION['back']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -49,10 +72,16 @@ $mysqli->close();
 
   <!-- Animation-->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- SweetAlert 2 library -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="./assets/js/sweetalert.min.js"></script>
 
   <!--loader-->
   <script src="./assets/js/loader.js"></script>
+  <!-- <?php
+        include 'header-home.php';
 
+        ?> -->
   <style>
     div.scroll {
       width: 22rem;
@@ -60,7 +89,7 @@ $mysqli->close();
       overflow-x: hidden;
       overflow-y: auto;
       text-align: center;
-      padding: 2px;
+      padding: 5px;
     }
   </style>
 
@@ -83,33 +112,18 @@ $mysqli->close();
           we'll help out. <br>
         </p>
         <div class="d-flex justify-content-center justify-content-lg-start mt-4" id="boton">
-          <a href="main.php" class="btn-get-started me-3">Sign in account</a>
-          <a href="main-regis.php" class="btn-get-appointment">Register account</a>
+          <a href="#feedback" class="btn-get-started me-3">Patient Feedback</a>
+          <a href="main.php" class="btn-get-appointment">Make an Appointment</a>
         </div>
 
+        <!-- Your Appointment Schedule -->
+        <!-- <h4> Welcome, <?php echo $fullname ?></h4> -->
         <div class="App-sched mt-5">
-          <div class="card" id="card-one" style="width: 25rem;">
+          <div class="card" id="card-one">
             <div class="card-body" id="card-one-body">
               <h5>Your Appointment Schedule:</h5>
-              <div class="scroll mt-4"> Register and set an appointment!
-                <!-- <?php
-                      require 'connection/connection.php';
-
-                      $fullname = $_SESSION['fullname'];
-
-                      $selectQuery = "SELECT transac_no, session_time, date FROM appointment_booking WHERE name = '$fullname'";
-                      $result = mysqli_query($con, $selectQuery);
-
-                      while ($row = mysqli_fetch_assoc($result)) {
-                        $transac_no = $row['transac_no'];
-                        $session_time = $row['session_time'];
-                        $session_date = $row['date'];
-
-                        echo "<div class='show' style='text-align:center; margin-top: 5px;'> $transac_no <br>
-                    $session_time  - $session_date </div>";
-                      }
-                      mysqli_close($con);
-                      ?> -->
+              <div class="scroll mt-4">
+                Register and set an appointment
               </div>
             </div>
           </div>
@@ -126,7 +140,7 @@ $mysqli->close();
             </p>
 
             <div class="model">
-              <img src="assets/image/model1.png" alt="">
+              <img src="assets/image/model1.png" alt="img" role="img">
             </div>
           </div>
         </div>
@@ -145,12 +159,12 @@ $mysqli->close();
   <section class="content-two mt-5">
     <p class="services-title" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">OUR SERVICES</p>
     <div class="row g-0">
-      <div class="col-sm-6 col-md-8">
-        <h2 class="services-title" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">We specialize in you,<br>
-          Whatever your specialty</h2>
+      <div class="col-sm-6 col-md-8" id="specialize">
+        <h3 class="services-description" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">We specialize in you,<br>
+          Whatever your specialty</h3>
       </div>
-      <div class="col-6 col-md-4" style="display: flex; justify-content: center; align-items: center;">
-        <a href="more-about.php" class="btn-get-started me-3" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">MORE ABOUT</a>
+      <div class="col-6 col-md-4" id="more-about" style="display: flex; justify-content: center; align-items: center;">
+        <a href="more-about.php" class="btn-get-started me-3" id="more-about" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">MORE ABOUT</a>
       </div>
     </div>
 
@@ -247,67 +261,21 @@ $mysqli->close();
         <div class="col-md-8" style="padding-top: 0.5rem">
           <h3 class="feedback-title"> Let's see our patients Feedback! </h3>
         </div>
-        <div class="col-6 col-md-4">
-          <a href="feedback.php" class="btn-get-feedback me-3">Send Feedback!</a>
+        <div class="col-6 col-md-4" id="get">
+          <a href="feedbacks.php" class="btn-get-feedback me-3" id="get-feed">Send Feedback!</a>
         </div>
       </div>
       <div class="card-container" id="feedback-card">
         <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner" id="inner" style="background-color: transparent;">
             <div class="carousel-item active" data-bs-interval="10000">
-              <p><?php
-                  require 'connection/connection.php';
 
-                  $selectQuery = "SELECT feedback, patient_name FROM positive_feedback WHERE id = '19'";
-                  $result = mysqli_query($con, $selectQuery);
-
-                  while ($row = mysqli_fetch_assoc($result)) {
-                    $feedback = $row['feedback'];
-                    $patient_name = $row['patient_name'];
-
-
-                    echo "$feedback <br><br>
-                    - $patient_name";
-                  }
-                  mysqli_close($con);
-                  ?>
-              </p>
             </div>
             <div class="carousel-item" data-bs-interval="10000">
-              <p><?php
-                  require 'connection/connection.php';
 
-                  $selectQuery = "SELECT feedback, patient_name FROM positive_feedback  WHERE id = '20'";
-                  $result = mysqli_query($con, $selectQuery);
-
-                  while ($row = mysqli_fetch_assoc($result)) {
-                    $feedback = $row['feedback'];
-                    $patient_name = $row['patient_name'];
-
-                    echo "$feedback <br><br>
-                    - $patient_name";
-                  }
-                  mysqli_close($con);
-                  ?>
-              </p>
             </div>
             <div class="carousel-item " data-bs-interval="20000">
-              <p><?php
-                  require 'connection/connection.php';
 
-                  $selectQuery = "SELECT feedback, patient_name FROM positive_feedback WHERE id = '21'";
-                  $result = mysqli_query($con, $selectQuery);
-
-                  while ($row = mysqli_fetch_assoc($result)) {
-                    $feedback = $row['feedback'];
-                    $patient_name = $row['patient_name'];
-
-                    echo "$feedback <br> <br>
-                     - $patient_name";
-                  }
-                  mysqli_close($con);
-                  ?>
-              </p>
             </div>
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
@@ -329,66 +297,74 @@ $mysqli->close();
   <div data-aos="fade-up" data-aos-offset="300" data-aos-easing="ease-in-sine">
     <section class="about-us" id="about-us">
       <div class="row" id="about-row">
-        <div class="col">
+        <div class="col me-5" id="col-about">
           <p class="about">ABOUT US</p>
-          <p class="about-dalino">Mercedita Batoc-Dalino Dental Clinic was established in the year 2006, <br>
-            it was first located at P. Burgos Street San Jose Pasig City and later on <br>
-            moved to Malinao Pasig in front of Ado’s Panciteria in the year 2019. <br>
-            For the past years it was serving the people quality dental services <br>
-            worthy of its cost. <br>
-            <br>
-            The clinic is owned by Dr. Mercedita Batoc-Dalino, who graduated<br>
-            Doctor of Dental Medicine in Centro Escolar University-Manila.
-          </p>
+          <div class="about-dalino">
+            <p class="about-dalino">Mercedita Batoc-Dalino Dental Clinic was established in the year 2006,
+              it was first located at P. Burgos Street San Jose Pasig City and later on
+              moved to Malinao Pasig in front of Ado’s Panciteria in the year 2019.
+              For the past years it was serving the people quality dental services
+              worthy of its cost.
+              <br>
+              <br>
+              The clinic is owned by Dr. Mercedita Batoc-Dalino, who graduated
+              Doctor of Dental Medicine in Centro Escolar University-Manila.
+            </p>
+          </div>
 
 
           <div class="icon-about">
             <div class="row gy-4">
               <div class="social-links d-flex mt-4">
-                <a href=""><ion-icon name="call-outline"></ion-icon></a>
-                <a href=""><ion-icon name="logo-facebook"></ion-icon></a>
-                <a href=""><ion-icon name="mail-outline"></ion-icon></a>
+                <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon" title="Contact Dr. Menchie">
+                  <ion-icon name="mail-outline" role="img" class="md hydrated"></ion-icon></a>
+                <a href="https://www.facebook.com/menchie.dalino" class="nav__social-icon" title="Contact Dr. Menchie"><ion-icon name="logo-facebook" role="img" class="md hydrated"></ion-icon></a>
+                <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon" title="Contact Dr. Menchie">
+                  <ion-icon name="mail-outline" role="img" class="md hydrated"></ion-icon></a>
               </div>
             </div>
           </div>
 
 
         </div>
-        <div class="col">
 
-          <p class="contact-info">
-            CONTACT US
-          </p>
-          <div class="container-column">
-            <div class="column-small small">
-              <ul class="social-link">
-                <li>
-                  <a href=""><ion-icon name="call-outline"></ion-icon></a>
-                </li>
-                <li>
-                  <a href=""><ion-icon name="logo-facebook"></ion-icon></a>
-                </li>
-                <li>
-                  <a href=""><ion-icon name="mail-outline"></ion-icon></a>
-                </li>
-              </ul>
+        <!-- <div class="col" style="margin-left: 150px;"> -->
 
-            </div>
-            <div class="column-mid">
-              <p class="mid-number">+63 956 073 4201</p>
+        <p class="contact-info mt-5">
+          CONTACT US
+        </p>
+        <div class="container-column">
+          <div class="column-small small">
+            <ul class="social-link">
+              <li>
+                <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon" title="Contact Dr. Menchie">
+                  <ion-icon name="mail-outline" role="img" class="md hydrated"></ion-icon></a>
+              </li>
+              <li>
+                <a href="https://www.facebook.com/menchie.dalino" class="nav__social-icon" title="Contact Dr. Menchie"><ion-icon name="logo-facebook" role="img" class="md hydrated"></ion-icon></a>
+              </li>
+              <li>
+                <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon" title="Contact Dr. Menchie">
+                  <ion-icon name="mail-outline" role="img" class="md hydrated"></ion-icon></a>
+              </li>
+            </ul>
 
-              <p class="mid-fb">Menchi Batoc-Dalino</p>
+          </div>
+          <div class="column-mid">
+            <p class="mid-number">+63 956 073 4201</p>
 
-              <p class="mid-gmail">dra.menchie@yahoo.com</p>
-            </div>
+            <p class="mid-fb">Menchi Batoc-Dalino</p>
+
+            <p class="mid-gmail">dra.menchie@yahoo.com</p>
           </div>
         </div>
       </div>
+  </div>
 
-      <div class="end-footer">
-        <p class="mid-owner">© Copyright Dalino Dental Clinic. All Rights Reserved</p>
-      </div>
-    </section>
+  <div class="end-footer">
+    <p class="mid-owner">© Copyright Dalino Dental Clinic. All Rights Reserved</p>
+  </div>
+  </section>
   </div>
 
   <!--owl-carousel-->
@@ -416,6 +392,10 @@ $mysqli->close();
       }
     })
   </script>
+
+  <!-- sweet alert -->
+  <script src="./assets/js/sweetalert.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- Animation-->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

@@ -1,6 +1,6 @@
 <?php
 require 'connection/connection.php';
-session_start();
+// session_start();
 
 include('vendor/autoload.php');
 require_once './src/Analyzer.php';
@@ -38,6 +38,15 @@ if (isset($_POST['submit'])) {
 // Function to store the comment in the database
 function storeComment($comment, $sentiment)
 {
+
+  session_start();
+
+  // Get the patient name from the session variable
+  $patientName = $_SESSION['fullname'];
+
+  // Get the current date
+  $currentDate = date('Y-m-d');
+
   $server = "localhost";
   $username = "root";
   $password = "";
@@ -46,20 +55,19 @@ function storeComment($comment, $sentiment)
 
   $mydb = mysqli_connect("$server", "$username", $password, $databasename);
 
+  // Use prepared statements to prevent SQL injection
+  $stmt = $mydb->prepare("INSERT INTO feedback_table (patient_name, comment, sentiment, date) VALUES (?, ?, ?, ?)");
+  $stmt->bind_param("ssss", $patientName, $comment, $sentiment, $currentDate);
 
-  // Insert the comment into the database
-  $sql = "INSERT INTO feedback_table (comment, sentiment) VALUES ('$comment', '$sentiment')";
-  if ($mydb->query($sql) === TRUE) {
-
+  if ($stmt->execute()) {
     $_SESSION['insert'] = "Thank you!";
-    $_SESSION['insert_code'] = "Thank you for sending us a feedback!";
-
-    // header("location: home.php");
+    $_SESSION['insert_code'] = "Thank you for sending us feedback!";
   } else {
-    echo "Error: " . $sql . "<br>" . $mydb->error;
+    echo "Error: " . $stmt->error;
   }
 
   // Close the database connection
+  $stmt->close();
   $mydb->close();
 }
 
@@ -69,6 +77,7 @@ $result = '';
 
 if (isset($_POST['submit'])) {
   $text = $_POST['text'];
+  $currentDate = date('Y-m-d');
   $result = $obj->getSentiment($text);
 
   // Check sentiment and store in the database
@@ -132,9 +141,9 @@ if (isset($_POST['submit'])) {
 
 <body>
   <div class="header">
-    <!-- <?php
-          include 'app-header.php';
-          ?> -->
+    <?php
+    // include 'app-header.php';
+    ?>
   </div>
 
   <div class="container mt-4">

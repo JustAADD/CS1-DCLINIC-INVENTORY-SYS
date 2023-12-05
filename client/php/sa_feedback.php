@@ -325,6 +325,7 @@ if (isset($_GET['logout'])) {
             null,
             null,
             null
+
           ],
           "columnDefs": [{
             "width": "50%",
@@ -340,16 +341,16 @@ if (isset($_GET['logout'])) {
             dataType: 'json',
             success: function(data) {
               // Clear the existing data and add the new data
-              var data = data.data;
+              var dataPositive = data.data;
 
               table.clear();
-              $.each(data, function(index, row) {
+              $.each(dataPositive, function(index, row) {
                 var deleteButton = '<a href="../php/patient_data.php? deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a>&nbsp';
 
                 table.row.add([
                   row.id,
                   row.patient_name,
-                  row.feedback,
+                  row.comment,
                   row.date,
                   deleteButton
                   // Add more columns as needed
@@ -396,16 +397,16 @@ if (isset($_GET['logout'])) {
             dataType: 'json',
             success: function(data2) {
 
-              var data2 = data2.data2;
+              var dataNegative = data2.data2;
               // Clear the existing data and add the new data
               table.clear();
-              $.each(data2, function(index, row2) {
+              $.each(dataNegative, function(index, row2) {
                 var deleteButton = '<a href="../php/patient_data.php?deleteid=' + row2.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a>&nbsp';
 
                 table.row.add([
                   row2.id,
                   row2.patient_name,
-                  row2.feedback,
+                  row2.comment,
                   row2.date,
                   deleteButton
                   // Add more columns as needed
@@ -452,16 +453,16 @@ if (isset($_GET['logout'])) {
             dataType: 'json',
             success: function(data3) {
 
-              var data3 = data3.data3;
+              var dataNeutral = data3.data3;
               // Clear the existing data and add the new data
               table.clear();
-              $.each(data3, function(index, row3) {
+              $.each(dataNeutral, function(index, row3) {
                 var deleteButton = '<a href="../php/patient_data.php?deleteid=' + row3.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a>&nbsp';
 
                 table.row.add([
                   row3.id,
                   row3.patient_name,
-                  row3.feedback,
+                  row3.comment,
                   row3.date,
                   deleteButton
                   // Add more columns as needed

@@ -15,7 +15,6 @@ if (isset($_GET['logout'])) {
 
 require '../../connection/connection.php';
 
-// ADD QUERY DOCTORS
 if (isset($_POST["add_patient"])) {
   $fullname = $_POST["fullname"];
   $email = $_POST["email"];
@@ -24,41 +23,61 @@ if (isset($_POST["add_patient"])) {
   $dentalservices = $_POST["dental-services"];
   $date = $_POST["date"];
   $nextappointment = $_POST["next-appointment"];
-  $statusappointment = $_POST["status-appointment"];
+  // $teethstatus = $_POST["image"];
 
+  // Check if an image file is selected
+  if (isset($_FILES["image"])) {
+    $target_dir = "../imagedata/";
+    $target_file = $target_dir . basename($_FILES["image"]["name"]);
 
+    // Move the uploaded file to the target directory
+    if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+      // Generate a unique patient ID
+      function generatePatientID()
+      {
+        $prefix = 'PT-';
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
+        // Generate a random 5-character string
+        $random_string = '';
+        for ($i = 0; $i < 5; $i++) {
+          $random_string .= $characters[mt_rand(0, strlen($characters) - 1)];
+        }
 
-  function generatePatientID()
-  {
-    $prefix = 'PT-';
-    $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $patient_id = $prefix . $random_string;
+        return $patient_id;
+      }
 
-    // Generate a random 5-character string
-    $random_string = '';
-    for ($i = 0; $i < 5; $i++) {
-      $random_string .= $characters[mt_rand(0, strlen($characters) - 1)];
+      $patient_id = generatePatientID();
+
+      // Prepare the SQL statement
+      $stmtpatient = $con->prepare("INSERT INTO patient_list (patient_id, patient_name, email, contact, gender, dental_services, date, next_appointment, imagedata) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+      if (!$stmtpatient) {
+        echo "Failed to prepare statement: " . $con->error;
+        exit();
+      }
+
+      // Execute the SQL statement
+      $stmtpatient->bind_param("sssssssss", $patient_id, $fullname, $email, $contact, $gender, $dentalservices, $date, $nextappointment, $target_file);
+      $stmtpatient->execute();
+      $stmtpatient->close();
+
+      // Display a success message
+      $msg = "<div class='alert alert-success'>Changes saved</div>";
+
+      $_SESSION['patient'] = "Add Patient Successfully";
+      $_SESSION['patient_code'] = "Saved";
+      header("Location: ../php/patient_lists.php");
+    } else {
+      echo "Error moving the uploaded file.";
     }
-
-    $patient_id = $prefix . $random_string;
-    return $patient_id;
-  }
-
-  $patient_id = generatePatientID();
-
-  $sql = "INSERT INTO patient_list (patient_id, patient_name, email, contact, gender, dental_services, date, next_appointment, stats_appointment)
-  VALUES ('$patient_id','$fullname', '$email', '$contact', '$gender', '$dentalservices', '$formattedDate', '$nextappointment', '$statusappointment')";
-
-  // Execute the query and check if it was successful
-  if ($con->query($sql) === TRUE) {
-    // echo "Event data saved successfully.";
-    header("Location: ../php/patient_lists.php");
   } else {
-    echo "Error: " . $sql . "<br>" . $con->error;
+    echo "No image file selected.";
   }
-  // Close the database connection
-  $con->close();
 }
+
+mysqli_close($con);
 
 ?>
 
@@ -273,15 +292,43 @@ if (isset($_POST["add_patient"])) {
       <div class="row">
         <div class="col">
           <div class="card mb-3" id="cerds">
-            <div class="header-table" style="display: flex; justify-content: space-between; align-items:center;">Patient History
+            <div class="header-table" style="display: flex; justify-content: space-between; align-items:center;">Patient
+              History
               <button type="btn" name="add_doctors" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary">Add Patients</button>
             </div>
           </div>
+
+          <?php
+          if (isset($_SESSION['patient'])) {
+            // Display the SweetAlert confirmation pop-up
+            echo "<script>
+        Swal.fire({
+            title: '',
+            text: 'Add Patient Successfully',
+            icon: 'success',
+            confirmButtonText: 'Done',
+            customClass: {
+                popup: 'custom-swal-popup',
+                title: 'custom-swal-title',
+                confirmButton: 'custom-swal-button',
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'home.php';
+            } else {
+                // Handle cancelation if needed
+            }
+        });
+    </script>";
+
+            unset($_SESSION['patient']);
+          }
+          ?>
           <!-- Modal -->
           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl">
               <div class="modal-content" style="padding: 2%;">
-                <form method="POST" action="">
+                <form method="POST" action="" enctype="multipart/form-data">
                   <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Patient History</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -322,15 +369,15 @@ if (isset($_POST["add_patient"])) {
                           <input class="form-control" name="next-appointment" type="text" placeholder="Next Appointment:" autocomplete="off">
                         </div>
                         <div class="mb-3">
-                          <label for="exampleFormControlInput3" class="form-label">Status of Appointment</label>
-                          <input class="form-control" name="status-appointment" type="text" placeholder="Status of Appointment:" autocomplete="off">
+                          <label for="formfile" class="form-label">Teeth status</label>
+                          <input type="file" name="image" class="form-control" id="image" placeholder="Upload your photos">
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" name="add_patient" class="btn btn-primary" style="background:#3785F9; border: none;">Save information</button>
+                    <button type="submit" name="add_patient" value="Upload Image" class="btn btn-primary" style="background:#3785F9; border: none;">Save information</button>
                   </div>
                 </form>
               </div>
@@ -393,9 +440,12 @@ if (isset($_POST["add_patient"])) {
             // Clear the existing data and add the new data
             table.clear();
             $.each(data, function(index, row) {
-              var deleteButton = '<a href="../php/patient_data.php? deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a>&nbsp';
-              var updateButton = '<a href="../php/patient_update.php? updateid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></button></a>&nbsp';
-              var viewButton = '<a href="../php/patient_history_view.php? updateid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-file-import"></i></button></a>';
+              var deleteButton = '<a href="../php/patient_data.php? deleteid=' + row.id +
+                '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a>&nbsp';
+              var updateButton = '<a href="../php/patient_update.php? updateid=' + row.id +
+                '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></button></a>&nbsp';
+              var viewButton = '<a href="../php/patient_history_view.php? updateid=' + row.id +
+                '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-file-import"></i></button></a>';
 
               table.row.add([
                 row.id,
@@ -427,7 +477,8 @@ if (isset($_POST["add_patient"])) {
   </script>
 
   <!--===== Bootstrap JS =====-->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+  </script>
 
 </body>
 

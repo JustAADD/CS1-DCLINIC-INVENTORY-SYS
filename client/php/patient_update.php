@@ -30,10 +30,10 @@ if (isset($_POST['update'])) {
   $dentalservices = $_POST["dental-services"];
   $date = $_POST["date"];
   $nextappointment = $_POST["next-appointment"];
-  $statusappointment = $_POST["status-appointment"];
+
   // Prepare and execute the update query
   $updateQuery = "UPDATE patient_list SET id='$id', patient_name='$patient_name', email='$email', contact='$contact', gender='$gender' ,
-  dental_services = '$dentalservices',  date = '$date', next_appointment = '$nextappointment', stats_appointment = '$statusappointment' WHERE id = '$id'";
+  dental_services = '$dentalservices',  date = '$date', next_appointment = '$nextappointment', imagedata = '$target_file' WHERE id = '$id'";
   $result = mysqli_query($con, $updateQuery);
 
   if ($result) {
@@ -92,8 +92,8 @@ if (isset($_POST['update'])) {
 
 
   <div class="container" id="update_container">
-    <div class="card" id="update_card" style="margin-top: 8%;">
-      <form method="POST" action="">
+    <div class="card" id="update_card" style="margin-top: 5%;">
+      <form method="POST" action="" enctype="multipart/form-data">
         <div class="row ">
           <p class="update_title mt-4">Dental Information of Patient</p>
           <div class="col">
@@ -113,7 +113,7 @@ if (isset($_POST['update'])) {
             </div>
             <div class="mb-1">
               <label for="email" class="form-label">Gender</label>
-              <input type="form-control" name="gender" class="form-control" value="<?php echo $gender; ?>" autocomplete="off" >
+              <input type="form-control" name="gender" class="form-control" value="<?php echo $gender; ?>" autocomplete="off">
             </div>
           </div>
         </div>
@@ -135,13 +135,15 @@ if (isset($_POST['update'])) {
               <input type="form-control" name="next-appointment" class="form-control" value="<?php echo $nextappointment; ?>" autocomplete="off">
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label">Status of appointment</label>
-              <input type="form-control" name="status-appointment" class="form-control" value="<?php echo $statusappointment; ?>" autocomplete="off">
+              <label for="formfile" class="form-label">Teeth status</label>
+              <input type="file" name="image" class="form-control" id="image" placeholder="Upload your photos">
             </div>
           </div>
         </div>
 
-        <button type="submit" name="update" id="update" value="update" class="btn btn-primary mt-3 float-end">Update</button>
+
+        <button type="submit" name="update" value="Upload Image" id="update" value="update" class="btn btn-primary mt-4 me-4 float-end">Update</button>
+        <a href="../php/patient_lists.php"><button type="submit" name="update" id="update" value="update" class="btn btn-primary mt-4 me-3 float-end">Back</button></a>
       </form>
     </div>
   </div>

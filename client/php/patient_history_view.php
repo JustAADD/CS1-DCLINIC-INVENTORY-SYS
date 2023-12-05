@@ -18,7 +18,7 @@ $gender = $row['gender'];
 $dentalservices = $row["dental_services"];
 $date = $row["date"];
 $nextappointment = $row["next_appointment"];
-$statusappointment = $row["stats_appointment"];
+$status = $row["imagedata"];
 
 
 if (isset($_POST['update'])) {
@@ -30,10 +30,10 @@ if (isset($_POST['update'])) {
   $dentalservices = $_POST["dental-services"];
   $date = $_POST["date"];
   $nextappointment = $_POST["next-appointment"];
-  $statusappointment = $_POST["status-appointment"];
+  $status = $_POST["imagedata"];
   // Prepare and execute the update query
   $updateQuery = "UPDATE patient_list SET id='$id', patient_name='$patient_name', email='$email', contact='$contact', gender='$gender' ,
-  dental_services = '$dentalservices',  date = '$date', next_appointment = '$nextappointment', stats_appointment = '$statusappointment' WHERE id = '$id'";
+  dental_services = '$dentalservices',  date = '$date', next_appointment = '$nextappointment', imagedata = '$status' WHERE id = '$id'";
   $result = mysqli_query($con, $updateQuery);
 
   if ($result) {
@@ -134,16 +134,39 @@ if (isset($_POST['update'])) {
               <label for="email" class="form-label">Next Appointment</label>
               <input type="form-control" name="next-appointment" class="form-control" value="<?php echo $nextappointment; ?>" aria-label="Disabled input example" disabled>
             </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Status of appointment</label>
-              <input type="form-control" name="status-appointment" class="form-control" value="<?php echo $statusappointment; ?>" aria-label="Disabled input example" disabled>
+            <div class="mt-4">
+              <label for="fullname" class="form-label">Status of the patient teeth</label>
+              <!-- Button to trigger the modal -->
+              <button type="button" style="width: 20rem; border-radius: 5px;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#teethStatusModal">
+                See the teeth status
+              </button>
+
+              <!-- Modal structure -->
+              <div class="modal fade" id="teethStatusModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Teeth Status</h5>
+                      <button type="button" class="btn-close" style="width: 2rem;" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="imagesrc">
+                        <img src="<?php echo htmlspecialchars($status); ?>" alt="Teeth Status" style="width: 100%; height: auto;">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
-
-        <a href="../php/patient_lists.php" class="btn btn-primary mt-4 float-end" style="width: 20%;">Back</a>
-      </form>
+        <a href="../php/patient_lists.php" class="btn btn-primary mt-4 me-4 float-end" style="width: 20%;">Back</a>
     </div>
+
+    <!--  -->
+    </form>
+  </div>
   </div>
 
 
@@ -153,7 +176,7 @@ if (isset($_POST['update'])) {
 
   <!--===== Bootstrap JS =====-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <!--===== MAIN JS =====-->
   <script src="../../assets/js/main.js"></script>
 </body>

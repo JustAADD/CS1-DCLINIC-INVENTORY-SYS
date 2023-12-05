@@ -47,7 +47,7 @@ body {
 section {
 
   max-width: 100%;
-  overflow-x: hidden;
+
   box-sizing: border-box;
 }
 
@@ -70,10 +70,8 @@ section {
 }
 
 .columntwo {
-
   position: relative;
   width: 100%;
-  overflow: hidden;
   padding: 4%
 }
 
@@ -129,6 +127,10 @@ section {
   font-size: 1.2rem;
   color: var(--dark-color-alt);
   padding-left: 20%;
+}
+
+.about-dalino {
+  width: 35rem;
 }
 
 /*===== 2 button =====*/
@@ -482,13 +484,35 @@ section {
     display: none;
   }
 
-  #about-us {
-    white-space: normal;
-    /* Remove line breaks */
+  .about-dalino {
+    width: 30rem;
   }
+
+  #mapa h5 {
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+  }
+
+
+  iframe {
+    width: 120%;
+    height: 450px;
+    filter: invert(100%);
+  }
+
+  .end-footer p {
+    padding-bottom: 10%;
+    padding-top: -5rem;
+  }
+
 }
 
 
+iframe {
+  width: 80%;
+  height: 450px;
+  filter: invert(100%);
+}
 
 /*===== Second content =====*/
 
@@ -798,11 +822,13 @@ section {
 }
 
 .mid-owner {
+  padding: 0;
+  margin: 0 auto;
   color: var(--orange-color);
   font-family: var(--font-nunito);
   font-weight: var(--small-font-size);
   margin-top: 2rem;
-  margin-bottom: 2rem;
+  /* margin-bottom: 1rem; */
   font-size: 0.9rem;
   text-align: center;
 }
