@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'header.php';
+
 
 if (isset($_SESSION['email'])) {
   $email = $_SESSION['email'];
@@ -85,15 +85,18 @@ if (isset($_SESSION['back'])) {
 
   <!--loader-->
   <script src="./assets/js/loader.js"></script>
+  <?php
+  include 'header.php';
 
+  ?>
   <style>
     div.scroll {
-      width: 22rem;
+      width: 27rem;
       height: 3rem;
       overflow-x: hidden;
       overflow-y: auto;
       text-align: center;
-      padding: 2px;
+      padding: 5px;
     }
   </style>
 
@@ -180,12 +183,12 @@ if (isset($_SESSION['back'])) {
   <section class="content-two mt-5">
     <p class="services-title" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">OUR SERVICES</p>
     <div class="row g-0">
-      <div class="col-sm-6 col-md-8">
+      <div class="col-sm-6 col-md-8" id="specialize">
         <h3 class="services-description" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">We specialize in you,<br>
           Whatever your specialty</h3>
       </div>
-      <div class="col-6 col-md-4" style="display: flex; justify-content: center; align-items: center;">
-        <a href="more-about.php" class="btn-get-started me-3" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">MORE ABOUT</a>
+      <div class="col-6 col-md-4" id="more-about" style="display: flex; justify-content: center; align-items: center;">
+        <a href="more-about.php" class="btn-get-started me-3" id="more-about" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">MORE ABOUT</a>
       </div>
     </div>
 
@@ -282,8 +285,8 @@ if (isset($_SESSION['back'])) {
         <div class="col-md-8" style="padding-top: 0.5rem">
           <h3 class="feedback-title"> Let's see our patients Feedback! </h3>
         </div>
-        <div class="col-6 col-md-4">
-          <a href="feedback.php" class="btn-get-feedback me-3">Send Feedback!</a>
+        <div class="col-6 col-md-4" id="get">
+          <a href="feedbacks.php" class="btn-get-feedback me-3" id="get-feed">Send Feedback!</a>
         </div>
       </div>
       <div class="card-container" id="feedback-card">
@@ -364,7 +367,7 @@ if (isset($_SESSION['back'])) {
   <div data-aos="fade-up" data-aos-offset="300" data-aos-easing="ease-in-sine">
     <section class="about-us" id="about-us">
       <div class="row" id="about-row">
-        <div class="col">
+        <div class="col me-5" id="col-about">
           <p class="about">ABOUT US</p>
           <p class="about-dalino">Mercedita Batoc-Dalino Dental Clinic was established in the year 2006, <br>
             it was first located at P. Burgos Street San Jose Pasig City and later on <br>
@@ -391,9 +394,10 @@ if (isset($_SESSION['back'])) {
 
 
         </div>
-        <div class="col">
 
-          <p class="contact-info">
+        <!-- <div class="col" style="margin-left: 150px;"> -->
+
+          <p class="contact-info mt-5">
             CONTACT US
           </p>
           <div class="container-column">

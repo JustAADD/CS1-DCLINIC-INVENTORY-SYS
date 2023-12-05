@@ -264,6 +264,34 @@ img {
   color: var(--first-color);
 }
 
+@media screen and (min-width: 401px) and (max-width: 560px) {
+  .nav__menu {
+    padding-top: 2rem;
+
+  }
+
+  .nav__perfil {
+    width: 8rem;
+  }
+
+  .nav__img img {
+    width: 20rem;
+  }
+
+  .nav__menu li {
+    font-size: 18px;
+  }
+
+  .nav__social {
+    padding-top: 38rem;
+  }
+
+  .nav__name {
+    display: none;
+  }
+
+}
+
 /*===== MEDIA QUERIES =====*/
 @media screen and (min-width: 768px) {
   body {
@@ -791,7 +819,7 @@ fo #form-carousel {
   border: none;
 }
 
-.gcash-logo{
+.gcash-logo {
   width: 30px;
   height: 25px;
 }
@@ -804,7 +832,7 @@ fo #form-carousel {
   font-size: medium;
 }
 
-#btn-payment-group{
+#btn-payment-group {
   width: 30rem;
 }
 
