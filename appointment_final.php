@@ -56,8 +56,8 @@ function createNextPayPaymentLink($amount, $redirect_url)
     'nonce' => $nonce,
   ];
 
-  $client_id = "ck_sandbox_vxkm6bii9xqvqz8wxsdwwcig";
-  $client_secret = "qexjhp4if77zi6zaivh5e9m6";
+  $client_id = "";
+  $client_secret = "";
 
   $url = 'https://api-sandbox.nextpay.world/v2/paymentlinks';
 
