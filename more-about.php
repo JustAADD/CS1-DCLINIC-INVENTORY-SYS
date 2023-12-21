@@ -1,3 +1,21 @@
+<?php
+session_start();
+
+if (isset($_SESSION['email'])) {
+  $email = $_SESSION['email'];
+} elseif (isset($_SESSION['email'])) {
+
+  header("Location: home.php");
+  exit();
+}
+
+if (!isset($_SESSION['email'])) {
+
+  header("Location: main.php");
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,12 +58,12 @@
         </div>
       </nav>
       <div class="tab-content" id="nav-tabContent">
-        
+
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" style="background-color: transparent;">
           <div class="title-services">
             <h1 class="title mb-4">Dental Services</h1>
           </div>
-         
+
           <div class="row align-items-start" data-aos="fade-up" data-aos-offset="300" data-aos-easing="ease-in-sine">
             <div class="col" id="service1">
               <div class="card" id="services-card1">
@@ -109,7 +127,7 @@
           </div>
 
           <div class="row align-items-start mt-5" data-aos="fade-up" data-aos-offset="300" data-aos-easing="ease-in-sine">
-            <div class="col" id="service1" >
+            <div class="col" id="service1">
               <div class="card" id="services-card1">
                 <p>
                   Teeth Cleaning (Dental Prophylaxis)

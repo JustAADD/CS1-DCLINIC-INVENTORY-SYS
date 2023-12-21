@@ -63,6 +63,8 @@ if (isset($_POST["add_transaction"])) {
 
 <head>
   <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/png" href="../image/dalino_logo.png">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dalino Admin</title>
 
@@ -365,7 +367,7 @@ if (isset($_POST["add_transaction"])) {
               var deleteButton = '<a href="../php/p_transaction_data.php? deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a>&nbsp';
               var updateButton = '<a href="../php/p_transaction_receipt.php? receiptid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></button></a>';
               var timeDate = row.session_time + ' - ' + row.date;
-              var transacLink = '<a href="p_transaction_receipt.php' + row.transac_no + '">' + row.transac_no + '</a>';
+              var transacLink = '<a href="../php/p_transaction_receipt.php? receiptid=' + row.id + '">' + row.transac_no + '</a>';
 
               var transacAndName = `
                    ${transacLink}

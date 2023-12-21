@@ -2,7 +2,7 @@
 
 require 'connection/connection.php';
 
-$mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
+$mysqli = new mysqli('', 'u530383017_root', 'Ik@wl@ngb0w4', 'u530383017_localhost');
 if ($mysqli->connect_error) {
   die("Connection failed: " . $mysqli->connect_error);
 }
@@ -57,8 +57,9 @@ if (isset($_GET['logout'])) {
 
 <head>
   <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/png" href="./assets/image/dalino_logo.png">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <!-- ===== Bootstrap CSS ===== -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <!-- ===== CSS ===== -->
@@ -79,7 +80,7 @@ if (isset($_GET['logout'])) {
 
     <nav class="nav" id="nav-menu">
       <div class="bd-grid" id="nav__content">
-        <ion-icon name="close-outline" class="nav__close" id="nav-close"></ion-icon>
+        <ion-icon name="close-outline" class="nav__close md hydrated" id="nav-close" role="img"></ion-icon>
 
         <div class="nav__perfil">
           <div class="nav__img">
@@ -87,13 +88,13 @@ if (isset($_GET['logout'])) {
           </div>
 
           <div>
-            <a href="#" class="nav__name">Dalino Dental Clinic</a>
+            <a href="home.php" class="nav__name" id="nav__name">Dalino Dental Clinic</a>
           </div>
         </div>
 
         <div class="nav__menu">
           <ul class="nav__list">
-            <li class="nav__item"><a href="#" class="nav__link">Home</a></li>
+            <li class="nav__item"><a href="home.php" class="nav__link">Home</a></li>
             <li class="nav__item"><a href="#services" class="nav__link">Services</a></li>
             <li class="nav__item"><a href="main.php" class="nav__link">Appointment</a></li>
             <li class="nav__item"><a href="#about-us" class="nav__link">About us</a></li>
@@ -101,10 +102,11 @@ if (isset($_GET['logout'])) {
         </div>
 
         <div class="nav__social">
-          <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon"><ion-icon name="mail-outline"></ion-icon></a>
-          <a href="https://www.facebook.com/menchie.dalino" class="nav__social-icon"><ion-icon name="logo-facebook"></ion-icon></a>
-          <a href="?logout" name="logout" id="logout" class="nav__social-icon">
-            <ion-icon name="log-out-outline"></ion-icon>
+          <a href="mailto:dra.menchie@yahoo.com" class="nav__social-icon" title="Contact Dr. Menchie">
+            <ion-icon name="mail-outline" role="img" class="md hydrated"></ion-icon></a>
+          <a href="https://www.facebook.com/menchie.dalino" class="nav__social-icon" title="Contact Dr. Menchie"><ion-icon name="logo-facebook" role="img" class="md hydrated"></ion-icon></a>
+          <a href="?logout" name="logout" id="logout" title="logout" class="nav__social-icon">
+            <ion-icon name="log-out-outline" role="img" class="md hydrated"></ion-icon>
           </a>
         </div>
       </div>

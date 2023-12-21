@@ -20,9 +20,9 @@ if (isset($_GET['receiptid'])) {
     $transac_no = $row['transac_no']; 
     $patient_name = $row['patient_name'];
     $name = $row['name'];
-    $procedures = $row['procedures'];
+    $procedures = $row['selectedProcedures'];
     $session_time = $row['session_time'];
-    $session_date = $row['session_date'];
+    $session_date = $row['date'];
   }
 }
 ?>

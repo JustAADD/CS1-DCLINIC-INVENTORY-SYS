@@ -81,6 +81,9 @@ section {
   font-weight: bold;
   font-size: 1rem;
   color: #2c2b2b;
+  width: 30rem;
+  margin-left: 7rem;
+
 }
 
 .rectangle {
@@ -325,26 +328,39 @@ section {
   }
 }
 
+@media screen and (max-width: 1080px) {
+  #columnOne p {
+    font-size: 15px;
+    width: auto;
+  }
 
-/* tablet */
-@media screen and (min-width: 401px) and (max-width: 560px) {
+  .columntwo p {
+    text-align: center;
+    margin-top: 5%;
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: #2c2b2b;
+    width: auto;
+    margin: auto;
+  }
 
   body {
     overflow: auto;
   }
 
   section {
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: hidden;
   }
 
   #boton {
     margin: 0 auto;
-    padding: 0;
+    padding: 1rem;
     width: auto;
     /* padding-top: 20px;
     padding-left: 25px;
     padding-right: 25px; */
-    padding-top: 2rem;
+    padding-top: 1rem;
   }
 
   #columnOne {
@@ -364,17 +380,39 @@ section {
     padding: 0;
     font-family: var(--body-font);
     font-weight: var(--normal-font-size);
-    font-size: 15px;
+    font-size: 13px;
     text-decoration: none;
     display: fixed;
-    padding: 15px 40px;
-    border-radius: 50px;
+    padding: 10px 10px;
+    border-radius: 20px;
     transition: 0.3s;
     color: var(--white-color);
     background: var(--first-color);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
     border: 0px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    max-width: auto;
+  }
 
+  #columnOne .btn-get-appointment {
+    margin: 0 auto;
+    padding: 0;
+    font-family: var(--body-font);
+    font-weight: var(--normal-font-size);
+    font-size: 13px;
+    text-decoration: none;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 10px 10px;
+    border-radius: 20px;
+    transition: 0.3s;
+    color: var(--white-color);
+    background: var(--orange-color);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    margin-left: -0.20rem;
+    text-align: center;
+    max-width: auto;
   }
 
   #columnOne .btn-get-started:hover {
@@ -384,28 +422,25 @@ section {
 
   #card-one {
     width: 85%;
+
   }
 
   #card-one-body {
     width: 100%;
   }
 
-  div.scroll {
-    width: 25rem;
-    height: 8rem;
-    overflow-x: hidden;
-    overflow-y: auto;
-    text-align: center;
-    padding: 5px;
-
+  #scroll {
+    margin-left: 1rem;
+    width: auto;
   }
 
   #more-about {
-    width: 20rem;
-    padding-top: 1rem;
-    padding-left: -20rem;
-    margin: 0;
-    margin-left: 10px;
+    width: auto;
+    margin-left: 13px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   #get {
@@ -415,10 +450,12 @@ section {
 
   #get-feed {
     margin: 0;
-    margin-left: 10px;
+    margin-left: 80px;
     margin-top: 9px;
-    width: 15rem;
-
+    width: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .rectangle {
@@ -428,6 +465,10 @@ section {
     height: 100%;
     background-color: var(--light-color);
     border-bottom-left-radius: 0px;
+    margin: 0 auto;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
   }
 
   .model img {
@@ -451,8 +492,12 @@ section {
     width: 100%;
   }
 
-  .services-description {
-    margin-left: 1.5rem;
+
+  #specialize h3 {
+    margin: 0 auto;
+    padding-left: 1.5rem;
+    font-size: 2rem;
+    padding-bottom: 1.5rem;
   }
 
   .content-two .btn-get-started {
@@ -484,27 +529,306 @@ section {
     display: none;
   }
 
-  .about-dalino {
-    width: 30rem;
-  }
-
   #mapa h5 {
+    margin-left: 5rem;
     padding-top: 2rem;
     padding-bottom: 1rem;
   }
 
 
   iframe {
+    margin-left: 2rem;
     width: 120%;
     height: 450px;
     filter: invert(100%);
   }
 
   .end-footer p {
-    padding-bottom: 10%;
-    padding-top: -5rem;
+   padding-bottom: 5rem;
   }
 
+  .content-two h3 {
+    text-align: left;
+    font-size: 25px;
+  }
+
+  .services-title {
+    margin-left: 7rem;
+
+  }
+
+  .feedback-title {
+    padding-top: 1rem;
+    text-align: center;
+  }
+
+  p.services-title {
+    text-align: left;
+    
+  }
+
+  .columntwo p {
+    font-size: var(--small-font-size);
+  }
+
+  .about-dalino {
+    width: 20rem;
+  }
+  
+}
+
+
+
+/* jezzyrel */
+/* tablet */
+@media screen and (max-width: 768px) {
+  #columnOne p {
+    font-size: 15px;
+    width: auto;
+  }
+
+  .columntwo p {
+    text-align: center;
+    margin-top: 5%;
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: #2c2b2b;
+    width: auto;
+    margin: auto;
+  }
+
+  body {
+    overflow: auto;
+  }
+
+  section {
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+
+  #boton {
+    margin: 0 auto;
+    padding: 1rem;
+    width: auto;
+    /* padding-top: 20px;
+    padding-left: 25px;
+    padding-right: 25px; */
+    padding-top: 1rem;
+  }
+
+  #columnOne {
+    padding: 0;
+    margin: 0 auto;
+
+
+
+    padding-top: 2rem;
+  }
+
+  .columntwo {
+    padding-top: 0.5rem;
+
+  }
+
+  #columnOne .btn-get-started {
+    margin: 0 auto;
+    padding: 0;
+    font-family: var(--body-font);
+    font-weight: var(--normal-font-size);
+    font-size: 13px;
+    text-decoration: none;
+    display: fixed;
+    padding: 10px 10px;
+    border-radius: 20px;
+    transition: 0.3s;
+    color: var(--white-color);
+    background: var(--first-color);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+    border: 0px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    max-width: auto;
+  }
+
+  #columnOne .btn-get-appointment {
+    margin: 0 auto;
+    padding: 0;
+    font-family: var(--body-font);
+    font-weight: var(--normal-font-size);
+    font-size: 13px;
+    text-decoration: none;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 10px 10px;
+    border-radius: 20px;
+    transition: 0.3s;
+    color: var(--white-color);
+    background: var(--orange-color);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    margin-left: -0.20rem;
+    text-align: center;
+    max-width: auto;
+  }
+
+  #columnOne .btn-get-started:hover {
+    border-color: rgb(47, 106, 244);
+    background-color: rgb(47, 106, 244);
+  }
+
+  #card-one {
+    width: 85%;
+
+  }
+
+  #card-one-body {
+    width: 100%;
+  }
+
+  #scroll {
+    margin-left: 1rem;
+    width: auto;
+  }
+
+  #more-about {
+    width: auto;
+    margin-left: 13px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #get {
+    margin: 0 auto;
+    padding-right: 30rem;
+  }
+
+  #get-feed {
+    margin: 0;
+    margin-left: 80px;
+    margin-top: 9px;
+    width: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rectangle {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--light-color);
+    border-bottom-left-radius: 0px;
+    margin: 0 auto;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .model img {
+    height: 80%;
+    width: 83%;
+    margin-left: 2rem;
+    margin-top: 2rem;
+  }
+
+  .columntwo p {
+    text-align: center;
+    margin-top: 10%;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #2c2b2b;
+
+  }
+
+  .content_two p {
+    padding-right: 10px;
+    width: 100%;
+  }
+
+
+  #specialize h3 {
+    margin: 0 auto;
+    padding-left: 1.5rem;
+    font-size: 2rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .content-two .btn-get-started {
+    font-family: var(--body-font);
+    font-weight: var(--small-font-size);
+    font-size: 13px;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 15px 20px;
+    width: 50%;
+    border-radius: 50px;
+    transition: 0.3s;
+    color: var(--white-color);
+    background: var(--first-color);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+    border: 0px solid rgba(255, 255, 255, 0.1);
+    margin-left: 8rem;
+  }
+
+  #about-row {
+    margin: 0 auto;
+    padding: 0;
+    margin-left: 2rem;
+  }
+
+  .social-links {
+    display: none;
+  }
+
+  #mapa h5 {
+    margin-left: 5rem;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+  }
+
+
+  iframe {
+    margin-left: 2rem;
+    width: 120%;
+    height: 450px;
+    filter: invert(100%);
+  }
+
+  .end-footer p {
+   padding-bottom: 5rem;
+  }
+
+  .content-two h3 {
+    text-align: left;
+    font-size: 25px;
+  }
+
+  .services-title {
+    margin-left: 7rem;
+
+  }
+
+  .feedback-title {
+    padding-top: 1rem;
+    text-align: center;
+  }
+
+  p.services-title {
+    text-align: left;
+  }
+
+  .columntwo p {
+    font-size: var(--small-font-size);
+  }
+
+  .about-dalino {
+    width: 20rem;
+  }
+  
 }
 
 

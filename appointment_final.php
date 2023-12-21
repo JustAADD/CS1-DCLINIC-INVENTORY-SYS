@@ -2,11 +2,25 @@
 session_start();
 require 'connection/connection.php';
 
+
+if (isset($_SESSION['email'])) {
+  $email = $_SESSION['email'];
+} elseif (isset($_SESSION['email'])) {
+
+  header("Location: home.php");
+  exit();
+}
+
+if (!isset($_SESSION['email'])) {
+
+  header("Location: main.php");
+}
+
 if (isset($_SESSION['email'])) {
   $email = $_SESSION['email'];
 }
 
-$mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
+$mysqli = new mysqli('', 'u530383017_root', 'Ik@wl@ngb0w4', 'u530383017_localhost');
 $stmt = $mysqli->prepare("SELECT fullname FROM user_registration WHERE email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -56,8 +70,8 @@ function createNextPayPaymentLink($amount, $redirect_url)
     'nonce' => $nonce,
   ];
 
-  $client_id = "";
-  $client_secret = "";
+  $client_id = "ck_xa6057ru68ko570aaw2tr0cd";
+  $client_secret = "u1krgkkl5zzpcyjfracbzr18";
 
   $url = 'https://api-sandbox.nextpay.world/v2/paymentlinks';
 
@@ -125,7 +139,7 @@ if (isset($_POST['proceed'])) {
       $paymentStatus = 'paid';
       // Create payment link
       $amount = 50;
-      $redirect_url = 'http://localhost/cs1-dclinic-inventory-sys/appointment.php';
+      $redirect_url = 'https://dalinodentalclinic.com/home.php';
       $paymentLinkData = createNextPayPaymentLink($amount, $redirect_url);
 
       if (isset($paymentLinkData['error'])) {
@@ -139,7 +153,7 @@ if (isset($_POST['proceed'])) {
       }
     } elseif ($selectedPaymentMethod === 'counter') {
       $paymentStatus = 'not paid';
-      $redirect_url = 'http://localhost/cs1-dclinic-inventory-sys/appointment.php';
+      $redirect_url = 'https://dalinodentalclinic.com/home.php';
       // Redirect to the specified URL
       header("Location: " . $redirect_url);
       // echo "Data transferred successfully!";
@@ -171,6 +185,7 @@ if (isset($_POST['proceed'])) {
 
 <head>
   <meta charset="UTF-8">
+  <link rel="shorcut icon" href="./assets/image/dalino_logo.png">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -178,12 +193,10 @@ if (isset($_POST['proceed'])) {
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-  <link rel="stylesheet" href="assets/css//style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
   <!-- SweetAlert 2 library -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="./assets/js/sweetalert.min.js"></script>
-
-  <?php include 'app-header.php'; ?>
 
 </head>
 

@@ -3,8 +3,35 @@ session_start();
 
 require_once 'app-header.php';
 
+if (isset($_SESSION['email'])) {
+  $email = $_SESSION['email'];
+} elseif (isset($_SESSION['email'])) {
+
+  header("Location: home.php");
+  exit();
+}
+
+if (!isset($_SESSION['email'])) {
+
+  header("Location: main.php");
+}
 
 include 'app-data.php';
+
+
+if (isset($_SESSION['valid'])) {
+  // Echo the SweetAlert code instead of a simple div
+  echo '<script>
+          Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "' . $_SESSION['valid'] . '",
+          });
+        </script>';
+
+  // Clear the status message to avoid displaying it on subsequent visits
+  unset($_SESSION['valid']);
+}
 ?>
 
 
@@ -13,7 +40,10 @@ include 'app-data.php';
 
 <head>
   <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/png" href="./assets/image/dalino_logo.png">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Appointment Schedule</title>
 
   <!-- OWL-Carousel-->
@@ -25,7 +55,7 @@ include 'app-data.php';
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <!-- Stylesheets css -->
-  <link rel="stylesheet" href="assets\css\style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
 
   <script src="./assets/js/sweetalert.min.js"></script>
   <style>
@@ -160,47 +190,46 @@ include 'app-data.php';
   <!-- appointment -->
   <div class="container-fluid">
     <section class="app">
-      <div class="row g-0">
-        <div class="col">
-          <p>Set an appointment by using this calendar: </p>
-        </div>
-        <?php
-        if (isset($_SESSION['status'])) {
-        ?>
-          <script>
-            swal({
-              title: "<?php echo $_SESSION['status']; ?>",
-              text: "",
-              icon: "<?php echo $_SESSION['status_code'] ?>",
-              button: "Done!",
-              customClass: {
-                popup: "custom-swal-popup",
-                title: "custom-swal-title",
-                confirmButton: "custom-swal-button",
-              },
-            });
-          </script>
-        <?php
-          unset($_SESSION['status']);
-        }
-        ?>
 
-        <div class="apps" id="apps" style="margin: 0 auto; display:flex; justify-content:center; align-items:center;">
-          <div class="card" id="cardcalendar" style="width: 60rem; height: 40rem;  padding: 2%; border-radius: 50px; border-color:#D2E3FC; box-shadow: 0 8px 8px rgba(100, 150, 200, 0.3);">
+      <div class="col">
+        <p>Set an appointment by using this calendar: </p>
+      </div>
+      <?php
+      if (isset($_SESSION['status'])) {
+      ?>
+        <script>
+          swal({
+            title: "<?php echo $_SESSION['status']; ?>",
+            text: "",
+            icon: "<?php echo $_SESSION['status_code'] ?>",
+            button: "Done!",
+            customClass: {
+              popup: "custom-swal-popup",
+              title: "custom-swal-title",
+              confirmButton: "custom-swal-button",
+            },
+          });
+        </script>
+      <?php
+        unset($_SESSION['status']);
+      }
+      ?>
 
-            <!-- calendar -->
-            <?php
-            $dateComponents = getdate();
-            if (isset($_GET['month']) && isset($_GET['year'])) {
-              $month = $_GET['month'];
-              $year = $_GET['year'];
-            } else {
-              $month = $dateComponents['mon'];
-              $year = $dateComponents['year'];
-            }
-            echo build_calendar($month, $year);
-            ?>
-          </div>
+      <div class="apps" id="apps" style="margin: 0 auto; display:flex; justify-content:center; align-items:center;">
+        <div class="card" id="cardcalendar" style="width: 60rem; height: 40rem;  padding: 2%; border-radius: 50px; border-color:#D2E3FC; box-shadow: 0 8px 8px rgba(100, 150, 200, 0.3);">
+
+          <!-- calendar -->
+          <?php
+          $dateComponents = getdate();
+          if (isset($_GET['month']) && isset($_GET['year'])) {
+            $month = $_GET['month'];
+            $year = $_GET['year'];
+          } else {
+            $month = $dateComponents['mon'];
+            $year = $dateComponents['year'];
+          }
+          echo build_calendar($month, $year);
+          ?>
         </div>
       </div>
     </section>
@@ -208,13 +237,11 @@ include 'app-data.php';
 
   <div class="spacing" style="padding-top: 5%;"></div>
 
-  <div class="footer">
-
+  <!-- <div class="footer">
     <div class="owner">
       <p> ® Dalino Dental Clinic</p>
     </div>
-
-  </div>
+  </div> -->
 
   <!-- sweet alert -->
   <script src="./assets/js/sweetalert.min.js"></script>

@@ -3,7 +3,8 @@
 session_start();
 
 
-if (!isset($_SESSION['isAdmin'])) {
+if (!isset($_SESSION['isAdmin']) && !isset($_SESSION['isAssistantDoctor']) && !isset($_SESSION['isHelpDesk'])) {
+
 
   header("location: ../../main.php");
 }
@@ -27,6 +28,8 @@ if (isset($_GET['logout'])) {
 
 <head>
   <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/png" href="../image/dalino_logo.png">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dalino Admin</title>
 
@@ -216,6 +219,41 @@ if (isset($_GET['logout'])) {
 
     <div class="home-content">
       <i class='bx bx-menu'></i>
+
+      <?php
+
+      if (isset($_SESSION['email'])) {
+        // User is already signed in, continue with the rest of your home.php code
+        $email = $_SESSION['email'];
+      }
+
+      $mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
+      $stmt = $mysqli->prepare("SELECT fullname FROM user_registration WHERE email = ?");
+      $stmt->bind_param("s", $email);
+      $stmt->execute();
+
+      // Bind the result to a variable
+      $stmt->bind_result($fullname);
+
+      // Fetch the result
+      if ($stmt->fetch()) {
+        // Fullname is retrieved from the database
+        // Store it in the session variable
+        $_SESSION['fullname'] = $fullname;
+      }
+
+      $stmt->close();
+      $mysqli->close();
+      // $mysqli->close()
+
+      ?>
+      <!-- <h4> Welcome, <?php echo $fullname ?></h4> -->
+      <h4 style="padding-left: 2rem; padding-top: 1.5rem;">Welcome, <?php
+
+
+                                                                    $fullname = isset($_SESSION['fullname']) ? $_SESSION['fullname'] : '';
+
+                                                                    echo $fullname ?></h4>
     </div>
 
 

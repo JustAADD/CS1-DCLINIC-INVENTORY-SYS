@@ -1,8 +1,10 @@
 <?php
+
+
 function build_calendar($month, $year)
 {
 
-  $mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
+  $mysqli = new mysqli('', 'u530383017_root', 'Ik@wl@ngb0w4', 'u530383017_localhost');
   // $stmt = $mysqli->prepare("select * from appointment_booking where MONTH(session_date) = ? AND YEAR(session_date) = ?");
   //$stmt = $mysqli->prepare("SELECT session_date, status FROM appointment_booking WHERE MONTH(session_date) = ? AND YEAR(session_date) = ?");
   $stmt = $mysqli->prepare("SELECT date, status, slots FROM manage_schedule WHERE MONTH(date) = ? AND YEAR(date) = ?");
@@ -50,8 +52,8 @@ function build_calendar($month, $year)
 
   $calendar = "<table class='table table-bordered' id='appointment' style='width: 100%; height: 50%;'>";
   $calendar .= "<div class='row' style='margin-top: 1px;'>";
-  $calendar .= "<div class='col-8 text-start'><h3>$monthName $year</h3></div>";
-  $calendar .= "<div class='col-4'>";
+  $calendar .= "<div class='col-8' id='col1row' text-start'><h3>$monthName $year</h3></div>";
+  $calendar .= "<div class='col-4' id='col2row'>";
   $calendar .= "<a class='btn btn-xs btn-primary' style='font-size: 12px; background-color: #3785F9; margin-left: 90px'; href='?month=" . date('m', mktime(0, 0, 0, $month - 1, 1, $year)) . "&year=" . date('Y', mktime(0, 0, 0, $month - 1, 1, $year)) . "'><</a> ";
   $calendar .= "<a class='btn btn-xs btn-primary' style='font-size: 12px'; background-color: #3785F9; href='?month=" . date('m') . "&year=" . date('Y') . "'>Current Month</a> ";
   $calendar .= "<a class='btn btn-xs btn-primary' style='font-size: 12px'; background-color: #3785F9; href='?month=" . date('m', mktime(0, 0, 0, $month + 1, 1, $year)) . "&year=" . date('Y', mktime(0, 0, 0, $month + 1, 1, $year)) . "'>></a></div>";

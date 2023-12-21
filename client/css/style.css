@@ -502,7 +502,10 @@ body {
 #button_patient button {
   margin-left: 61.5rem;
   border: none;
+
+  
 }
+
 
 #button_patient_transaction button {
   margin-left: 53rem;
@@ -549,7 +552,7 @@ body {
 
 #notes button {
   display: var(--z-fixed);
-
+  
 }
 
 #schedule_button button {
@@ -582,7 +585,17 @@ body {
   border-radius: 10px;
   border: none;
   box-shadow: 0 7px 4px rgba(126, 175, 249, 0.4);
-  padding: 5rem;
+  padding: 20rem;
+}
+
+#genreports {
+  background-color: #ffffff;
+  width: 80rem;
+  height: 33rem;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 7px 4px rgba(126, 175, 249, 0.4);
+  padding: 12rem;
 }
 
 #gen1 {
@@ -598,4 +611,30 @@ body {
 
 #savesettings {
   width: auto;
+}
+
+/* overall reports */
+.creports {
+
+  margin: 0 auto;
+  padding: 5%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+
+
+}
+
+#creports {
+  box-shadow: 0 7px 4px rgba(126, 175, 249, 0.4);
+  padding: 8%;
+  height: 80rem;
+  border-radius: 10px;
+  border-color: var(--light-color);
+  width: 60rem;
+}
+
+#creports img {
+  background-color: var(--dark-first-color);
+  border-radius: 15px;
 }

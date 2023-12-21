@@ -13,12 +13,13 @@ if (isset($_SESSION['email'])) {
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/png" href="./assets/image/dalino_logo.png">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dalino Dental Clinic</title>
   <!-- Bootstrap CSS -->
@@ -36,9 +37,6 @@ if (isset($_SESSION['email'])) {
 <body class="body-main">
 
   <div class="container-fluid" id="main">
-
-
-
     <div class="card" id="form-card">
       <div class="row g-0" id="form-row">
         <div class="col" id="unang-col">
@@ -75,17 +73,6 @@ if (isset($_SESSION['email'])) {
 
           </form>
         </div>
-
-
-
-
-
-
-
-
-
-
-
 
         <div class="col-lg-6" id="pangalawang-col">
 
@@ -141,6 +128,8 @@ if (isset($_SESSION['email'])) {
       }
     })
   </script>
+
+
 
 
 </body>

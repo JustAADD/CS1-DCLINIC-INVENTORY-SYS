@@ -21,7 +21,7 @@ function sendemail_verify($fullname, $email, $verify_token)
   $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
   $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
   $mail->Username   = 'dalinomercedita@gmail.com';                     //SMTP username
-  $mail->Password   = '';                             //SMTP password
+  $mail->Password   = 'ogjd yafl kxcw bikm';                             //SMTP password
   $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
   $mail->Port       = 465;
 
@@ -36,7 +36,7 @@ function sendemail_verify($fullname, $email, $verify_token)
 
   $email_template = "
   <h3>You have registered with Dalino Dental Clinic as a user</h3>
-  <h5>Verify your email address to login with thhe below given link</h5>
+  <h5>Verify your email address to login with the below given link</h5>
   <br/><br/>
   <a href='http://localhost/cs1-dclinic-inventory-sys/main-everification.php?token=$verify_token'> Click me </a>
   ";

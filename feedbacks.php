@@ -1,6 +1,19 @@
 <?php
 require 'connection/connection.php';
-// session_start();
+session_start();
+
+if (isset($_SESSION['email'])) {
+  $email = $_SESSION['email'];
+} elseif (isset($_SESSION['email'])) {
+
+  header("Location: home.php");
+  exit();
+}
+
+if (!isset($_SESSION['email'])) {
+
+  header("Location: main.php");
+}
 
 include('vendor/autoload.php');
 require_once './src/Analyzer.php';
@@ -10,7 +23,7 @@ require_once './src/Config/Config.php';
 use Sentiment\Analyzer;
 
 
-$mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
+$mysqli = new mysqli('', 'u530383017_root', 'Ik@wl@ngb0w4', 'u530383017_localhost');
 $stmt = $mysqli->prepare("SELECT fullname FROM user_registration WHERE email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -47,10 +60,10 @@ function storeComment($comment, $sentiment)
   // Get the current date
   $currentDate = date('Y-m-d');
 
-  $server = "localhost";
-  $username = "root";
-  $password = "";
-  $databasename = "cs1-dclinic-sys";
+  $server = "";
+  $username = "u530383017_root";
+  $password = "Ik@wl@ngb0w4";
+  $databasename = "u530383017_localhost";
   // Adjust the database connection details
 
   $mydb = mysqli_connect("$server", "$username", $password, $databasename);
@@ -96,6 +109,8 @@ if (isset($_POST['submit'])) {
 
 <head>
   <meta charset="UTF-8">
+  <link rel="shorcut icon" href="./assets/image/dalino_logo.png">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- ===== Bootstrap CSS ===== -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -134,7 +149,13 @@ if (isset($_POST['submit'])) {
     .card button {
       width: 10rem;
       font-size: small;
-      border-radius: 20px;
+      border-radius: 10px;
+    }
+
+    .buton a {
+      width: 10rem;
+      font-size: small;
+      border-radius: 10px;
     }
   </style>
 </head>
@@ -181,6 +202,7 @@ if (isset($_POST['submit'])) {
           <label for="feedback">Send a Feedback</label>
         </div>
         <div class="buton">
+          <a href="home.php" class="btn btn-primary mt-4">Back</a>
           <button type="submit" name="submit" value="submit" class="btn btn-primary mt-4">Send Feedback</button>
         </div>
       </form>

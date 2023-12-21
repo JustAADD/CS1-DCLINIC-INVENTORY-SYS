@@ -3,10 +3,16 @@ session_start();
 
 
 if (isset($_SESSION['email'])) {
+  // User is already signed in, continue with the rest of your home.php code
   $email = $_SESSION['email'];
-} elseif (isset($_SESSION['email'])) {
+} else {
+  // User is not signed in, redirect to main.php
+  header("Location: main.php");
+  exit();
+}
 
-  header("Location: home.php");
+if (!isset($_SESSION['email'])) {
+  header("Location: index.php");
   exit();
 }
 
@@ -28,12 +34,6 @@ if ($stmt->fetch()) {
 $stmt->close();
 $mysqli->close();
 
-
-
-if (!isset($_SESSION['email'])) {
-
-  header("Location: main.php");
-}
 
 ?>
 
@@ -71,6 +71,7 @@ if (isset($_SESSION['back'])) {
 
 <head>
   <meta charset="UTF-8">
+  <link rel="shorcut icon" href="./assets/image/dalino_logo.png">
   <!-- ===== css ===== -->
   <link rel="stylesheet" href="./assets/css/content-style.css">
   <!-- OWL-Carousel-->
@@ -86,12 +87,12 @@ if (isset($_SESSION['back'])) {
   <!--loader-->
   <script src="./assets/js/loader.js"></script>
   <?php
-  include 'header-home.php';
+  include 'header.php';
 
   ?>
   <style>
     div.scroll {
-      width: 22rem;
+      width: 21.5rem;
       height: 3rem;
       overflow-x: hidden;
       overflow-y: auto;
@@ -129,7 +130,7 @@ if (isset($_SESSION['back'])) {
           <div class="card" id="card-one">
             <div class="card-body" id="card-one-body">
               <h5>Your Appointment Schedule:</h5>
-              <div class="scroll">
+              <div class="scroll" id="scroll">
                 <?php
                 require 'connection/connection.php';
 
@@ -173,8 +174,8 @@ if (isset($_SESSION['back'])) {
       <div class="col-sm-6 p-0">
         <div class="rectangle" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">
           <div class="columntwo">
-            <p> Our dental health services prioritize your oral well-being. <br>
-              Trust your oral well-being. Trust our Experienced services to <br>
+            <p> Our dental health services prioritize your oral well-being.
+              Trust your oral well-being. Trust our Experienced services to
               Guide you on your journey to optimal dental health.
             </p>
 
@@ -303,15 +304,50 @@ if (isset($_SESSION['back'])) {
       <div class="card-container" id="feedback-card">
         <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner" id="inner" style="background-color: transparent;">
-            <div class="carousel-item active" data-bs-interval="10000">
+            <?php
+            // Display feedback in carousel items
+            $servername = "localhost";
+            $username = "u530383017_root";
+            $password = "Ik@wl@ngb0w4";
+            $dbname = "u530383017_localhost";
 
-            </div>
-            <div class="carousel-item" data-bs-interval="10000">
+            $conn = new mysqli($servername, $username, $password, $dbname);
+
+            // Check connection
+            if ($conn->connect_error) {
+              die("Connection failed: " . $conn->connect_error);
+            }
+
+            // Fetch feedback from the database
+            $sql = "SELECT patient_name, comment FROM feedback_table WHERE sentiment = 'positive'";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+              $active = true;
+              while ($row = $result->fetch_assoc()) {
+                echo '<div class="carousel-item' . ($active ? ' active' : '') . '" id="feedback_table" style="margin-top: -3rem;" data-bs-interval="10000">';
+                echo '<p><strong>' . $row['patient_name'] . ':</strong> ' . $row['comment'] . '</p>';
+                echo '</div>';
+                $active = false;
+              }
+            } else {
+              echo '<div class="carousel-item active" data-bs-interval="10000">';
+              echo '<p>No positive feedback available.</p>';
+              echo '</div>';
+            }
+
+            // Close database connection
+            $conn->close();
+
+
+            ?>
+
+            <!-- <div class="carousel-item" data-bs-interval="10000">
 
             </div>
             <div class="carousel-item " data-bs-interval="20000">
 
-            </div>
+            </div> -->
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -397,8 +433,8 @@ if (isset($_SESSION['back'])) {
         </div>
         <div class="col" id="mapa">
           <h5 class="mb-2" id="mapa">Location Map</h5>
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30890.508969491348!2d120.95043177910162!3d14.581196799999987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397ca27af509b3f%3A0x7daeec78a2e1d9d7!2sMercedita%20Marcelino%20Medical%20Clinic!5e0!3m2!1sen!2sph!4v1701773057728!5m2!1sen!2sph" width="700" height="550" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-          </iframe>
+
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30892.319871854666!2d121.03025168562912!3d14.56827894849337!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c983ae9bab9b%3A0xbb06d55d519d0b63!2sDr%20Menchie%20Dalino%20Dental%20Clinic!5e0!3m2!1sen!2sph!4v1701836307486!5m2!1sen!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
 
         <div class="end-footer" style="padding-top: 6rem; margin-bottom: -4rem;">
@@ -432,6 +468,8 @@ if (isset($_SESSION['back'])) {
       }
     })
   </script>
+
+
 
   <!-- sweet alert -->
   <script src="./assets/js/sweetalert.min.js"></script>

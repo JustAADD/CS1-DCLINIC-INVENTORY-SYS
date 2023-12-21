@@ -8,7 +8,7 @@ if (isset($_SESSION['email'])) {
   $email = $_SESSION['email'];
 }
 
-$mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
+$mysqli = new mysqli('', 'u530383017_root', 'Ik@wl@ngb0w4', 'u530383017_localhost');
 $stmt = $mysqli->prepare("SELECT fullname FROM user_registration WHERE email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();

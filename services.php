@@ -1,3 +1,22 @@
+<?php
+session_start();
+
+if (isset($_SESSION['email'])) {
+  $email = $_SESSION['email'];
+} elseif (isset($_SESSION['email'])) {
+
+  header("Location: home.php");
+  exit();
+}
+
+if (!isset($_SESSION['email'])) {
+
+  header("Location: main.php");
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 

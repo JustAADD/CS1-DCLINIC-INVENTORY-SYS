@@ -4,7 +4,7 @@
 $hostname = "localhost"; //server
 $username = "root"; //username
 $password = ""; //password
-$dbname = "cs1-dclinic-sys";  //databases
+$dbname = "cs1-dclinic-sys";  //databases  //databases
 
 // Create connection
 $con = mysqli_connect($hostname, $username, $password, $dbname); // connecting 

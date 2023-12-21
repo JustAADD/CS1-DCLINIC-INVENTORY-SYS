@@ -18,6 +18,8 @@ if (isset($_GET['deleteid'])) {
         $stmt_insert = mysqli_prepare($con, $insert_query);
 
         if (!$stmt_insert) {
+
+          
             throw new Exception("Error preparing insert statement: " . mysqli_error($con));
         }
 

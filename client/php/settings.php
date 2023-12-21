@@ -59,7 +59,7 @@ if (isset($_POST["gensettings"])) {
     // display a success message if the file was uploaded successfully
     // echo "The file " . basename($_FILES["image"]["name"]) . " has been uploaded.";
 
-    $stmtSettings->bind_param("ssssss", $dashboard_name, $name, $target_file, $id);
+    $stmtSettings->bind_param("ssss", $dashboard_name, $name, $target_file, $id);
 
     if (!$stmtSettings->execute()) {
       echo "Failed to execute statement: " . $stmtSettings->error;
@@ -131,6 +131,8 @@ if (isset($_POST["savesettings"])) {
 
 <head>
   <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/png" href="../image/dalino_logo.png">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dalino Admin</title>
 
@@ -405,7 +407,7 @@ if (isset($_POST["savesettings"])) {
       <div class="d-flex align-items-start">
         <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
           <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">General Settings</button>
-          <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Media Settings</button>
+          <!-- <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Media Settings</button> -->
           <button class="nav-link" id="v-pills-reports-tab" data-bs-toggle="pill" data-bs-target="#v-pills-reports" type="button" role="tab" aria-controls="v-pills-reports" aria-selected="false">Overall Reports</button>
         </div>
         <div class="tab-content" id="v-pills-tabContent">
@@ -488,13 +490,12 @@ if (isset($_POST["savesettings"])) {
             </div>
           </div>
           <div class="tab-pane fade" id="v-pills-reports" role="tabpanel" aria-labelledby="v-pills-reports-tab">
-            <div class="card" id="gen" style="width: 55rem;">
+            <div class="card" id="genreports" style="width: 55rem;">
               <p class="">Information above are the overall records in every month.
                 click here to print reports and save as a soft copy.</p>
-
-                
-
-
+              <div class="genreports">
+                <a href="overall_reports.php" class="btn btn-primary">Generate Reports</a>
+              </div>
             </div>
           </div>
         </div>

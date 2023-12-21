@@ -57,6 +57,8 @@ if (isset($_GET['logout'])) {
 
 <head>
   <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/png" href="./assets/image/dalino_logo.png">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- ===== Bootstrap CSS ===== -->
@@ -87,7 +89,7 @@ if (isset($_GET['logout'])) {
           </div>
 
           <div>
-            <a href="home.php" class="nav__name">Dalino Dental Clinic</a>
+            <a href="home.php" class="nav__name" id="nav__name">Dalino Dental Clinic</a>
           </div>
         </div>
 

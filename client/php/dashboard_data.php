@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require '../../connection/connection.php';
 // $rows = mysqli_query($con, "SELECT * FROM user_registration");
 ?>
@@ -36,8 +38,10 @@ require '../../connection/connection.php';
 </head>
 
 <body>
+
   <!-- monitoring -->
-  <div class="container" id="dashboard-container">
+  <div class="container mt-3" id="dashboard-container">
+
     <div class="cardBox" style="background-color: #FFFFF9;"></div>
 
     <div class="row g-0 " id="cards">
@@ -50,7 +54,7 @@ require '../../connection/connection.php';
               </div>
               <div class="col">
                 <?php
-                $selectQuery = "SELECT COUNT(*) AS total_rows FROM appointment_booking";
+                $selectQuery = "SELECT COUNT(*) AS total_rows FROM app_final_process";
                 $result = mysqli_query($con, $selectQuery);
 
                 if ($result) {
@@ -78,7 +82,7 @@ require '../../connection/connection.php';
               </div>
               <div class="col">
                 <?php
-                
+
                 $selectPatientListQuery = "SELECT COUNT(*) AS total_rows FROM patient_list";
                 $resultPatientList = mysqli_query($con, $selectPatientListQuery);
 
@@ -198,7 +202,7 @@ require '../../connection/connection.php';
               <!-- data -->
               <!-- data -->
               <?php
-              $selectquery = "SELECT * FROM appointment_booking ORDER BY ID DESC";
+              $selectquery = "SELECT * FROM app_final_process ORDER BY ID DESC";
               $result = mysqli_query($con, $selectquery);
 
               while ($row = mysqli_fetch_assoc($result)) {

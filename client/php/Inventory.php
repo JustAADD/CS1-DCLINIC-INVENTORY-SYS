@@ -87,6 +87,8 @@ if (isset($_POST["add_inventory"])) {
 
 <head>
   <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/png" href="../image/dalino_logo.png">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dalino Admin</title>
 
@@ -393,14 +395,22 @@ if (isset($_POST["add_inventory"])) {
               var updateButton = '<a href="../php/Inventory_update.php? updateid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></button></a>';
               var imagesrc = '<div class="imagesrc"><img src="' + row.imagedata + '" style="width: 100px; height: 60px;" /></div>';
 
+
+              var rowClass = (row.stocks < 5) ? 'row-red' : '';
+
+
               table.row.add([
                 row.inv_id,
                 imagesrc,
                 row.name,
-                row.stocks,
+                '<button type="button" class="btn ' + (row.stocks < 5 ? 'btn-outline-danger' : 'btn-outline-success') + '">' + row.stocks + '</button>',
+                
                 row.class,
                 row.date,
-                deleteButton + updateButton
+                '<div>' +
+                '<a href="../php/Inventory_data.php?deleteid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa-solid fa-trash"></i></button></a>' +
+                '&nbsp;<a href="../php/Inventory_update.php?updateid=' + row.id + '"><button class="btn btn-dark btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="fa fa-edit"></i></button></a>' +
+                '</div>',
                 // Add more columns as needed
               ]);
             });

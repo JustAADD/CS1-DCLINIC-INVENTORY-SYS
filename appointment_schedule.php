@@ -6,7 +6,7 @@ if (isset($_SESSION['email'])) {
   $email = $_SESSION['email'];
 }
 
-$mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
+$mysqli = new mysqli('', 'u530383017_root', 'Ik@wl@ngb0w4', 'u530383017_localhost');
 $stmt = $mysqli->prepare("SELECT fullname FROM user_registration WHERE email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -37,6 +37,12 @@ if (isset($_POST['back'])) {
 
 if (isset($_POST['submit'])) {
 
+  if (empty($_POST['selectedProcedures']) || empty($_POST['timeslot']) || empty($_POST['patient_name'])) {
+    $_SESSION['status'] = "Please complete your appointment form!";
+    header("Location: main.php");
+    exit();
+  }
+
   $status = "pending";
   $patient_name = $_POST['patient_name'];
   // $selectedProcedure = $_POST['procedures'];
@@ -48,7 +54,7 @@ if (isset($_POST['submit'])) {
   // $date_obj = DateTime::createFromFormat('Y-m-d', $date);
   // $formatted_date = $date_obj->format('d/m/y l');
 
-  $mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
+  $mysqli = new mysqli('', 'u530383017_root', 'Ik@wl@ngb0w4', 'u530383017_localhost');
 
   // Check for connection errors
   if ($mysqli->connect_errno) {
@@ -353,34 +359,6 @@ if (!isset($_SESSION['email'])) {
 
               <p class="timeslots mt-3">Fill up for our info</p>
 
-
-              <!-- <div class=" mt-3 mb-3"><span>Name:</span>
-
-                <?php
-                $mysqli = new mysqli('localhost', 'root', '', 'cs1-dclinic-sys');
-                $stmt = $mysqli->prepare("SELECT fullname FROM user_registration WHERE email = ?");
-                $stmt->bind_param("s", $email);
-                $stmt->execute();
-
-                // Bind the result to a variable
-                $stmt->bind_result($fullname);
-
-                // Fetch the result
-                if ($stmt->fetch()) {
-                  // Fullname is retrieved from the database
-                  // Store it in the session variable
-                  $_SESSION['fullname'] = $fullname;
-
-                  echo $fullname;
-                }
-
-                $stmt->close();
-                $mysqli->close();
-
-
-                ?> 
-
-            </div> -->
 
               <p class="text" style="font-size:smaller;"><span>Option:</span>&nbsp Please confirm whether you intend to use the name above; if not, kindly provide an alternative name.</p>
               <div class="mb-4 mt-3">
